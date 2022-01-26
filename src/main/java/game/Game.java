@@ -12,13 +12,13 @@ public class Game extends Canvas implements Runnable{
     private Handler handler;
 
     public Game(){
-        new Window(1000,563,"Wizard Game", this);
+        new Window(1000,563,"Once Upon a Dungeon", this);
         start();
 
         handler = new Handler();
 
-        handler.addObject(new Box(100,100, ID.Block));
-        handler.addObject(new Box(200,100, ID.Block));
+        this.addKeyListener(new KeyInput(handler));
+        handler.addObject(new Protagonist(100,100,ID.Player, handler));
     }
 
     private void start(){
