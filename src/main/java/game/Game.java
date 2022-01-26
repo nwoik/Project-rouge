@@ -7,14 +7,18 @@ import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable{
 
-    private static final long serialVersionUID = 1L;
-
     private boolean isRunning = false;
     private Thread thread;
+    private Handler handler;
 
     public Game(){
         new Window(1000,563,"Wizard Game", this);
         start();
+
+        handler = new Handler();
+
+        handler.addObject(new Box(100,100));
+        handler.addObject(new Box(200,100));
     }
 
     private void start(){
@@ -66,7 +70,7 @@ public class Game extends Canvas implements Runnable{
 
     //updates everything in the game. updated 60 times per second
     public void tick(){
-
+        handler.tick();
     }
 
     //renders everything in the game. updated thousands of times per second.
@@ -82,8 +86,10 @@ public class Game extends Canvas implements Runnable{
         ////////////////////////////
         //Anything between these comments will be drawn.
 
-        g.setColor(Color.green);
+        g.setColor(Color.magenta);
         g.fillRect(0,0, 1000, 563);
+
+        handler.render(g);
         ///////////////////////////
         g.dispose();
         bs.show();
