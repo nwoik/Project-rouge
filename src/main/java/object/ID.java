@@ -1,4 +1,4 @@
-package game;
+package object;
 
 //lets us identify different entities from one another, and keep track of them
 public enum ID {

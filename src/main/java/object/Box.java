@@ -1,10 +1,10 @@
-package game;
+package object;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Color;
 
-public class Box extends GameObject{
+public class Box extends GameObject {
 
     public Box(int x, int y, ID id) {
         super(x, y, id);

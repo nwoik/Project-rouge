@@ -1,12 +1,14 @@
-package game;
+package object;
 
-import org.w3c.dom.css.RGBColor;
+import object.GameObject;
+import object.Handler;
+import object.ID;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Color;
 
-public class Protagonist extends GameObject{
+public class Protagonist extends GameObject {
 
     Handler handler;
 

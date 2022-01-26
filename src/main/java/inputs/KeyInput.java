@@ -1,4 +1,8 @@
-package game;
+package inputs;
+
+import object.GameObject;
+import object.Handler;
+import object.ID;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

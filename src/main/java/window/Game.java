@@ -1,4 +1,9 @@
-package game;
+package window;
+
+import inputs.KeyInput;
+import object.Handler;
+import object.ID;
+import object.Protagonist;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -18,7 +23,7 @@ public class Game extends Canvas implements Runnable{
         handler = new Handler();
 
         this.addKeyListener(new KeyInput(handler));
-        handler.addObject(new Protagonist(100,100,ID.Player, handler));
+        handler.addObject(new Protagonist(100,100, ID.Player, handler));
     }
 
     private void start(){
