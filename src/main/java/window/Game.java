@@ -10,30 +10,27 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
-public class Game extends Canvas implements Runnable{
-
-    private boolean isRunning = false;
+public class Game implements Runnable{
     private Thread thread;
-    private Handler handler;
+    private GameCanvas gameCanvas;
+    private GameWindow gameWindow;
 
     public Game(){
-        new Window(1000,563,"Once Upon a Dungeon", this);
+        this.gameCanvas = new GameCanvas();
+        this.gameWindow = new GameWindow(1000,563,"Once Upon a Dungeon", this.gameCanvas);
+
         start();
 
-        handler = new Handler();
-
-        this.addKeyListener(new KeyInput(handler));
-        handler.addObject(new Protagonist(100,100, ID.Player, handler));
     }
 
     private void start(){
-        isRunning = true;
+        gameCanvas.isRunning = true;
         thread = new Thread(this);
         thread.start();
     }
 
     private void stop() {
-        isRunning = false;
+        gameCanvas.isRunning = false;
         try{
             thread.join();  //rejoins thread to main program
         }catch (InterruptedException e) {
@@ -45,14 +42,14 @@ public class Game extends Canvas implements Runnable{
     //updates window 60 times per second and updates render method
     //a couple thousand times per second.
     public void run() {
-        this.requestFocus();
+        this.gameCanvas.requestFocus();
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
         long timer = System.currentTimeMillis();
         int frames = 0;
-        while(isRunning){
+        while(gameCanvas.isRunning){
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
@@ -61,7 +58,7 @@ public class Game extends Canvas implements Runnable{
                 //updates++;
                 delta--;
             }
-            render();
+            this.gameCanvas.render();
             frames++;
 
             if(System.currentTimeMillis()-timer>1000){
@@ -75,30 +72,11 @@ public class Game extends Canvas implements Runnable{
 
     //updates everything in the game. updated 60 times per second
     public void tick(){
-        handler.tick();
+        this.gameCanvas.handler.tick();
     }
 
     //renders everything in the game. updated thousands of times per second.
-    public void render(){
-        BufferStrategy bs = this.getBufferStrategy();
-        if(bs == null){
-            //preload 3 frames before they are actually shown. Improve efficiency
-            this.createBufferStrategy(3);
-            return;
-        }
 
-        Graphics g = bs.getDrawGraphics();
-        ////////////////////////////
-        //Anything between these comments will be drawn.
-
-        g.setColor(Color.magenta);
-        g.fillRect(0,0, 1000, 563);
-
-        handler.render(g);
-        ///////////////////////////
-        g.dispose();
-        bs.show();
-    }
     public static void main(String[] args){
         new Game();
     }
