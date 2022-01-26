@@ -11,8 +11,10 @@ import java.awt.image.BufferStrategy;
 public class GameCanvas extends Canvas {
     public Handler handler;
     public boolean isRunning = false;
+    public Panel panel;
 
-    public GameCanvas() {
+    public GameCanvas(Panel panel) {
+        this.panel = panel;
         this.handler = new Handler();
         addKeyListener(new KeyInput(handler));
         handler.addObject(new Protagonist(100,100, ID.Player, handler));
