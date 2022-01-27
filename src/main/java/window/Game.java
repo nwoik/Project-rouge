@@ -3,10 +3,12 @@ package window;
 public class Game implements Runnable{
     private Thread thread;
     private GameCanvas gameCanvas;
+    private MenuCanvas menuCanvas;
     private GameWindow gameWindow;
 
     public Game(){
         this.gameCanvas = new GameCanvas(Panel.Game);
+        this.menuCanvas = new MenuCanvas(Panel.Menu);
         this.gameWindow = new GameWindow(1000,563,"Once Upon a Dungeon", this.gameCanvas);
         start();
 

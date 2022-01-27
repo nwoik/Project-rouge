@@ -18,7 +18,6 @@ public class GameCanvas extends Canvas {
         this.handler = new Handler();
         addKeyListener(new KeyInput(handler));
         handler.addObject(new Protagonist(100,100, ID.Player, handler));
-
     }
 
     public void render(){
