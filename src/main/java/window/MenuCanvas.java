@@ -8,7 +8,7 @@ import java.io.InputStream;
 
 public class MenuCanvas extends Canvas {
     public Panel panel;
-    public BufferedImage img;
+    Game game;
     Graphics2D graphics2D;
     GameWindow gameWindow;
     Font gameFont;
@@ -39,7 +39,7 @@ public class MenuCanvas extends Canvas {
     public void drawTitleScreen() {
         //Title Name
         graphics2D.setFont(gameFont.deriveFont(64F));
-        graphics2D.drawImage(img, 0,0, screenWidth, screenHeight, null);
+        graphics2D.drawImage(game.img, 0,0, screenWidth, screenHeight, null);
         graphics2D.drawString("Placeholder", getXForCenteredText("Placeholder"), tileSize+0.5F);
         //Selectable
         graphics2D.drawString("New Game", getXForCenteredText("New Game"), tileSize*3);
@@ -58,17 +58,5 @@ public class MenuCanvas extends Canvas {
         int length = (int)graphics2D.getFontMetrics().getStringBounds(text, graphics2D).getWidth();
         return screenWidth/2 - length/2;
     }
-
-    // imports the background for menu
-    public void importImg() {
-        InputStream inputStream = getClass().getResourceAsStream("MenuBackground/Background.png");
-        try {
-            assert inputStream != null;
-            img = ImageIO.read(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public  void draw(Graphics2D g2) { }
 }
