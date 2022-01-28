@@ -13,6 +13,11 @@ public class GameCanvas extends Canvas {
     public boolean isRunning = false;
     public Panel panel;
 
+    // For callFPS
+    long lastTime;
+    String outputFPS;
+    int frames;
+
     public GameCanvas(Panel panel) {
         this.panel = panel;
         this.handler = new Handler();
@@ -38,7 +43,19 @@ public class GameCanvas extends Canvas {
 
         this.handler.render(g);
         ///////////////////////////
+        g.setColor(Color.BLACK);
+        g.drawString(callFPS(), 20, 20);
         g.dispose();
         bs.show();
+    }
+
+    public String callFPS() {
+        frames++;
+        if (System.currentTimeMillis() - lastTime >= 1000) { // if the time between the current and last time is over 1000ms
+            outputFPS = "" + frames;
+            frames = 0; // reset frame count
+            lastTime = System.currentTimeMillis(); // reassign last time
+        }
+        return outputFPS;
     }
 }
