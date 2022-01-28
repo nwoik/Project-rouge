@@ -40,7 +40,7 @@ public class MenuCanvas extends Canvas {
         //Title Name
         graphics2D.setFont(gameFont.deriveFont(64F));
         graphics2D.drawImage(game.img, 0,0, screenWidth, screenHeight, null);
-        graphics2D.drawString("Placeholder", getXForCenteredText("Placeholder"), tileSize+0.5F);
+        graphics2D.drawString("Once Upon a Dungeon", getXForCenteredText("Once Upon a Dungeon"), tileSize+0.5F);
         //Selectable
         graphics2D.drawString("New Game", getXForCenteredText("New Game"), tileSize*3);
         graphics2D.drawString("Settings", getXForCenteredText("Settings"), tileSize*4+10F);
