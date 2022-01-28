@@ -39,6 +39,8 @@ public class MenuCanvas extends Canvas {
     public void drawTitleScreen() {
         //Title Name
         graphics2D.setFont(gameFont.deriveFont(64F));
+        graphics2D.setColor(new Color(70,120,80));
+        graphics2D.fillRect(0,0, screenWidth, screenHeight);
         graphics2D.drawImage(game.img, 0,0, screenWidth, screenHeight, null);
         graphics2D.drawString("Once Upon a Dungeon", getXForCenteredText("Once Upon a Dungeon"), tileSize+0.5F);
         //Selectable

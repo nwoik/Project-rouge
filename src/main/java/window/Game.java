@@ -8,15 +8,21 @@ import java.io.InputStream;
 public class Game implements Runnable{
     private Thread thread;
     private GameCanvas gameCanvas;
-    private MenuCanvas menuCanvas;
+    public MenuCanvas menuCanvas;
     private GameWindow gameWindow;
+    public Panel state;
 
     public BufferedImage img;
 
     public Game(){
         this.gameCanvas = new GameCanvas(Panel.Game);
         this.menuCanvas = new MenuCanvas(Panel.Menu);
+        this.state = this.menuCanvas.panel;
+        // menu state on start-up
         this.gameWindow = new GameWindow(1000,563,"Once Upon a Dungeon", this.menuCanvas);
+        // import images
+        this.importImg();
+        // draw the title menu
         this.menuCanvas.drawTitleScreen();
         if (gameCanvas.isRunning){start();}
     }
@@ -45,6 +51,10 @@ public class Game implements Runnable{
         }catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void changeState(int stateNum) {
+
     }
 
     //Yet again, game loop from notch that is perfect for any game

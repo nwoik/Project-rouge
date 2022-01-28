@@ -3,12 +3,14 @@ package inputs;
 import object.GameObject;
 import object.Handler;
 import object.ID;
+import window.Game;
+import window.Panel;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class KeyInput extends KeyAdapter{
-
+    Game game;
     Handler handler; //Note: not creating new handler because we need to be using same handler as before
     //                 Don't want a new list, just to access movement methods.
     //                 Reason for putting movement there is to prevent input lag.
@@ -20,15 +22,24 @@ public class KeyInput extends KeyAdapter{
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
-        for(int i=0; i<handler.object.size(); i++){
-            GameObject tempObject = handler.object.get(i);
+        if (game.state== Panel.Menu) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_W -> game.menuCanvas.commandNum--;
+                case KeyEvent.VK_S -> game.menuCanvas.commandNum++;
+                case KeyEvent.VK_ENTER -> game.changeState(game.menuCanvas.commandNum+1);
+            }
+        }
+        if (game.state== Panel.Game) {
+            for (int i = 0; i < handler.object.size(); i++) {
+                GameObject tempObject = handler.object.get(i);
 
-            //loop through all our objects, and if the current object is the player then do something.
-            if(tempObject.getId() == ID.Player){
-                if(key == KeyEvent.VK_W) handler.setUp(true);
-                if(key == KeyEvent.VK_S) handler.setDown(true);
-                if(key == KeyEvent.VK_A) handler.setLeft(true);
-                if(key == KeyEvent.VK_D) handler.setRight(true);
+                //loop through all our objects, and if the current object is the player then do something.
+                if (tempObject.getId() == ID.Player) {
+                    if (key == KeyEvent.VK_W) handler.setUp(true);
+                    if (key == KeyEvent.VK_S) handler.setDown(true);
+                    if (key == KeyEvent.VK_A) handler.setLeft(true);
+                    if (key == KeyEvent.VK_D) handler.setRight(true);
+                }
             }
         }
     }
