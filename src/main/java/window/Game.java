@@ -16,9 +16,9 @@ public class Game implements Runnable{
     public Game(){
         this.gameCanvas = new GameCanvas(Panel.Game);
         this.menuCanvas = new MenuCanvas(Panel.Menu);
-        this.gameWindow = new GameWindow(1000,563,"Once Upon a Dungeon", this.gameCanvas);
-        start();
-
+        this.gameWindow = new GameWindow(1000,563,"Once Upon a Dungeon", this.menuCanvas);
+        this.menuCanvas.drawTitleScreen();
+        if (gameCanvas.isRunning){start();}
     }
 
     // imports the background for menu
