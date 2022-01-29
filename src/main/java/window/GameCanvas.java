@@ -16,7 +16,7 @@ public class GameCanvas extends Canvas implements Runnable{
 
     // For callFPS
     long lastTime;
-    String outputFPS;
+    String outputFPS = "";
     int frames;
 
     public GameCanvas(Panel panel) {
@@ -63,6 +63,7 @@ public class GameCanvas extends Canvas implements Runnable{
             frames++;
 
             if(System.currentTimeMillis()-timer>1000){
+                outputFPS = "" + frames;
                 timer += 1000;
                 frames = 0;
                 //updates = 0;
@@ -93,7 +94,7 @@ public class GameCanvas extends Canvas implements Runnable{
         this.handler.render(g);
         ///////////////////////////
         g.setColor(Color.BLACK);
-        g.drawString(callFPS(), 20, 20);
+        g.drawString(outputFPS, 20, 20);
         g.dispose();
         bs.show();
     }
