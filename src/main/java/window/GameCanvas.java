@@ -8,10 +8,11 @@ import object.Protagonist;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-public class GameCanvas extends Canvas {
+public class GameCanvas extends Canvas implements Runnable{
     public Handler handler;
     public boolean isRunning = false;
     public Panel panel;
+    private Thread thread;
 
     // For callFPS
     long lastTime;
@@ -26,6 +27,54 @@ public class GameCanvas extends Canvas {
 
     }
 
+    public void start(){
+        isRunning = true;
+        thread = new Thread(this);
+        thread.start();
+    }
+
+    public void stop() {
+        isRunning = false;
+        try{
+            thread.join();  //rejoins thread to main program
+        }catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void run() {
+        requestFocus();
+        long lastTime = System.nanoTime();
+        double amountOfTicks = 60.0;
+        double ns = 1000000000 / amountOfTicks;
+        double delta = 0;
+        long timer = System.currentTimeMillis();
+        int frames = 0;
+        while(isRunning){
+            long now = System.nanoTime();
+            delta += (now - lastTime) / ns;
+            lastTime = now;
+            while(delta >= 1) {
+                tick();
+                //updates++;
+                delta--;
+            }
+            this.render();
+            frames++;
+
+            if(System.currentTimeMillis()-timer>1000){
+                timer += 1000;
+                frames = 0;
+                //updates = 0;
+            }
+        }
+        stop();
+    }
+
+    //updates everything in the game. updated 60 times per second
+    public void tick(){
+        this.handler.tick();
+    }
     public void render(){
         BufferStrategy bs = this.getBufferStrategy();
         if(bs == null){
