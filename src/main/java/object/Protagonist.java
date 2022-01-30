@@ -1,5 +1,6 @@
 package object;
 
+import core.SpriteSheet;
 import object.GameObject;
 import object.Handler;
 import object.ID;
@@ -7,20 +8,27 @@ import object.ID;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 
 public class Protagonist extends GameObject {
 
     Handler handler;
 
-    public Protagonist(int x, int y, ID id, Handler handler) {
-        super(x, y, id);
+    private BufferedImage protagonistImage;
+
+    public Protagonist(int x, int y, ID id, Handler handler, SpriteSheet ss) {
+        super(x, y, id, ss);
         this.handler = handler;
+
+        protagonistImage = ss.grabImage(1,3,64,96);
     }
 
     @Override
     public void tick() {
         x += velX;
         y += velY;
+
+        collision();
 
         //Movement. Implemented in handler instead of here for efficiency -
         //will only be used once so no need to copy it multiple times
@@ -38,15 +46,31 @@ public class Protagonist extends GameObject {
 
     }
 
+    //check collision with block
+    private void collision(){
+        try{
+            for(int i =0; i < handler.object.size(); i++){
+                GameObject tempObject = handler.object.get(i);
+
+                if (tempObject.getId() == ID.Block){
+                    if (getBounds().intersects(tempObject.getBounds())){
+                        x += velX * -1;
+                        y += velY * -1;
+                    }
+                }
+            }}
+        catch (IndexOutOfBoundsException e) {
+        }
+    }
+
     @Override
     public void render(Graphics g) {
-        g.setColor(new Color(240, 198, 76));
-        g.fillRect(x,y,32,48);
+    g.drawImage(protagonistImage, x, y, null);
     }
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x,y,32,48); //useful for collision for future
+        return new Rectangle(x,y,64,96); //useful for collision for future
     }
 
 }
