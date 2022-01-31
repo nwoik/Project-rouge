@@ -5,18 +5,21 @@ import object.GameObject;
 //Class that pans around the level, following the player.
 public class Camera {
     private float x,y;
+    private int HEIGHT, WIDTH;
 
-    public Camera(float x, float y) {
+    public Camera(float x, float y, int HEIGHT, int WIDTH) {
         this.x = x;
         this.y = y;
+        this.HEIGHT = HEIGHT;
+        this.WIDTH = WIDTH;
     }
 
     public void tick(GameObject object){
         //could do below line but our version smoother
         //x += (object.getX()) - 1000/2;
 
-        x += ((object.getX() - x) - 1500/2)*0.05f;
-        y += ((object.getY() - y) - 800/2)*0.05f;
+        x += ((object.getX() - x) - WIDTH/2)*0.05f;
+        y += ((object.getY() - y) - HEIGHT/2)*0.05f;
     }
 
     public float getX(){

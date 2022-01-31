@@ -35,7 +35,7 @@ public class GameCanvas extends Canvas implements Runnable{
     public GameCanvas(Panel panel) {
         this.panel = panel;
         this.handler = new Handler();
-        camera = new Camera(0,0);
+        camera = new Camera(0,0, HEIGHT, WIDTH);
 
         addKeyListener(new KeyInput(handler));
 
