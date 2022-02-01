@@ -17,7 +17,6 @@ public class Game{
 
         //start loop of game
         gameCanvas.start();
-
     }
 
     public static void main(String[] args){
