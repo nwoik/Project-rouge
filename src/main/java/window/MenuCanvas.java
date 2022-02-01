@@ -1,13 +1,16 @@
 package window;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import core.BufferedImageLoader;
 
-public class MenuCanvas extends Canvas {
+public class MenuCanvas extends JPanel {
     public Panel panel;
+    private BufferedImageLoader bufferLoader;
     Game game;
     Graphics2D graphics2D;
     GameWindow gameWindow;
@@ -25,6 +28,7 @@ public class MenuCanvas extends Canvas {
     final int screenHeight = tileSize * maxScreenRow;
 
     public MenuCanvas(Panel panel) {
+        this.bufferLoader = new BufferedImageLoader();
         this.panel = panel;
 
         try {
@@ -36,10 +40,21 @@ public class MenuCanvas extends Canvas {
         }
     }
 
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        this.graphics2D = (Graphics2D)g;
+        drawTitleScreen();
+    }
+
+
     public void drawTitleScreen() {
         //Title Name
         graphics2D.setFont(gameFont.deriveFont(64F));
-        graphics2D.drawImage(game.img, 0,0, screenWidth, screenHeight, null);
+        for (int xx=0; xx<128*70; xx+=128){
+            for(int yy = 0; yy<128*70; yy+=128){
+                graphics2D.drawImage(this.bufferLoader.loadImage("/MenuBackground/Wood Texture Bottom side.png"), xx,yy, 128, 128, null);
+            }
+        }
         graphics2D.drawString("Once Upon a Dungeon", getXForCenteredText("Once Upon a Dungeon"), tileSize+0.5F);
         //Selectable
         graphics2D.drawString("New Game", getXForCenteredText("New Game"), tileSize*3);
@@ -58,5 +73,4 @@ public class MenuCanvas extends Canvas {
         int length = (int)graphics2D.getFontMetrics().getStringBounds(text, graphics2D).getWidth();
         return screenWidth/2 - length/2;
     }
-    public  void draw(Graphics2D g2) { }
 }

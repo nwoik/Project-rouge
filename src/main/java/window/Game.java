@@ -4,6 +4,7 @@ import java.awt.*;
 
 public class Game{
     private GameCanvas gameCanvas;
+    private MenuCanvas menuCanvas;
     private GameWindow gameWindow;
     private final Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
     public int HEIGHT = dimension.height;
@@ -11,10 +12,11 @@ public class Game{
 
     public Game(){
         this.gameCanvas = new GameCanvas(Panel.Game);
-        this.gameWindow = new GameWindow(WIDTH,HEIGHT,"Once Upon a Dungeon", this.gameCanvas);
+        this.menuCanvas = new MenuCanvas(Panel.Menu);
+        this.gameWindow = new GameWindow(WIDTH,HEIGHT,"Once Upon a Dungeon", this.menuCanvas);
 
         //start loop of game
-        gameCanvas.start();
+        //gameCanvas.start();
 
     }
 
