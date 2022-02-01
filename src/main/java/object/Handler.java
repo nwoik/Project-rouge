@@ -27,6 +27,11 @@ public class Handler {
         }
     }
 
+    //empty list (for loading new level)
+    public void emptyList() {
+        object = new LinkedList<GameObject>();
+    }
+
     //add to list
     public void addObject(GameObject tempObject) {
         object.add(tempObject);
@@ -36,6 +41,8 @@ public class Handler {
     public void removeObject(GameObject tempObject) {
         object.remove(tempObject);
     }
+
+    //getters and setters
     public boolean isRight(){
         return right;
     }

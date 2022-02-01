@@ -14,6 +14,7 @@ public class GameWindow extends JFrame{
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setUndecorated(true);
         setVisible(true);
     }
 }
