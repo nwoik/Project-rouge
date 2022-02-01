@@ -1,4 +1,4 @@
-package window;
+package window.menu;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -7,17 +7,19 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import core.BufferedImageLoader;
+import window.Game;
+import window.GameWindow;
+import window.Panel;
 
-public class MenuCanvas extends JPanel {
-    public Panel panel;
+public class MenuPanel extends JPanel {
+    public window.Panel panel;
     private BufferedImageLoader bufferLoader;
     Game game;
     Graphics2D graphics2D;
     GameWindow gameWindow;
     Font gameFont;
     Font exceptionFont = new Font("Times New Roman", Font.PLAIN, 120);
-    public int commandNum = 0;
-
+    private static JButton playButton, settingsButton;
     //Screen Settings
     final int defaultTileSize = 16; // 16 bit
     final int scale = 3;
@@ -27,7 +29,7 @@ public class MenuCanvas extends JPanel {
     final int screenWidth = tileSize * maxScreenCol;
     final int screenHeight = tileSize * maxScreenRow;
 
-    public MenuCanvas(Panel panel) {
+    public MenuPanel(Panel panel) {
         this.bufferLoader = new BufferedImageLoader();
         this.panel = panel;
 
@@ -55,22 +57,7 @@ public class MenuCanvas extends JPanel {
                 graphics2D.drawImage(this.bufferLoader.loadImage("/MenuBackground/Wood Texture Bottom side.png"), xx,yy, 128, 128, null);
             }
         }
-        graphics2D.drawString("Once Upon a Dungeon", getXForCenteredText("Once Upon a Dungeon"), tileSize+0.5F);
-        //Selectable
-        graphics2D.drawString("New Game", getXForCenteredText("New Game"), tileSize*3);
-        graphics2D.drawString("Settings", getXForCenteredText("Settings"), tileSize*4+10F);
-        graphics2D.drawString("Exit", getXForCenteredText("Exit"), tileSize*5+20F);
 
-        switch (commandNum) {
-            case 0 -> graphics2D.drawString(">", getXForCenteredText("New Game")-tileSize, tileSize*3);
-            case 1 -> graphics2D.drawString(">", getXForCenteredText("Settings")-tileSize, tileSize*4+10F);
-            case 2 -> graphics2D.drawString(">", getXForCenteredText("Exit")-tileSize, tileSize*5+20F);
-        }
     }
 
-    // Centers the text
-    public int getXForCenteredText(String text) {
-        int length = (int)graphics2D.getFontMetrics().getStringBounds(text, graphics2D).getWidth();
-        return screenWidth/2 - length/2;
-    }
 }
