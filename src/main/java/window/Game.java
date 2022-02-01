@@ -13,10 +13,10 @@ public class Game{
     public Game(){
         this.gameCanvas = new GameCanvas(Panel.Game);
         this.menuCanvas = new MenuCanvas(Panel.Menu);
-        this.gameWindow = new GameWindow(WIDTH,HEIGHT,"Once Upon a Dungeon", this.menuCanvas);
+        this.gameWindow = new GameWindow(WIDTH,HEIGHT,"Once Upon a Dungeon", this.gameCanvas);
 
         //start loop of game
-        //gameCanvas.start();
+        gameCanvas.start();
 
     }
 

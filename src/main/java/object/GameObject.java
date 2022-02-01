@@ -9,13 +9,19 @@ import java.awt.Rectangle;
 public abstract class GameObject {
     protected int x, y;
     protected float velX = 0, velY = 0;
+    protected int movementSpeed;
     protected ID id;
     protected SpriteSheet spriteSheet;
+    public boolean up, down, left, right;
 
     public GameObject(int x, int y, ID id, SpriteSheet ss){
         this.x = x;
         this.y = y;
         this.id = id;
+        this.left = false;
+        this.right = false;
+        this.up = false;
+        this.down = false;
         this.spriteSheet = ss;
     }
 
@@ -63,4 +69,12 @@ public abstract class GameObject {
     public void setSpriteSheet(SpriteSheet spriteSheet) {
         this.spriteSheet = spriteSheet;
     }
+
+    public abstract void addX(int value);
+
+    public abstract void subX(int value);
+
+    public abstract void addY(int value);
+
+    public abstract void subY(int value);
 }

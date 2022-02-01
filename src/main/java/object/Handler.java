@@ -6,8 +6,7 @@ import java.awt.Graphics;
 
 public class Handler {
     public LinkedList<GameObject> object = new LinkedList<GameObject>();
-
-    private boolean up=false,down=false,left=false,right=false;
+    public Player player;
 
     //ticks every object in our list.
     public void tick() {
@@ -16,6 +15,7 @@ public class Handler {
 
             tempObject.tick();
         }
+        player.tick();
     }
 
     //renders every object in list
@@ -25,6 +25,7 @@ public class Handler {
 
             tempObject.render(g);
         }
+        player.render(g);
     }
 
     //empty list (for loading new level)
@@ -40,39 +41,6 @@ public class Handler {
     //remove from list
     public void removeObject(GameObject tempObject) {
         object.remove(tempObject);
-    }
-
-    //getters and setters
-    public boolean isRight(){
-        return right;
-    }
-
-    public void setRight(boolean b) {
-        this.right = b;
-    }
-
-    public boolean isLeft(){
-        return left;
-    }
-
-    public void setLeft(boolean b) {
-        this.left = b;
-    }
-
-    public boolean isUp(){
-        return up;
-    }
-
-    public void setUp(boolean b) {
-        this.up = b;
-    }
-
-    public boolean isDown(){
-        return down;
-    }
-
-    public void setDown(boolean b) {
-        this.down = b;
     }
 }
 

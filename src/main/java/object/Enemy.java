@@ -77,6 +77,26 @@ public class Enemy extends GameObject{
         return new Rectangle(x, y, 64, 96);
     }
 
+    @Override
+    public void addX(int value) {
+
+    }
+
+    @Override
+    public void subX(int value) {
+
+    }
+
+    @Override
+    public void addY(int value) {
+
+    }
+
+    @Override
+    public void subY(int value) {
+
+    }
+
     public Rectangle getBoundsBig() {
         return new Rectangle(x - 16, y- 16, 32, 32);
     }

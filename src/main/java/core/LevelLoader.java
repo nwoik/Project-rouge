@@ -43,7 +43,7 @@ public class LevelLoader {
                     handler.addObject(new Enemy(xx * 64, yy * 64, ID.Enemy, handler, spriteSheet));
                 }
                 else if (colour.getRed() == 0 && colour.getGreen() == 0 && colour.getBlue() == 255) {
-                    handler.addObject(new Protagonist(xx * 64, yy * 64, ID.Player, handler, spriteSheet));
+                    handler.player = new Player(xx * 64, yy * 64, ID.Player, handler, spriteSheet);
                 }
 
             }

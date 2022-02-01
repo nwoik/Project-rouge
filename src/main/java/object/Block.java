@@ -30,4 +30,24 @@ public class Block extends GameObject{
     public Rectangle getBounds() {
         return new Rectangle(x,y,64,64);
     }
+
+    @Override
+    public void addX(int value) {
+
+    }
+
+    @Override
+    public void subX(int value) {
+
+    }
+
+    @Override
+    public void addY(int value) {
+
+    }
+
+    @Override
+    public void subY(int value) {
+
+    }
 }
