@@ -49,22 +49,24 @@ public class Player extends GameObject {
                 GameObject tempObject = handler.object.get(i);
 
                 if (tempObject.getId() == ID.Block){
-                    if (((this.y >= tempObject.getY() - 96) && (this.y <= tempObject.getY() + 64)) && (this.x <= tempObject.getX() + 64)) {
-                        this.left = false;
-
+                    if (getBounds().intersects(tempObject.getBounds())){
+                        if (this.x <= tempObject.getX() + 64 && this.left) {
+                            this.left = false;
+                            this.x = tempObject.getX() + 64;
+                        }
+                        if (this.x + 64 >= tempObject.getX() && this.right) {
+                            this.right = false;
+                            this.x = tempObject.getX() - 64;
+                        }
+                        if (this.y <= tempObject.getY() + 64 && this.up) {
+                            this.up = false;
+                            this.y = tempObject.getY() + 64;
+                        }
+                        if (this.y + 64 >= tempObject.getY() && this.down) {
+                            this.down = false;
+                            this.y = tempObject.getY() - 64;
+                        }
                     }
-//                    if (this.x + this.width >= WIDTH) {
-//                        this.right = false;
-//                        this.x = WIDTH - this.width;
-//                    }
-//                    if (this.y <= 0) {
-//                        this.up = false;
-//                        this.y = 0;
-//                    }
-//                    if (this.y + this.height >= HEIGHT) {
-//                        this.down = false;
-//                        this.y = HEIGHT - this.height;
-//                    }
                 }
             }}
         catch (IndexOutOfBoundsException e) {
