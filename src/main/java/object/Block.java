@@ -30,4 +30,5 @@ public class Block extends GameObject{
     public Rectangle getBounds() {
         return new Rectangle(x,y,64,64);
     }
+
 }

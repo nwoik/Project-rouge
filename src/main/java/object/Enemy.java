@@ -27,27 +27,25 @@ public class Enemy extends GameObject{
 
     //updates enemy every tick. Mostly for checking movement and collision with blocks
     public void tick() {
-        x += velX;
-        y += velY;
-
-        choose = r.nextInt(10);
-
-        for(int i=0; i < handler.object.size(); i ++){
-            GameObject tempObject = handler.object.get(i);
-
-            //if collide with wall, go the opposite way
-            if(tempObject.getId() == ID.Block){
-                if(getBoundsBig().intersects(tempObject.getBounds())){
-                    x += (velX*2) * -1;
-                    y += (velY*2) * -1;
-                    velX *= 0;
-                    velY *= 0;
-                }
-                else if(choose == 0){
-                    velX = (r.nextInt(4 - -4)+ - 4);
-                    velY = (r.nextInt(4 - -4)+ - 4);
-                }
-            }
+//        x += velX;
+//        y += velY;
+//
+//        choose = r.nextInt(10);
+//
+//        for(GameObject gameObject : handler.objects){
+//            //if collide with wall, go the opposite way
+//            if(gameObject.getId() == ID.Block){
+//                if(getBoundsBig().intersects(gameObject.getBounds())){
+//                    x += (velX*2) * -1;
+//                    y += (velY*2) * -1;
+//                    velX *= 0;
+//                    velY *= 0;
+//                }
+//                else if(choose == 0){
+//                    velX = (r.nextInt(4 - -4)+ - 4);
+//                    velY = (r.nextInt(4 - -4)+ - 4);
+//                }
+//            }
             //Collision with bullet (for later). Decrement hp if collides
             /*
             if(tempObject.getId() == ID.Bullet){
@@ -57,21 +55,22 @@ public class Enemy extends GameObject{
                 }
             }
              */
-        }
+//        }
 
         //remove on death
-        if(hp <= 0) handler.removeObject(this);
+//        if(hp <= 0) handler.removeObject(this);
 
         //randomly change movement. Terrible algorithm needs much work
-        if(choose == 0){
-            velX = (r.nextInt(4 - -4)+ -4); //between negative and positive 4
-            velY = (r.nextInt(4 - -4)+ -4);
-        }
+//        if(choose == 0){
+//            velX = (r.nextInt(4 - -4)+ -4); //between negative and positive 4
+//            velY = (r.nextInt(4 - -4)+ -4);
+//        }
     }
 
     public void render(Graphics g) {
         g.drawImage(enemyImage, x, y, null);
     }
+
 
     public Rectangle getBounds() {
         return new Rectangle(x, y, 64, 96);
