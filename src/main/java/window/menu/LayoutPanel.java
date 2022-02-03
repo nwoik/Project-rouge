@@ -1,6 +1,7 @@
 package window.menu;
 
 import core.BufferedImageLoader;
+import window.Game;
 import window.GameCanvas;
 
 import java.awt.*;
@@ -48,8 +49,7 @@ class SwapCardAction extends AbstractAction {
 class Menu extends JPanel {
 
     public Menu(final LayoutPanel layoutPanel) {
-//        setBackground(new Color(255, 200, 200));
-//        JPanel btnPanel = new JPanel();
+        setBackground(new Color(255, 200, 200));
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JLabel title = new JLabel("Once Upon a Dungeon", SwingConstants.CENTER);
@@ -58,6 +58,13 @@ class Menu extends JPanel {
         JButton settingsButton = new JButton(new SwapCardAction("Settings", Settings.class.toString(), layoutPanel));
         JButton exitButton = new JButton("Exit");
 
+        playButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GameCanvas gameCanvas = new GameCanvas();
+                gameCanvas.start();
+            }
+        });
         exitButton.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) {System.exit(0);}});
 
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
