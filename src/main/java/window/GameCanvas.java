@@ -55,6 +55,7 @@ public class GameCanvas extends Canvas implements Runnable{
     }
     //stop game
     public void start(){
+        System.out.println("aloha");
         isRunning = true;
         thread = new Thread(this);
         thread.start();

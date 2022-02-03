@@ -13,13 +13,8 @@ public class Game{
     public int WIDTH = dimension.width;
 
     public Game(){
-        this.gameCanvas = new GameCanvas(Panel.Game);
         this.menuPanel = new MenuPanel(Panel.Menu);
         this.gameWindow = new GameWindow(WIDTH,HEIGHT,"Once Upon a Dungeon", this.menuPanel);
-
-        //start loop of game
-        //gameCanvas.start();
-
     }
 
     public static void main(String[] args){
