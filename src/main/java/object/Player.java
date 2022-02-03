@@ -54,39 +54,25 @@ public class Player extends GameObject {
         try{
             for(GameObject gameObject : handler.objects){
                 if (gameObject.getId() == ID.Block){
-                    Rectangle gameRect = gameObject.getBounds();
-                    Rectangle playerRect = this.getBounds();
-                    if (gameRect.getBounds().intersects(playerRect)) {
-                        Rectangle intersect = gameRect.intersection(playerRect);
-                        if (playerRect.x == intersect.x &&
-                                (playerRect.y == intersect.y || playerRect.y < intersect.y + intersect.height)) { // left
-                            System.out.println(playerRect.x + " " + intersect.x + "|" );
-                            this.velX *= -1;
-                            this.left = false;
+                    if (this.getBoundsHorizontal().intersects(gameObject.getBounds())) {
+                        if (velX > 0) {
+                            velX = 0;
+                            this.x = gameObject.x - 64;
                         }
-
-                        else if (playerRect.x < intersect.x + intersect.width &&
-                                (playerRect.y == intersect.y || playerRect.y < intersect.y + intersect.height)) { // right
-                            System.out.println(playerRect.x + " " + intersect.x + "|" );
-                            this.velX *= -1;
-                            this.right = false;
+                        else if (velX < 0) {
+                            velX = 0;
+                            this.x = gameObject.x + 64;
                         }
-
-                        if (playerRect.y == intersect.y &&
-                                (playerRect.x < intersect.x + intersect.width || playerRect.x == intersect.x)) { // up
-                            System.out.println(playerRect.y + " " + intersect.y + "|" );
-                            this.velY *= -1;
-                            this.up = false;
+                    }
+                    if (this.getBoundsVertical().intersects(gameObject.getBounds())) {
+                        if (velY > 0) {
+                            velY = 0;
+                            this.y = gameObject.y - 96;
                         }
-
-                        else if (playerRect.y < intersect.y + intersect.height) {
-                            System.out.println(playerRect.y + " " + intersect.y + "|" );
-                            this.velY *= -1;
-                            this.down = false;
+                        else if (velY < 0) {
+                            velY = 0;
+                            this.y = gameObject.y + 96;
                         }
-
-                        this.x += this.velX;
-                        this.y += this.velY;
                     }
                 }
             }
@@ -101,8 +87,26 @@ public class Player extends GameObject {
     }
 
     @Override
-    public Rectangle getBounds() {
-        return new Rectangle(x,y,this.width,this.height); //useful for collision for future
+    protected Rectangle getBounds() {
+        return null;
+    }
+
+    public Rectangle getBoundsVertical() {
+        float bx = this.x;
+        float by = this.y + this.velY;
+        float bw = this.width;
+        float bh = this.height + this.velY;
+
+        return new Rectangle((int) bx, (int) by, (int) bw, (int) bh); //useful for collision for future
+    }
+
+    public Rectangle getBoundsHorizontal() {
+        float bx = this.x + this.velX;
+        float by = this.y;
+        float bw = this.width + this.velY;
+        float bh = this.height;
+
+        return new Rectangle((int) bx, (int) by, (int) bw, (int) bh); //useful for collision for future
     }
 
 }
