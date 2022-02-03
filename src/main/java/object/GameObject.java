@@ -70,11 +70,4 @@ public abstract class GameObject {
         this.spriteSheet = spriteSheet;
     }
 
-    public abstract void addX(int value);
-
-    public abstract void subX(int value);
-
-    public abstract void addY(int value);
-
-    public abstract void subY(int value);
 }

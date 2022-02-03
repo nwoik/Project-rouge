@@ -32,12 +32,10 @@ public class Enemy extends GameObject{
 
         choose = r.nextInt(10);
 
-        for(int i=0; i < handler.object.size(); i ++){
-            GameObject tempObject = handler.object.get(i);
-
+        for(GameObject gameObject : handler.objects){
             //if collide with wall, go the opposite way
-            if(tempObject.getId() == ID.Block){
-                if(getBoundsBig().intersects(tempObject.getBounds())){
+            if(gameObject.getId() == ID.Block){
+                if(getBoundsBig().intersects(gameObject.getBounds())){
                     x += (velX*2) * -1;
                     y += (velY*2) * -1;
                     velX *= 0;
@@ -75,26 +73,6 @@ public class Enemy extends GameObject{
 
     public Rectangle getBounds() {
         return new Rectangle(x, y, 64, 96);
-    }
-
-    @Override
-    public void addX(int value) {
-
-    }
-
-    @Override
-    public void subX(int value) {
-
-    }
-
-    @Override
-    public void addY(int value) {
-
-    }
-
-    @Override
-    public void subY(int value) {
-
     }
 
     public Rectangle getBoundsBig() {

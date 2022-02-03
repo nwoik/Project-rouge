@@ -146,7 +146,4 @@ public class GameCanvas extends Canvas implements Runnable{
         g.dispose();
         bs.show();
     }
-
-
-
 }
