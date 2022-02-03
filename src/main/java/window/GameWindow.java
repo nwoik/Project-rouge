@@ -1,12 +1,14 @@
 package window;
 
+import window.menu.LayoutPanel;
 import window.menu.MenuPanel;
 
-import java.awt.Dimension;
+import java.awt.*;
 
 import javax.swing.JFrame;
 
 public class GameWindow extends JFrame{
+    private LayoutPanel layoutPanel = new LayoutPanel();
     public GameWindow(int width, int height, String title){
         setTitle(title);
         setPreferredSize(new Dimension(width, height));
@@ -15,6 +17,9 @@ public class GameWindow extends JFrame{
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        getContentPane().add(layoutPanel);
         setUndecorated(true);
+        pack();
+        setVisible(true);
     }
 }

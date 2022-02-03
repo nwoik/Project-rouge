@@ -10,6 +10,7 @@ import core.BufferedImageLoader;
 import window.GameCanvas;
 
 public class MenuPanel extends JPanel implements ActionListener {
+    public static final String NAME = "menu";
     private final BufferedImageLoader bufferLoader;
     private Graphics2D graphics2D;
     private final GameCanvas gameCanvas;
@@ -81,8 +82,6 @@ public class MenuPanel extends JPanel implements ActionListener {
         }
 
         if (event.getSource()==this.settingsButton) {
-            //start loop of game
-            System.out.println("aloha");
         }
 
         if (event.getSource()==this.exitButton) {
@@ -90,6 +89,4 @@ public class MenuPanel extends JPanel implements ActionListener {
             System.exit(0);
         }
     }
-
-
 }

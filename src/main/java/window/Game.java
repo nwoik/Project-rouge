@@ -15,12 +15,7 @@ public class Game{
     public int WIDTH = dimension.width;
 
     public Game(){
-        this.menuPanel = new MenuPanel();
-        this.setingsPanel = new SettingsPanel();
         this.gameWindow = new GameWindow(WIDTH,HEIGHT,"Once Upon a Dungeon");
-        this.gameWindow.add(this.setingsPanel);
-        this.gameWindow.add(this.menuPanel);
-        this.gameWindow.setVisible(true);
     }
 
     public static void main(String[] args){

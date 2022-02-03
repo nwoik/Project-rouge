@@ -10,6 +10,7 @@ import core.BufferedImageLoader;
 
 
 public class SettingsPanel extends JPanel implements ActionListener {
+    public static final String NAME = "settings";
     private final BufferedImageLoader bufferLoader;
     private Graphics2D graphics2D;
     private Font gameFont;
