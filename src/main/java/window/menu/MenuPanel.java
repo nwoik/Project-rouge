@@ -1,41 +1,24 @@
 package window.menu;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import core.BufferedImageLoader;
-import window.Game;
 import window.GameCanvas;
-import window.GameWindow;
-import window.Panel;
 
 public class MenuPanel extends JPanel implements ActionListener {
-    public window.Panel panel;
     private final BufferedImageLoader bufferLoader;
-    Game game;
-    Graphics2D graphics2D;
-    GameWindow gameWindow;
-    GameCanvas gameCanvas;
-    Font gameFont;
-    Font exceptionFont = new Font("Times New Roman", Font.PLAIN, 120);
+    private Graphics2D graphics2D;
+    private final GameCanvas gameCanvas;
+    private Font gameFont;
+    private Font exceptionFont = new Font("Times New Roman", Font.PLAIN, 120);
     private final JLabel title;
     private final JButton playButton, settingsButton, exitButton;
 
-    //Screen Settings
-    final int defaultTileSize = 16; // 16 bit
-    final int scale = 3;
-    final int tileSize = defaultTileSize * scale; //Larger image size with 16 bit look
-    final int maxScreenCol = 16;
-    final int maxScreenRow = 12;
-    final int screenWidth = tileSize * maxScreenCol;
-    final int screenHeight = tileSize * maxScreenRow;
-
-    public MenuPanel(Panel panel) {
+    public MenuPanel() {
         try {
             InputStream is = getClass().getResourceAsStream("/Font/GameFont-Regular.ttf");
             assert is != null;
@@ -45,8 +28,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         }
 
         this.bufferLoader = new BufferedImageLoader();
-        this.panel = panel;
-        this.gameCanvas = new GameCanvas(Panel.Game);
+        this.gameCanvas = new GameCanvas();
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -78,10 +60,10 @@ public class MenuPanel extends JPanel implements ActionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.graphics2D = (Graphics2D)g;
-        drawTitleScreen();
+        drawScreen();
     }
 
-    public void drawTitleScreen() {
+    public void drawScreen() {
         //Title Name
         graphics2D.setFont(gameFont.deriveFont(64F));
         for (int xx=0; xx<128*70; xx+=128){
@@ -100,7 +82,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 
         if (event.getSource()==this.settingsButton) {
             //start loop of game
-            this.gameCanvas.start();
+            System.out.println("aloha");
         }
 
         if (event.getSource()==this.exitButton) {
