@@ -1,7 +1,6 @@
 package window;
 
 import window.menu.LayoutPanel;
-import window.menu.MenuPanel;
 
 import java.awt.*;
 
