@@ -15,6 +15,11 @@ public class Player extends GameObject {
     Handler handler;
     private BufferedImage playerImage;
 
+    public boolean leftPressed;
+    public boolean rightPressed;
+    public boolean upPressed;
+    public boolean downPressed;
+
     public Player(int x, int y, ID id, Handler handler, SpriteSheet ss) {
         super(x, y, id, ss);
         this.handler = handler;
@@ -28,7 +33,6 @@ public class Player extends GameObject {
     public void tick() {
         if (this.right) {
             addX(this.movementSpeed);
-            System.out.println(x +" "+ y);
         }
         if (this.left) {
             subX(this.movementSpeed);
@@ -38,6 +42,19 @@ public class Player extends GameObject {
         }
         if (this.up) {
             subY(this.movementSpeed);
+        }
+
+        if (leftPressed){
+            this.left = true;
+        }
+        if (rightPressed){
+            this.right = true;
+        }
+        if (upPressed){
+            this.up = true;
+        }
+        if (downPressed){
+            this.down = true;
         }
         collision();
     }
@@ -50,22 +67,39 @@ public class Player extends GameObject {
 
                 if (tempObject.getId() == ID.Block){
                     if (getBounds().intersects(tempObject.getBounds())){
-                        if (this.x <= tempObject.getX() + 64 && this.left) {
-                            this.left = false;
-                            this.x = tempObject.getX() + 64;
-                        }
-                        if (this.x + 64 >= tempObject.getX() && this.right) {
-                            this.right = false;
-                            this.x = tempObject.getX() - 64;
-                        }
-                        if (this.y <= tempObject.getY() + 64 && this.up) {
-                            this.up = false;
-                            this.y = tempObject.getY() + 64;
-                        }
-                        if (this.y + 64 >= tempObject.getY() && this.down) {
-                            this.down = false;
-                            this.y = tempObject.getY() - 64;
-                        }
+                            if ( ((this.x + 6 >= tempObject.getX() && this.x + 6 <= tempObject.getX() + 64) ||(this.x + 58 >= tempObject.getX() && this.x + 58 <= tempObject.getX() + 64))&&
+                                    (this.y + 6 >= tempObject.getY() + 64 && this.y <= tempObject.getY() + 64)){
+                                this.up = false;
+                                this.y += movementSpeed;
+                            }
+                            else if (((this.x + 6 >= tempObject.getX() && this.x + 6 <= tempObject.getX() + 64) ||(this.x + 58 >= tempObject.getX() && this.x + 58 <= tempObject.getX() + 64))&&
+                                    (this.y + 90 <= tempObject.getY() && this.y + 96 >= tempObject.getY())){
+                                this.down = false;
+                                this.y -= movementSpeed;
+                            }
+                            else if (((this.y + 6 >= tempObject.getY() && this.y + 6 <= tempObject.getY() + 64) || (this.y + 90 >= tempObject.getY() && this.y + 90 <= tempObject.getY() + 64))&&
+                                    (this.x + 6 >= tempObject.getX() + 64 && this.x <= tempObject.getX() + 64)){
+                                this.left = false;
+                                this.x += movementSpeed;
+                            }
+                            else if (((this.y + 6 >= tempObject.getY() && this.y + 6 <= tempObject.getY() + 64) || (this.y + 90 >= tempObject.getY() && this.y + 90 <= tempObject.getY() + 64))&&
+                                        (this.x + 58 <= tempObject.getX() && this.x + 64 >= tempObject.getX())){
+                                    this.right = false;
+                                    this.x -= movementSpeed;
+                                }
+
+                            else{
+                                if (this.x + 6 <= tempObject.getX() + 64 && this.x + 11 >= tempObject.getX() + 64){
+                                    this.x += 2*movementSpeed;
+                                    System.out.println("YUPIKAYO");
+                                }
+                                else if (this.x + 58 >= tempObject.getX() && this.x + 52 <= tempObject.getX()){
+                                    this.x -= 2*movementSpeed;
+                                    System.out.println("LESSGO");
+                                }
+                            }
+
+
                     }
                 }
             }}
@@ -76,6 +110,8 @@ public class Player extends GameObject {
     @Override
     public void render(Graphics g) {
         g.drawImage(playerImage, x, y, null);
+        g.setColor(Color.red);
+        g.drawRect(x,y,64,96);
     }
 
     @Override

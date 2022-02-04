@@ -17,28 +17,50 @@ public class KeyInput implements KeyListener{
 
     @Override
     public void keyTyped(KeyEvent e) {
-        System.out.println(e.getKeyChar());
 
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_A -> this.handler.player.left = true;
-            case KeyEvent.VK_D -> this.handler.player.right = true;
-            case KeyEvent.VK_S -> this.handler.player.down = true;
-            case KeyEvent.VK_W -> this.handler.player.up = true;
+            case KeyEvent.VK_A:
+                this.handler.player.left = true;
+                this.handler.player.leftPressed = true;
+                break;
+            case KeyEvent.VK_D:
+                this.handler.player.right = true;
+                this.handler.player.rightPressed = true;
+                break;
+            case KeyEvent.VK_S:
+                this.handler.player.down = true;
+                this.handler.player.downPressed = true;
+                break;
+            case KeyEvent.VK_W:
+                this.handler.player.up = true;
+                this.handler.player.upPressed = true;
+                break;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        System.out.println(e.getKeyChar() + " released");
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_A -> this.handler.player.left = false;
-            case KeyEvent.VK_D -> this.handler.player.right = false;
-            case KeyEvent.VK_S -> this.handler.player.down = false;
-            case KeyEvent.VK_W -> this.handler.player.up = false;
+            case KeyEvent.VK_A:
+                this.handler.player.left = false;
+                this.handler.player.leftPressed = false;
+                break;
+            case KeyEvent.VK_D:
+                this.handler.player.right = false;
+                this.handler.player.rightPressed = false;
+                break;
+            case KeyEvent.VK_S:
+                this.handler.player.down = false;
+                this.handler.player.downPressed = false;
+                break;
+            case KeyEvent.VK_W:
+                this.handler.player.up = false;
+                this.handler.player.upPressed = false;
+                break;
         }
     }
 }
