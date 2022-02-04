@@ -10,13 +10,15 @@ import java.awt.image.BufferedImage;
 public class Block extends GameObject{
     private BufferedImage block_image;
     private BlockID blockID;
+    private int size;
 
     public Block(int x, int y, ID id, SpriteSheet ss, BlockID bID) {
         super(x, y, id, ss);
         this.blockID = bID;
+        this.size = 64;
 
         //switch statement - depending on block type grab different image from sprite sheet
-        block_image = ss.grabImage(1, 1, 64, 64);
+        block_image = ss.grabImage(1, 1, this.size, this.size);
     }
 
     public void tick() {
@@ -49,5 +51,13 @@ public class Block extends GameObject{
     @Override
     public void subY(int value) {
 
+    }
+
+    public int getSize(){
+        return this.size;
+    }
+
+    public void setSize(int size){
+        this.size = size;
     }
 }
