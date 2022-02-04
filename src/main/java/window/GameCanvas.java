@@ -31,8 +31,8 @@ public class GameCanvas extends Canvas implements Runnable{
     String outputFPS = "";
 
     //initialise the game canvas
-    public GameCanvas(Panel panel) {
-        this.panel = panel;
+    public GameCanvas() {
+
         this.handler = new Handler();
         camera = new Camera(0,0, HEIGHT, WIDTH);
 

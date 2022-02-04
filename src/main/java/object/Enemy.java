@@ -98,6 +98,7 @@ public class Enemy extends GameObject{
     }
 
     public Rectangle getBoundsBig() {
+
         return new Rectangle(x - 16, y- 16, 32, 32);
     }
 
