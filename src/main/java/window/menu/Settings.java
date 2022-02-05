@@ -4,10 +4,16 @@ import core.BufferedImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class Settings extends JPanel {
 
     public Settings(LayoutPanel layoutPanel) {
+        KeyListener listener = new KeyBindings();
+        addKeyListener(listener);
+        setFocusable(true);
+
         JButton menuBtn = new JButton(new SwapCardAction("Menu", Menu.class.toString(), layoutPanel));
         setBackground(new Color(150, 200, 255));
         JPanel btnPanel = new JPanel();
