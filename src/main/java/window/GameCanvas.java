@@ -17,7 +17,6 @@ public class GameCanvas extends Canvas implements Runnable{
     private Handler handler;
     private Camera camera;
     public boolean isRunning = false;
-    private Panel panel;
     private Thread thread;
     private SpriteSheet ss;
     private final Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -32,8 +31,7 @@ public class GameCanvas extends Canvas implements Runnable{
     String outputFPS = "";
 
     //initialise the game canvas
-    public GameCanvas(Panel panel) {
-        this.panel = panel;
+    public GameCanvas() {
         this.handler = new Handler();
         camera = new Camera(0,0, HEIGHT, WIDTH);
 
@@ -55,6 +53,7 @@ public class GameCanvas extends Canvas implements Runnable{
     }
     //stop game
     public void start(){
+        System.out.println("aloha");
         isRunning = true;
         thread = new Thread(this);
         thread.start();
