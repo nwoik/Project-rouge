@@ -1,20 +1,24 @@
 package window;
 
-import java.awt.Dimension;
+import window.menu.LayoutPanel;
+
+import java.awt.*;
 
 import javax.swing.JFrame;
 
 public class GameWindow extends JFrame{
-    public GameWindow(int width, int height, String title, GameCanvas gameCanvas){
+    private LayoutPanel layoutPanel = new LayoutPanel(this);
+    public GameWindow(int width, int height, String title){
         setTitle(title);
         setPreferredSize(new Dimension(width, height));
         setMinimumSize(new Dimension(width, height));
         setMaximumSize(new Dimension(width, height));
-        add(gameCanvas);
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        getContentPane().add(layoutPanel);
         setUndecorated(true);
+        pack();
         setVisible(true);
     }
 }

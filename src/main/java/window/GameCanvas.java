@@ -32,7 +32,6 @@ public class GameCanvas extends Canvas implements Runnable{
 
     //initialise the game canvas
     public GameCanvas() {
-
         this.handler = new Handler();
         camera = new Camera(0,0, HEIGHT, WIDTH);
 
@@ -146,7 +145,4 @@ public class GameCanvas extends Canvas implements Runnable{
         g.dispose();
         bs.show();
     }
-
-
-
 }
