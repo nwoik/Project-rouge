@@ -24,7 +24,8 @@ public class Menu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GameCanvas gameCanvas = new GameCanvas();
-                setVisible(false);
+                //setVisible(false);
+                layoutPanel.setVisible(false);
                 gameWindow.add(gameCanvas);
                 gameCanvas.start();
             }
