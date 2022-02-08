@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Menu extends JPanel {
-    public Menu(final LayoutPanel layoutPanel, GameWindow gameWindow) {
+    public Menu(final LayoutPanel layoutPanel, GameWindow gameWindow, Settings settings) {
         setBackground(new Color(255, 200, 200));
         System.out.println("DAVE THIS BETTER WORK");
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -24,8 +24,11 @@ public class Menu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GameCanvas gameCanvas = new GameCanvas();
-                //setVisible(false);
+
+                setVisible(false);
+                settings.setVisible(false);
                 layoutPanel.setVisible(false);
+
                 gameWindow.add(gameCanvas);
                 gameCanvas.start();
             }

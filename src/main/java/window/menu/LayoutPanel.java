@@ -21,7 +21,7 @@ public class LayoutPanel extends JPanel {
 
     public LayoutPanel(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
-        menu = new Menu(this, this.gameWindow);
+        menu = new Menu(this, this.gameWindow, settings);
         setLayout(cardLayout);
         add(menu, Menu.class.toString());
         add(settings, Settings.class.toString());
