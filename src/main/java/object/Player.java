@@ -20,6 +20,8 @@ public class Player extends GameObject {
     public boolean downPressed;
     private final int movementSpeed1;
 
+    private BufferedImage[] walking;
+
     public Player(int x, int y, ID id, Handler handler, SpriteSheet ss) {
         super(x, y, id, ss);
         this.handler = handler;
@@ -29,7 +31,7 @@ public class Player extends GameObject {
         this.height = 64;
         this.offset = 32;
 
-        playerImage = ss.grabImage(1,3,64,96);
+        playerImage = ss.grabImage(0,0,16,24);
     }
 
     @Override

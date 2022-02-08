@@ -6,10 +6,12 @@ import object.*;
 public class LevelLoader {
     private Handler handler;
     private SpriteSheet spriteSheet;
+    private CharacterSpawn characterSpawn;
 
-    public LevelLoader(Handler handler, SpriteSheet ss){
+    public LevelLoader(Handler handler, CharacterSpawn characterSpawn, SpriteSheet ss){
         this.spriteSheet = ss;
         this.handler = handler;
+        this.characterSpawn = characterSpawn;
     }
 
     //might be useful for loading new level
@@ -42,10 +44,7 @@ public class LevelLoader {
                 else if (colour.getRed() == 0 && colour.getGreen() == 255 && colour.getBlue() == 0) {
                     handler.addObject(new Enemy(xx * 64, yy * 64, ID.Enemy, handler, spriteSheet));
                 }
-                else if (colour.getRed() == 0 && colour.getGreen() == 0 && colour.getBlue() == 255) {
-                    handler.player = new Player(xx * 64, yy * 64, ID.Player, handler, spriteSheet);
-                }
-
+                characterSpawn.loadCharacter(xx, yy, colour);
             }
         }
     }
