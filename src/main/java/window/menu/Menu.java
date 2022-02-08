@@ -2,6 +2,7 @@ package window.menu;
 
 import core.BufferedImageLoader;
 import window.GameCanvas;
+import window.GameWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,8 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Menu extends JPanel {
-
-    public Menu(final LayoutPanel layoutPanel) {
+    public Menu(final LayoutPanel layoutPanel, GameWindow gameWindow) {
         setBackground(new Color(255, 200, 200));
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -24,6 +24,8 @@ public class Menu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GameCanvas gameCanvas = new GameCanvas();
+                setVisible(false);
+                gameWindow.add(gameCanvas);
                 gameCanvas.start();
             }
         });

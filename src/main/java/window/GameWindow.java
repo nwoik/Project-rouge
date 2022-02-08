@@ -7,7 +7,7 @@ import java.awt.*;
 import javax.swing.JFrame;
 
 public class GameWindow extends JFrame{
-    private LayoutPanel layoutPanel = new LayoutPanel();
+    private LayoutPanel layoutPanel = new LayoutPanel(this);
     public GameWindow(int width, int height, String title){
         setTitle(title);
         setPreferredSize(new Dimension(width, height));

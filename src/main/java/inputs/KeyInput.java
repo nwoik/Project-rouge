@@ -14,9 +14,7 @@ public class KeyInput extends KeyAdapter{
     //                 Don't want a new list, just to access movement methods.
     //                 Reason for putting movement there is to prevent input lag.
 
-    public KeyInput(Handler handler) {
-        this.handler = handler;
-    }
+    public KeyInput(Handler handler) {this.handler = handler;}
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
