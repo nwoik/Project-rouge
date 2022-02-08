@@ -12,7 +12,8 @@ public abstract class GameObject {
     protected int movementSpeed;
     protected ID id;
     protected SpriteSheet spriteSheet;
-    protected int size;
+    protected int width;
+    protected int height;
     public boolean up, down, left, right;
 
     public GameObject(int x, int y, ID id, SpriteSheet ss){
@@ -23,7 +24,6 @@ public abstract class GameObject {
         this.right = false;
         this.up = false;
         this.down = false;
-        this.size = 0;
         this.spriteSheet = ss;
     }
 
@@ -31,6 +31,9 @@ public abstract class GameObject {
     public abstract void tick();
     // making the image draw
     public abstract void render(Graphics g);
+
+    public abstract void debugRender(Graphics g);
+
     // collision (everything has the hitbox of rectangle)
     public abstract Rectangle getBounds();
 
@@ -72,12 +75,20 @@ public abstract class GameObject {
         this.spriteSheet = spriteSheet;
     }
 
-    public int getSize() {
-        return size;
+    public int getWidth() {
+        return this.width;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public abstract void addX(int value);

@@ -21,6 +21,8 @@ public class Enemy extends GameObject{
     public Enemy(int x, int y, ID id, Handler handler, SpriteSheet ss) {
         super(x, y, id, ss);
         this.handler = handler;
+        this.width = 64;
+        this.height = 96;
 
         enemyImage = ss.grabImage(2, 3, 64, 96);
     }
@@ -32,12 +34,11 @@ public class Enemy extends GameObject{
 
         choose = r.nextInt(10);
 
-        for(int i=0; i < handler.object.size(); i ++){
-            GameObject tempObject = handler.object.get(i);
+        for(GameObject gameObject : handler.object){
 
             //if collide with wall, go the opposite way
-            if(tempObject.getId() == ID.Block){
-                if(getBoundsBig().intersects(tempObject.getBounds())){
+            if(gameObject.getId() == ID.Block){
+                if(getBoundsBig().intersects(gameObject.getBounds())){
                     x += (velX*2) * -1;
                     y += (velY*2) * -1;
                     velX *= 0;
@@ -73,8 +74,30 @@ public class Enemy extends GameObject{
         g.drawImage(enemyImage, x, y, null);
     }
 
+    @Override
+    public void debugRender(Graphics g) {
+        g.setColor(Color.red);
+        g.drawRect(x,y+32,this.width,this.height-32);
+    }
+
     public Rectangle getBounds() {
-        return new Rectangle(x, y, 64, 96);
+        return new Rectangle(x, y, this.width, this.height);
+    }
+
+    public int getWidth() {
+        return this.width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     @Override

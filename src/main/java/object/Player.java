@@ -27,8 +27,8 @@ public class Player extends GameObject {
     public Player(int x, int y, ID id, Handler handler, SpriteSheet ss) {
         super(x, y, id, ss);
         this.handler = handler;
-        this.movementSpeed = 5;
-        this.movementSpeed1 = 6;
+        this.movementSpeed = 6;
+        this.movementSpeed1 = this.movementSpeed +1;
         this.width = 64;
         this.height = 64;
 
@@ -104,43 +104,42 @@ public class Player extends GameObject {
     //check collision with block
     private void collision(){
         try{
-            for(int i =0; i < handler.object.size(); i++){
-                GameObject tempObject = handler.object.get(i);
-
-                if (tempObject.getId() == ID.Block){
-                    if (getBounds().intersects(tempObject.getBounds())){
-                        if ( ((this.x + movementSpeed1 >= tempObject.getX() && this.x + movementSpeed1 <= tempObject.getX() + tempObject.getSize())
-                                ||(this.x + (this.width - movementSpeed1) >= tempObject.getX() && this.x + (this.width - movementSpeed1) <= tempObject.getX() + tempObject.getSize()))&&
-                                    (this.yOffset() + movementSpeed1 >= tempObject.getY() + tempObject.getSize() && this.yOffset() <= tempObject.getY() + tempObject.getSize())){
+            for(GameObject gameObject : handler.object){
+                if (gameObject.getId() == ID.Block){
+                    if (getBounds().intersects(gameObject.getBounds())){
+                        System.out.println(gameObject.getHeight());
+                        if ( ((this.x + movementSpeed1 >= gameObject.getX() && this.x + movementSpeed1 <= gameObject.getX() + gameObject.getHeight())
+                                ||(this.x + (this.width - movementSpeed1) >= gameObject.getX() && this.x + (this.width - movementSpeed1) <= gameObject.getX() + gameObject.getHeight()))&&
+                                    (this.yOffset() + movementSpeed1 >= gameObject.getY() + gameObject.getHeight() && this.yOffset() <= gameObject.getY() + gameObject.getHeight())){
                                 this.up = false;
                                 this.y += movementSpeed;
                             }
-                            else if (((this.x + movementSpeed1 >= tempObject.getX() && this.x + movementSpeed1 <= tempObject.getX() + tempObject.getSize())
-                                ||(this.x + (this.width - movementSpeed1) >= tempObject.getX() && this.x + (this.width - movementSpeed1) <= tempObject.getX() + tempObject.getSize()))&&
-                                    (this.yOffset() + (this.height - movementSpeed1) <= tempObject.getY() && this.yOffset() + this.height >= tempObject.getY())){
+                            else if (((this.x + movementSpeed1 >= gameObject.getX() && this.x + movementSpeed1 <= gameObject.getX() + gameObject.getHeight())
+                                ||(this.x + (this.width - movementSpeed1) >= gameObject.getX() && this.x + (this.width - movementSpeed1) <= gameObject.getX() + gameObject.getHeight()))&&
+                                    (this.yOffset() + (this.height - movementSpeed1) <= gameObject.getY() && this.yOffset() + this.height >= gameObject.getY())){
                                 this.down = false;
                                 this.y -= movementSpeed;
                             }
-                            else if (((this.yOffset() + movementSpeed1 >= tempObject.getY() && this.yOffset() + movementSpeed1 <= tempObject.getY() + tempObject.getSize())
-                                || (this.yOffset() + (this.height - movementSpeed1) >= tempObject.getY() && this.yOffset() + (this.height - movementSpeed1) <= tempObject.getY() + tempObject.getSize()))&&
-                                    (this.x + movementSpeed1 >= tempObject.getX() + tempObject.getSize() && this.x <= tempObject.getX() + tempObject.getSize())){
+                            else if (((this.yOffset() + movementSpeed1 >= gameObject.getY() && this.yOffset() + movementSpeed1 <= gameObject.getY() + gameObject.getWidth())
+                                || (this.yOffset() + (this.height - movementSpeed1) >= gameObject.getY() && this.yOffset() + (this.height - movementSpeed1) <= gameObject.getY() + gameObject.getWidth()))&&
+                                    (this.x + movementSpeed1 >= gameObject.getX() + gameObject.getWidth() && this.x <= gameObject.getX() + gameObject.getWidth())){
                                 this.left = false;
                                 this.x += movementSpeed;
 
                         }
-                            else if (((this.yOffset() + movementSpeed1 >= tempObject.getY() && this.yOffset() + movementSpeed1 <= tempObject.getY() + tempObject.getSize())
-                                || (this.yOffset() + (this.height - movementSpeed1) >= tempObject.getY() && this.yOffset() + (this.height - movementSpeed1) <= tempObject.getY() + tempObject.getSize()))&&
-                                        (this.x + (this.width - movementSpeed1) <= tempObject.getX() && this.x + this.width >= tempObject.getX())){
+                            else if (((this.yOffset() + movementSpeed1 >= gameObject.getY() && this.yOffset() + movementSpeed1 <= gameObject.getY() + gameObject.getWidth())
+                                || (this.yOffset() + (this.height - movementSpeed1) >= gameObject.getY() && this.yOffset() + (this.height - movementSpeed1) <= gameObject.getY() + gameObject.getWidth()))&&
+                                        (this.x + (this.width - movementSpeed1) <= gameObject.getX() && this.x + this.width >= gameObject.getX())){
                                     this.right = false;
                                     this.x -= movementSpeed;
                                 }
 
                             else{
-                                if (this.x + movementSpeed1 <= tempObject.getX() + tempObject.getSize() && this.x + (2*movementSpeed1) >= tempObject.getX() + tempObject.getSize()){
+                                if (this.x + movementSpeed1 <= gameObject.getX() + gameObject.getWidth() && this.x + (2*movementSpeed1) >= gameObject.getX() + gameObject.getWidth()){
                                     this.x += 2*movementSpeed;
 
                                 }
-                                else if (this.x + (this.width - movementSpeed1) >= tempObject.getX() && this.x + (this.width - (movementSpeed1*2)) <= tempObject.getX()){
+                                else if (this.x + (this.width - movementSpeed1) >= gameObject.getX() && this.x + (this.width - (movementSpeed1*2)) <= gameObject.getX()){
                                     this.x -= 2*movementSpeed;
                                 }
                             }
@@ -156,7 +155,11 @@ public class Player extends GameObject {
     @Override
     public void render(Graphics g) {
         g.drawImage(playerImage, x, y, null);
-        g.setColor(Color.red);
+    }
+
+    @Override
+    public void debugRender(Graphics g) {
+        g.setColor(Color.blue);
         g.drawRect(x,y + 32,64,64);
     }
 

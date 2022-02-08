@@ -10,22 +10,24 @@ public class Handler {
 
     //ticks every object in our list.
     public void tick() {
-        for(int i = 0; i < object.size(); i++){
-            GameObject tempObject = object.get(i);
-
-            tempObject.tick();
+        for(GameObject gameObject : object){
+            gameObject.tick();
         }
         player.tick();
     }
 
     //renders every object in list
-    public void render(Graphics g) {
-        for(int i = 0; i < object.size(); i++){
-            GameObject tempObject = object.get(i);
-
-            tempObject.render(g);
+    public void render(Graphics g, boolean debugMode) {
+        for(GameObject gameObject : object){
+            gameObject.render(g);
+            if (debugMode) {
+                gameObject.debugRender(g);
+            }
         }
         player.render(g);
+        if (debugMode) {
+            player.debugRender(g);
+        }
     }
 
     //empty list (for loading new level)

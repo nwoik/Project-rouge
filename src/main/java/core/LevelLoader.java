@@ -37,7 +37,7 @@ public class LevelLoader {
                 //block types we can implement the texture variation with BlockID enum
 
                 if (colour.getRed() == 255 && colour.getGreen() == 0 && colour.getBlue() == 0) {
-                    handler.addObject(new Block(xx * 64, yy * 64, ID.Block, spriteSheet, BlockID.floor));
+                    handler.addObject(new Block(xx * 64, yy * 64, ID.Block, spriteSheet, BlockID.wall));
                 }
                 else if (colour.getRed() == 0 && colour.getGreen() == 255 && colour.getBlue() == 0) {
                     handler.addObject(new Enemy(xx * 64, yy * 64, ID.Enemy, handler, spriteSheet));
