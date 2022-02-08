@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
 public class Block extends GameObject{
     private BufferedImage block_image;
     private BlockID blockID;
-    private int width, height;
 
     public Block(int x, int y, ID id, SpriteSheet ss, BlockID bID) {
         super(x, y, id, ss);
@@ -36,44 +35,9 @@ public class Block extends GameObject{
         g.drawRect(x,y,this.width,this.height);
     }
 
+
     public Rectangle getBounds() {
-        return new Rectangle(x,y,64,64);
-    }
-
-    public int getWidth() {
-        return this.width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    @Override
-    public void addX(int value) {
-
-    }
-
-    @Override
-    public void subX(int value) {
-
-    }
-
-    @Override
-    public void addY(int value) {
-
-    }
-
-    @Override
-    public void subY(int value) {
-
+        return new Rectangle(x, y, this.width, this.width);
     }
 
 }

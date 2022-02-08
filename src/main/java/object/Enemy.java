@@ -9,14 +9,12 @@ import java.util.Random;
 //Class for creating enemy objects. Might need to expand this more or make more variations for different enemies,
 //not sure yet how to implement this
 public class Enemy extends GameObject{
-    private Handler handler;
     Random r = new Random();
     int choose = 0;
     int hp = 100;
 
     //enemy image to be drawn
     private BufferedImage enemyImage;
-
 
     public Enemy(int x, int y, ID id, Handler handler, SpriteSheet ss) {
         super(x, y, id, ss);
@@ -84,41 +82,6 @@ public class Enemy extends GameObject{
         return new Rectangle(x, y, this.width, this.height);
     }
 
-    public int getWidth() {
-        return this.width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    @Override
-    public void addX(int value) {
-
-    }
-
-    @Override
-    public void subX(int value) {
-
-    }
-
-    @Override
-    public void addY(int value) {
-
-    }
-
-    @Override
-    public void subY(int value) {
-
-    }
 
     public Rectangle getBoundsBig() {
 

@@ -17,10 +17,12 @@ public class GameCanvas extends Canvas implements Runnable{
     private Handler handler;
     private Camera camera;
     public boolean isRunning = false;
-    private DebugSettings debugSettings;
     private Panel panel;
     private Thread thread;
     private SpriteSheet ss;
+
+    private DebugSettings debugSettings;
+
     private final Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
     public int HEIGHT = dimension.height;
     public int WIDTH = dimension.width;

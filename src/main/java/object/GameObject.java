@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 
 //template for creating any object we could possibly want in our game
 public abstract class GameObject {
+    protected Handler handler;
     protected int x, y;
     protected float velX = 0, velY = 0;
     protected int movementSpeed;
@@ -14,6 +15,7 @@ public abstract class GameObject {
     protected SpriteSheet spriteSheet;
     protected int width;
     protected int height;
+    protected int offset;
     public boolean up, down, left, right;
 
     public GameObject(int x, int y, ID id, SpriteSheet ss){
@@ -84,18 +86,26 @@ public abstract class GameObject {
     }
 
     public int getHeight() {
-        return height;
+        return this.height;
     }
 
     public void setHeight(int height) {
         this.height = height;
     }
 
-    public abstract void addX(int value);
+    public void addX(int value) {
+        this.x += value;
+    }
 
-    public abstract void subX(int value);
+    public void subX(int value) {
+        this.x -= value;
+    }
 
-    public abstract void addY(int value);
+    public void addY(int value) {
+        this.y += value;
+    }
 
-    public abstract void subY(int value);
+    public void subY(int value) {
+        this.y -= value;
+    }
 }
