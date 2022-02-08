@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 public class Menu extends JPanel {
     public Menu(final LayoutPanel layoutPanel, GameWindow gameWindow) {
         setBackground(new Color(255, 200, 200));
-
+        System.out.println("DAVE THIS BETTER WORK");
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JLabel title = new JLabel("Once Upon a Dungeon", SwingConstants.CENTER);
 
