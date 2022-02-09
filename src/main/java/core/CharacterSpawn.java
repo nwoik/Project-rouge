@@ -14,15 +14,9 @@ public class CharacterSpawn {
         this.handler = handler;
     }
 
-    private void clearCharacter() {
-        handler.emptyList();
-    }
-
     public void loadCharacter(int xx, int yy, Colour colour){
-        clearCharacter();
-        if (colour.getRed() == 0 && colour.getGreen() == 0 && colour.getBlue() == 255) {
-            handler.player = new Player(xx * 64, yy * 64, ID.Player, handler, spriteSheet);
-        }
+        handler.player = new Player(xx * 64, yy * 64, ID.Player, handler, spriteSheet);
+
     }
 
     public SpriteSheet getSpriteSheet() {

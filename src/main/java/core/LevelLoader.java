@@ -26,6 +26,7 @@ public class LevelLoader {
         int h = image.getHeight();
 
         Colour colour = new Colour();
+        int cunt = 0;
 
         for(int xx=0; xx<w; xx++){
             for(int yy=0; yy<h; yy++){
@@ -39,12 +40,17 @@ public class LevelLoader {
                 //block types we can implement the texture variation with BlockID enum
 
                 if (colour.getRed() == 255 && colour.getGreen() == 0 && colour.getBlue() == 0) {
+                    System.out.println();
                     handler.addObject(new Block(xx * 64, yy * 64, ID.Block, spriteSheet, BlockID.wall));
+                    System.out.println(cunt++ + " | " + handler.object.size());
                 }
                 else if (colour.getRed() == 0 && colour.getGreen() == 255 && colour.getBlue() == 0) {
                     handler.addObject(new Enemy(xx * 64, yy * 64, ID.Enemy, handler, spriteSheet));
                 }
-                characterSpawn.loadCharacter(xx, yy, colour);
+                else if (colour.getRed() == 0 && colour.getGreen() == 0 && colour.getBlue() == 255) {
+                    characterSpawn.loadCharacter(xx, yy, colour);
+                    System.out.println("Plz spawn");
+                }
             }
         }
     }

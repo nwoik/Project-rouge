@@ -4,7 +4,6 @@ import core.*;
 import debug.DebugSettings;
 import inputs.KeyInput;
 import object.Handler;
-import object.ID;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -44,7 +43,7 @@ public class GameCanvas extends Canvas implements Runnable{
         BufferedImageLoader loader = new BufferedImageLoader();
         level = loader.loadImage("/Levels/level1.png");
         sprite_sheet = loader.loadImage("/Levels/Dungeon_1.png");
-        character = loader.loadImage("/Player/Character Atlas.png");
+        character = loader.loadImage("/Player/Character_Atlas.png");
 
         characterSheet = new SpriteSheet(character);
         ss = new SpriteSheet(sprite_sheet);
