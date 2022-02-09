@@ -1,5 +1,6 @@
 package window.menu;
 
+import audio.AudioHandler;
 import core.BufferedImageLoader;
 import window.GameCanvas;
 import window.GameWindow;
@@ -9,8 +10,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class Menu extends JPanel {
-    public Menu(final LayoutPanel layoutPanel, GameWindow gameWindow, Settings settings) {
+
+    public Menu(LayoutPanel layoutPanel, GameWindow gameWindow, Settings settings) {
+        AudioHandler audio = new AudioHandler();
+
         setBackground(new Color(255, 200, 200));
         System.out.println("DAVE THIS BETTER WORK");
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -19,6 +24,7 @@ public class Menu extends JPanel {
         JButton playButton = new JButton("Play");
         JButton settingsButton = new JButton(new SwapCardAction("Settings", Settings.class.toString(), layoutPanel));
         JButton exitButton = new JButton("Exit");
+        audio.playMusic("Once_upon_a_dungeon.wav");
 
         playButton.addActionListener(new ActionListener() {
             @Override
