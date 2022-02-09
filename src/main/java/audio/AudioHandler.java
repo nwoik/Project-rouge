@@ -12,9 +12,17 @@ import java.util.List;
 
 
 public class AudioHandler {
-    private ArrayList<Audio> audioList = new ArrayList<Audio>();
+    public ArrayList<Audio> audioList = new ArrayList<Audio>();
+    public Clip clip;
+
+    public AudioHandler(String fileName) {
+        clip = getClip(fileName);
+    }
 
     public void update(Settings settings) {
+        /**
+         * entire settings object is getting added to each audio object???
+         * **/
         audioList.forEach(audio1 -> audio1.update(settings));
 
         List.copyOf(audioList).forEach(audio1 -> {
@@ -25,8 +33,14 @@ public class AudioHandler {
         });
     }
 
-    public void playMusic(String fileName) {
-        final Clip clip = getClip(fileName);
+    public void clear() {
+        audioList.forEach(audio1 -> {
+                audio1.finish();
+                audioList.remove(audio1);
+        });
+    }
+
+    public void playMusic() {
         audioList.add(new Music(clip));
     }
 
@@ -36,11 +50,19 @@ public class AudioHandler {
 
     }
 
+    public void stopMusic(Clip clip) {
+        audioList.remove(clip);
+    }
+
+
+    public void loopAudio() {
+        clip.loop(999);
+    }
+
 
 
     public Clip getClip(String fileName) {
-        final URL soundFile = AudioHandler.class.getResource("/Audio/Once_upon_a_dungeon.wav");
-        //final URL soundFile = AudioHandler.class.getResource("/Audio/" + fileName);
+        final URL soundFile = AudioHandler.class.getResource("/Audio/" + fileName);
 
         try(AudioInputStream audioInputStream = AudioSystem.getAudioInputStream((soundFile))) {
             final Clip clip = AudioSystem.getClip();
