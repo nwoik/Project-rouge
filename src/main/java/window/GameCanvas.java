@@ -113,6 +113,7 @@ public class GameCanvas extends Canvas implements Runnable{
         BufferStrategy bs = this.getBufferStrategy();
         if(bs == null){
             //preload 3 frames before they are actually shown. Improve efficiency
+
             this.createBufferStrategy(3);
             return;
         }
