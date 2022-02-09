@@ -20,6 +20,8 @@ public class Player extends GameObject {
     public boolean downPressed;
     private final int movementSpeed1;
 
+    private BufferedImage[] walking;
+
     public Player(int x, int y, ID id, Handler handler, SpriteSheet ss) {
         super(x, y, id, ss);
         this.handler = handler;
@@ -29,7 +31,7 @@ public class Player extends GameObject {
         this.height = 64;
         this.offset = 32;
 
-        playerImage = ss.grabImage(1,3,64,96);
+        playerImage = ss.grabImage(1,3,72,96);
     }
 
     @Override
@@ -88,27 +90,26 @@ public class Player extends GameObject {
                                 this.x += movementSpeed;
 
                         }
-                            else if (((this.yOffset() + movementSpeed1 >= gameObject.getY() && this.yOffset() + movementSpeed1 <= gameObject.getY() + gameObject.getWidth())
-                                || (this.yOffset() + (this.height - movementSpeed1) >= gameObject.getY() && this.yOffset() + (this.height - movementSpeed1) <= gameObject.getY() + gameObject.getWidth()))&&
-                                        (this.x + (this.width - movementSpeed1) <= gameObject.getX() && this.x + this.width >= gameObject.getX())){
-                                    this.right = false;
-                                    this.x -= movementSpeed;
-                                }
-
-                            else{
-                                if (this.x + movementSpeed1 <= gameObject.getX() + gameObject.getWidth() && this.x + (2*movementSpeed1) >= gameObject.getX() + gameObject.getWidth()){
-                                    this.x += 2*movementSpeed;
-
-                                }
-                                else if (this.x + (this.width - movementSpeed1) >= gameObject.getX() && this.x + (this.width - (movementSpeed1*2)) <= gameObject.getX()){
-                                    this.x -= 2*movementSpeed;
-                                }
+                        else if (((this.yOffset() + movementSpeed1 >= gameObject.getY() && this.yOffset() + movementSpeed1 <= gameObject.getY() + gameObject.getWidth())
+                            || (this.yOffset() + (this.height - movementSpeed1) >= gameObject.getY() && this.yOffset() + (this.height - movementSpeed1) <= gameObject.getY() + gameObject.getWidth()))&&
+                                    (this.x + (this.width - movementSpeed1) <= gameObject.getX() && this.x + this.width >= gameObject.getX())){
+                                this.right = false;
+                                this.x -= movementSpeed;
                             }
 
+                        else {
+                            if (this.x + movementSpeed1 <= gameObject.getX() + gameObject.getWidth() && this.x + (2*movementSpeed1) >= gameObject.getX() + gameObject.getWidth()){
+                                this.x += 2*movementSpeed;
 
+                            }
+                            else if (this.x + (this.width - movementSpeed1) >= gameObject.getX() && this.x + (this.width - (movementSpeed1*2)) <= gameObject.getX()){
+                                this.x -= 2*movementSpeed;
+                            }
+                        }
                     }
                 }
-            }}
+            }
+        }
         catch (IndexOutOfBoundsException ignored) {
         }
     }
@@ -121,12 +122,12 @@ public class Player extends GameObject {
     @Override
     public void debugRender(Graphics g) {
         g.setColor(Color.blue);
-        g.drawRect(x, yOffset(), this.width, this.width);
+        g.drawRect(x, yOffset(), this.width, this.height);
     }
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x, yOffset(), this.width, this.width); //useful for collision for future
+        return new Rectangle(x, yOffset(), this.width, this.height); //useful for collision for future
     }
 
     public int yOffset(){
