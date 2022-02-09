@@ -5,6 +5,7 @@ import window.menu.LayoutPanel;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 
+
 public abstract class Audio {
     private final Clip clip;
 

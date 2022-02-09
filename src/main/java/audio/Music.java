@@ -9,6 +9,7 @@ public class Music extends Audio {
         super(clip);
     }
 
+
     @Override
     protected float getVolume(LayoutPanel settings) {
         return settings.getMusicVol;
