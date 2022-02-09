@@ -1,6 +1,6 @@
 package audio;
 
-import window.menu.LayoutPanel;
+import window.menu.Settings;
 
 import javax.sound.sampled.Clip;
 
@@ -9,9 +9,8 @@ public class Music extends Audio {
         super(clip);
     }
 
-
     @Override
-    protected float getVolume(LayoutPanel settings) {
-        return settings.getMusicVol;
+    protected float getVolume(Settings settings) {
+        return settings.getMusicVol();
     }
 }

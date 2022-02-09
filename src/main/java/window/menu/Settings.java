@@ -8,8 +8,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Settings extends JPanel {
+    private float sfxVol;
+    private float musicVol;
 
     public Settings(LayoutPanel layoutPanel) {
+        musicVol = 1;
+        sfxVol = 1;
+
         KeyListener listener = new KeyBindings();
         addKeyListener(listener);
         setFocusable(true);
@@ -62,6 +67,25 @@ public class Settings extends JPanel {
         add(Box.createRigidArea(new Dimension(0, 100)));
         add(menuButton);
     }
+
+
+
+    public float getSFXVol() {
+        return sfxVol;
+    }
+
+    public void getSFXVol(float audioVol) {
+        this.sfxVol = audioVol;
+    }
+
+    public float getMusicVol() {
+        return musicVol;
+    }
+
+    public void setMusicVol(float musicVol) {
+        this.musicVol = musicVol;
+    }
+
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 
 public class LayoutPanel extends JPanel {

@@ -1,6 +1,7 @@
 package audio;
 
 import window.menu.LayoutPanel;
+import window.menu.Settings;
 
 import javax.sound.sampled.Clip;
 
@@ -11,7 +12,7 @@ public class SFX extends Audio {
     }
 
     @Override
-    protected float getVolume(LayoutPanel settings) {
-        return settings.getSFXVol;
+    protected float getVolume(Settings settings) {
+        return settings.getSFXVol();
     }
 }
