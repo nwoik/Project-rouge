@@ -15,7 +15,7 @@ public class Settings extends JPanel {
         setFocusable(true);
 
         setBackground(new Color(150, 200, 255));
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
         JLabel title = new JLabel("Settings", SwingConstants.CENTER);
         JLabel keyLabel = new JLabel("Key Bindings", SwingConstants.CENTER);
         JLabel upLabel = new JLabel("Move Up", SwingConstants.CENTER);
@@ -30,37 +30,44 @@ public class Settings extends JPanel {
 
         JButton menuButton = new JButton(new SwapCardAction("Back", Menu.class.toString(), layoutPanel));
 
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        keyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        upLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        downLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        leftLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        rightLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JPanel keyBind1Pane = new JPanel();
+        keyBind1Pane.setLayout(new BoxLayout(keyBind1Pane, BoxLayout.LINE_AXIS));
+        keyBind1Pane.add(Box.createHorizontalGlue());
+        keyBind1Pane.add(upLabel);
+        keyBind1Pane.add(Box.createRigidArea(new Dimension(10, 0)));
+        keyBind1Pane.add(downLabel);
 
-        moveUp.setAlignmentX(Component.CENTER_ALIGNMENT);
-        moveDown.setAlignmentX(Component.CENTER_ALIGNMENT);
-        menuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        moveLeft.setAlignmentX(Component.CENTER_ALIGNMENT);
-        moveRight.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JPanel keyBind2Pane = new JPanel();
+        keyBind2Pane.setLayout(new BoxLayout(keyBind2Pane, BoxLayout.LINE_AXIS));
+        keyBind2Pane.add(Box.createHorizontalGlue());
+        keyBind2Pane.add(moveUp);
+        keyBind2Pane.add(Box.createRigidArea(new Dimension(10, 0)));
+        keyBind2Pane.add(moveDown);
 
-        add(Box.createRigidArea(new Dimension(0, 100)));
-        add(title);
-        add(Box.createRigidArea(new Dimension(0, 100)));
-        add(keyLabel);
-        add(Box.createRigidArea(new Dimension(0, 50)));
-        add(upLabel);
-        add(moveUp);
-        add(Box.createRigidArea(new Dimension(0, 50)));
-        add(downLabel);
-        add(moveDown);
-        add(Box.createRigidArea(new Dimension(0, 50)));
-        add(leftLabel);
-        add(moveLeft);
-        add(Box.createRigidArea(new Dimension(0, 50)));
-        add(rightLabel);
-        add(moveRight);
-        add(Box.createRigidArea(new Dimension(0, 100)));
-        add(menuButton);
+        JPanel keyBind3Pane = new JPanel();
+        keyBind3Pane.setLayout(new BoxLayout(keyBind3Pane, BoxLayout.LINE_AXIS));
+        keyBind3Pane.add(Box.createHorizontalGlue());
+        keyBind3Pane.add(leftLabel);
+        keyBind3Pane.add(Box.createRigidArea(new Dimension(10, 0)));
+        keyBind3Pane.add(rightLabel);
+
+        JPanel keyBind4Pane = new JPanel();
+        keyBind4Pane.setLayout(new BoxLayout(keyBind4Pane, BoxLayout.LINE_AXIS));
+        keyBind4Pane.add(Box.createHorizontalGlue());
+        keyBind4Pane.add(moveLeft);
+        keyBind4Pane.add(Box.createRigidArea(new Dimension(10, 0)));
+        keyBind4Pane.add(moveRight);
+
+        keyBind1Pane.setAlignmentX(Component.CENTER_ALIGNMENT);
+        keyBind2Pane.setAlignmentX(Component.CENTER_ALIGNMENT);
+        keyBind3Pane.setAlignmentX(Component.CENTER_ALIGNMENT);
+        keyBind4Pane.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        add(title, BorderLayout.PAGE_START);
+        add(keyBind1Pane, BorderLayout.LINE_START);
+        add(keyBind2Pane, BorderLayout.LINE_END);
+        add(menuButton, BorderLayout.PAGE_END);
+
     }
 
     public void paintComponent(Graphics g) {
