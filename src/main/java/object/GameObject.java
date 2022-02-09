@@ -7,11 +7,15 @@ import java.awt.Rectangle;
 
 //template for creating any object we could possibly want in our game
 public abstract class GameObject {
-    protected int x, y, width, height;
+    protected Handler handler;
+    protected int x, y;
     protected float velX = 0, velY = 0;
     protected int movementSpeed;
     protected ID id;
     protected SpriteSheet spriteSheet;
+    protected int width;
+    protected int height;
+    protected int offset;
     public boolean up, down, left, right;
 
     public GameObject(int x, int y, ID id, SpriteSheet ss){
@@ -29,7 +33,11 @@ public abstract class GameObject {
     public abstract void tick();
     // making the image draw
     public abstract void render(Graphics g);
+
+    public abstract void debugRender(Graphics g);
+
     // collision (everything has the hitbox of rectangle)
+    public abstract Rectangle getBounds();
 
 
     public ID getId(){
@@ -69,6 +77,35 @@ public abstract class GameObject {
         this.spriteSheet = spriteSheet;
     }
 
+    public int getWidth() {
+        return this.width;
+    }
 
-    protected abstract Rectangle getBounds();
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return this.height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void addX(int value) {
+        this.x += value;
+    }
+
+    public void subX(int value) {
+        this.x -= value;
+    }
+
+    public void addY(int value) {
+        this.y += value;
+    }
+
+    public void subY(int value) {
+        this.y -= value;
+    }
 }

@@ -4,6 +4,7 @@ import core.BufferedImageLoader;
 import core.Camera;
 import core.LevelLoader;
 import core.SpriteSheet;
+import debug.DebugSettings;
 import inputs.KeyInput;
 import object.Handler;
 import object.ID;
@@ -16,8 +17,12 @@ public class GameCanvas extends Canvas implements Runnable{
     private Handler handler;
     private Camera camera;
     public boolean isRunning = false;
+    private Panel panel;
     private Thread thread;
     private SpriteSheet ss;
+
+    private DebugSettings debugSettings;
+
     private final Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
     public int HEIGHT = dimension.height;
     public int WIDTH = dimension.width;
@@ -33,6 +38,7 @@ public class GameCanvas extends Canvas implements Runnable{
     public GameCanvas() {
         this.handler = new Handler();
         camera = new Camera(0,0, HEIGHT, WIDTH);
+        this.debugSettings = new DebugSettings(true);
 
         addKeyListener(new KeyInput(handler));
 
@@ -52,7 +58,6 @@ public class GameCanvas extends Canvas implements Runnable{
     }
     //stop game
     public void start(){
-        System.out.println("aloha");
         isRunning = true;
         thread = new Thread(this);
         thread.start();
@@ -136,7 +141,7 @@ public class GameCanvas extends Canvas implements Runnable{
         }
 
         //Render every single object.
-        handler.render(g);
+        handler.render(g, this.debugSettings.isDebugMode());
         g2d.translate(camera.getX(), camera.getY());
         //Write out fps
         g.setColor(Color.yellow);
