@@ -4,10 +4,10 @@ import core.BufferedImageLoader;
 import core.Camera;
 import core.LevelLoader;
 import core.SpriteSheet;
+import debug.DebugSettings;
 import inputs.KeyInput;
 import object.Handler;
 import object.ID;
-import object.Protagonist;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -17,8 +17,12 @@ public class GameCanvas extends Canvas implements Runnable{
     private Handler handler;
     private Camera camera;
     public boolean isRunning = false;
+    private Panel panel;
     private Thread thread;
     private SpriteSheet ss;
+
+    private DebugSettings debugSettings;
+
     private final Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
     public int HEIGHT = dimension.height;
     public int WIDTH = dimension.width;
@@ -34,6 +38,7 @@ public class GameCanvas extends Canvas implements Runnable{
     public GameCanvas() {
         this.handler = new Handler();
         camera = new Camera(0,0, HEIGHT, WIDTH);
+        this.debugSettings = new DebugSettings(true);
 
         addKeyListener(new KeyInput(handler));
 
@@ -53,7 +58,6 @@ public class GameCanvas extends Canvas implements Runnable{
     }
     //stop game
     public void start(){
-        System.out.println("aloha");
         isRunning = true;
         thread = new Thread(this);
         thread.start();
@@ -101,11 +105,8 @@ public class GameCanvas extends Canvas implements Runnable{
     //updates everything in the game. updated 60 times per second
     public void tick(){
         //camera follows player every tick
-        for(int i=0; i < handler.object.size(); i++){
-            if(handler.object.get(i).getId() == ID.Player){
-                camera.tick(handler.object.get(i));
-            }
-        }
+
+        camera.tick(handler.player);
         this.handler.tick();
     }
     //Draw everything
@@ -123,7 +124,7 @@ public class GameCanvas extends Canvas implements Runnable{
         //Anything between these comments will be drawn.
 
         //Set background (What's outside level, otherwise looks glitchy)
-        g.setColor(Color.black);
+        g.setColor(Color.gray);
         g.fillRect(0,0, WIDTH, HEIGHT);
 
         //Pans camera. Most things that move in level go between the two translations. Static things like FPS and UI
@@ -133,14 +134,14 @@ public class GameCanvas extends Canvas implements Runnable{
         //Print the floor. Floor is represented by black pixels on level.png (for now as black is unassigned)
         //Basically every part of the level that isn't obstructed by something reveals the floor, even though floor
         //is drawn everywhere (but some things are drawn over it.)
-        for (int xx=0; xx<60*70; xx+=64){
-            for(int yy = 0; yy<60*70; yy+=64){
+        for (int xx=0; xx<60*70; xx+=128){
+            for(int yy = 0; yy<60*70; yy+=128){
                 g.drawImage(floor, xx, yy, null);
             }
         }
 
         //Render every single object.
-        handler.render(g);
+        handler.render(g, this.debugSettings.isDebugMode());
         g2d.translate(camera.getX(), camera.getY());
         //Write out fps
         g.setColor(Color.yellow);
@@ -149,7 +150,4 @@ public class GameCanvas extends Canvas implements Runnable{
         g.dispose();
         bs.show();
     }
-
-
-
 }

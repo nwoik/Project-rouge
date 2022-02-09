@@ -6,24 +6,27 @@ import java.awt.Graphics;
 
 public class Handler {
     public LinkedList<GameObject> object = new LinkedList<GameObject>();
-
-    private boolean up=false,down=false,left=false,right=false;
+    public Player player;
 
     //ticks every object in our list.
     public void tick() {
-        for(int i = 0; i < object.size(); i++){
-            GameObject tempObject = object.get(i);
-
-            tempObject.tick();
+        for(GameObject gameObject : object){
+            gameObject.tick();
         }
+        player.tick();
     }
 
     //renders every object in list
-    public void render(Graphics g) {
-        for(int i = 0; i < object.size(); i++){
-            GameObject tempObject = object.get(i);
-
-            tempObject.render(g);
+    public void render(Graphics g, boolean debugMode) {
+        for(GameObject gameObject : object){
+            gameObject.render(g);
+            if (debugMode) {
+                gameObject.debugRender(g);
+            }
+        }
+        player.render(g);
+        if (debugMode) {
+            player.debugRender(g);
         }
     }
 
@@ -40,39 +43,6 @@ public class Handler {
     //remove from list
     public void removeObject(GameObject tempObject) {
         object.remove(tempObject);
-    }
-
-    //getters and setters
-    public boolean isRight(){
-        return right;
-    }
-
-    public void setRight(boolean b) {
-        this.right = b;
-    }
-
-    public boolean isLeft(){
-        return left;
-    }
-
-    public void setLeft(boolean b) {
-        this.left = b;
-    }
-
-    public boolean isUp(){
-        return up;
-    }
-
-    public void setUp(boolean b) {
-        this.up = b;
-    }
-
-    public boolean isDown(){
-        return down;
-    }
-
-    public void setDown(boolean b) {
-        this.down = b;
     }
 }
 

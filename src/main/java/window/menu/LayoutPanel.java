@@ -1,15 +1,40 @@
 package window.menu;
 
-import javax.swing.*;
+import core.BufferedImageLoader;
+import window.Game;
+import window.GameCanvas;
+import window.GameWindow;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
-import core.BufferedImageLoader;
-import window.GameCanvas;
 
-public class MenuPanel extends JPanel implements ActionListener {
+import javax.swing.*;
+
+public class LayoutPanel extends JPanel {
+    private GameWindow gameWindow;
+    private final CardLayout cardLayout = new CardLayout();
+    private Menu menu;
+    private Settings settings = new Settings(this);
+
+    public LayoutPanel(GameWindow gameWindow) {
+        this.gameWindow = gameWindow;
+        menu = new Menu(this, this.gameWindow, settings);
+        setLayout(cardLayout);
+        add(menu, Menu.class.toString());
+        add(settings, Settings.class.toString());
+    }
+
+    public void showCard(String name) {
+        cardLayout.show(this, name);
+    }
+}
+
+/*
+class Menu extends JPanel implements ActionListener {
+    public static final String NAME = "menu";
     private final BufferedImageLoader bufferLoader;
     private Graphics2D graphics2D;
     private final GameCanvas gameCanvas;
@@ -18,7 +43,7 @@ public class MenuPanel extends JPanel implements ActionListener {
     private final JLabel title;
     private final JButton playButton, settingsButton, exitButton;
 
-    public MenuPanel() {
+    public Menu(LayoutPanel layoutPanel) {
         try {
             InputStream is = getClass().getResourceAsStream("/Font/GameFont-Regular.ttf");
             assert is != null;
@@ -35,7 +60,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         this.title = new JLabel("Once Upon a Dungeon");
 
         this.playButton = new JButton("Play");
-        this.settingsButton = new JButton("Settings");
+        settingsButton = new JButton(new SwapCardAction("Settings", Settings.NAME, layoutPanel));
         this.exitButton = new JButton("Exit");
 
         this.title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -80,16 +105,51 @@ public class MenuPanel extends JPanel implements ActionListener {
             this.gameCanvas.start();
         }
 
-        if (event.getSource()==this.settingsButton) {
-            //start loop of game
-            System.out.println("aloha");
-        }
-
         if (event.getSource()==this.exitButton) {
             //exit game
             System.exit(0);
         }
     }
-
-
 }
+
+class Settings extends JPanel implements ActionListener {
+    public static final String NAME = "settings";
+    private final BufferedImageLoader bufferLoader;
+    private Graphics2D graphics2D;
+    private Font gameFont;
+    private Font exceptionFont = new Font("Times New Roman", Font.PLAIN, 120);
+
+    public Settings() {
+        try {
+            InputStream is = getClass().getResourceAsStream("/Font/GameFont-Regular.ttf");
+            assert is != null;
+            gameFont = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (FontFormatException | IOException e) {
+            gameFont = exceptionFont;
+        }
+
+        this.bufferLoader = new BufferedImageLoader();
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        this.graphics2D = (Graphics2D)g;
+        drawScreen();
+    }
+
+    public void drawScreen() {
+        graphics2D.setFont(gameFont.deriveFont(64F));
+        for (int xx=0; xx<128*70; xx+=128){
+            for(int yy = 0; yy<128*70; yy+=128){
+                graphics2D.drawImage(this.bufferLoader.loadImage("/MenuBackground/Wood Texture Bottom side.png"), xx,yy, 128, 128, null);
+            }
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+}
+*/
+
