@@ -19,6 +19,7 @@ public class Player extends GameObject {
     public boolean downPressed;
     private final int movementSpeed1;
     private int framedelay = 2;
+    private final int alignmentY = -32;
 
     public Animation animation;
 
@@ -50,27 +51,26 @@ public class Player extends GameObject {
         this.movementSpeed1 = this.movementSpeed +1;
         this.width = 64;
         this.height = 64;
-        this.offset = 32;
 
         this.standingFacingDown.add(spriteSheet.grabImage(1, 1, 64, 96));
         this.standingFacingLeft.add(spriteSheet.grabImage(2, 1, 64, 96));
         this.standingFacingUp.add(spriteSheet.grabImage(3, 1, 64, 96));
         this.standingFacingRight.add(spriteSheet.grabImage(4, 1, 64, 96));
 
-        this.standFacingDown = new Animation(this.standingFacingDown, framedelay);
-        this.standFacingLeft = new Animation(this.standingFacingLeft, framedelay);
-        this.standFacingUp = new Animation(this.standingFacingUp, framedelay);
-        this.standFacingRight = new Animation(this.standingFacingRight, framedelay);
+        this.standFacingDown = new Animation(this.standingFacingDown, framedelay, 0, alignmentY);
+        this.standFacingLeft = new Animation(this.standingFacingLeft, framedelay, 0, alignmentY);
+        this.standFacingUp = new Animation(this.standingFacingUp, framedelay, 0, alignmentY);
+        this.standFacingRight = new Animation(this.standingFacingRight, framedelay, 0, alignmentY);
 
         fillAnimationList(spriteSheet, this.walkingUp, 1, 3, 2, 72, 100, 10);
         fillAnimationList(spriteSheet, this.walkingDown, 1, 9, 2, 72, 96, 10);
         fillAnimationList(spriteSheet, this.walkingLeft, 1, 5, 2, 82, 96, 10);
         fillAnimationList(spriteSheet, this.walkingRight, 1, 7, 2, 82, 96, 10);
 
-        this.walkUp = new Animation(this.walkingUp, framedelay);
-        this.walkDown = new Animation(this.walkingDown, framedelay);
-        this.walkLeft = new Animation(this.walkingLeft, framedelay);
-        this.walkRight = new Animation(this.walkingRight, framedelay);
+        this.walkUp = new Animation(this.walkingUp, framedelay, -4, alignmentY);
+        this.walkDown = new Animation(this.walkingDown, framedelay, -4, alignmentY);
+        this.walkLeft = new Animation(this.walkingLeft, framedelay, 0, alignmentY);
+        this.walkRight = new Animation(this.walkingRight, framedelay, -16, alignmentY);
 
 
         this.animation = this.standFacingDown;
@@ -98,12 +98,12 @@ public class Player extends GameObject {
             subY(this.movementSpeed);
         }
 
-        if (leftPressed){
+        if (leftPressed && (!this.up||!this.down)){
             this.setAnimation(this.walkLeft);
             this.animation.start();
             this.left = true;
         }
-        if (rightPressed){
+        if (rightPressed && (!this.up||!this.down)){
             this.setAnimation(this.walkRight);
             this.animation.start();
             this.right = true;
@@ -131,25 +131,25 @@ public class Player extends GameObject {
                     if (getBounds().intersects(gameObject.getBounds())){
                         if ( ((this.x + movementSpeed1 >= gameObject.getX() && this.x + movementSpeed1 <= gameObject.getX() + gameObject.getHeight())
                                 ||(this.x + (this.width - movementSpeed1) >= gameObject.getX() && this.x + (this.width - movementSpeed1) <= gameObject.getX() + gameObject.getHeight()))&&
-                                    (this.yOffset() + movementSpeed1 >= gameObject.getY() + gameObject.getHeight() && this.yOffset() <= gameObject.getY() + gameObject.getHeight())){
+                                    (this.y + movementSpeed1 >= gameObject.getY() + gameObject.getHeight() && this.y <= gameObject.getY() + gameObject.getHeight())){
                                 this.up = false;
                                 this.y += movementSpeed;
                             }
                             else if (((this.x + movementSpeed1 >= gameObject.getX() && this.x + movementSpeed1 <= gameObject.getX() + gameObject.getHeight())
                                 ||(this.x + (this.width - movementSpeed1) >= gameObject.getX() && this.x + (this.width - movementSpeed1) <= gameObject.getX() + gameObject.getHeight()))&&
-                                    (this.yOffset() + (this.height - movementSpeed1) <= gameObject.getY() && this.yOffset() + this.height >= gameObject.getY())){
+                                    (this.y + (this.height - movementSpeed1) <= gameObject.getY() && this.y + this.height >= gameObject.getY())){
                                 this.down = false;
                                 this.y -= movementSpeed;
                             }
-                            else if (((this.yOffset() + movementSpeed1 >= gameObject.getY() && this.yOffset() + movementSpeed1 <= gameObject.getY() + gameObject.getWidth())
-                                || (this.yOffset() + (this.height - movementSpeed1) >= gameObject.getY() && this.yOffset() + (this.height - movementSpeed1) <= gameObject.getY() + gameObject.getWidth()))&&
+                            else if (((this.y + movementSpeed1 >= gameObject.getY() && this.y + movementSpeed1 <= gameObject.getY() + gameObject.getWidth())
+                                || (this.y + (this.height - movementSpeed1) >= gameObject.getY() && this.y + (this.height - movementSpeed1) <= gameObject.getY() + gameObject.getWidth()))&&
                                     (this.x + movementSpeed1 >= gameObject.getX() + gameObject.getWidth() && this.x <= gameObject.getX() + gameObject.getWidth())){
                                 this.left = false;
                                 this.x += movementSpeed;
 
                         }
-                        else if (((this.yOffset() + movementSpeed1 >= gameObject.getY() && this.yOffset() + movementSpeed1 <= gameObject.getY() + gameObject.getWidth())
-                            || (this.yOffset() + (this.height - movementSpeed1) >= gameObject.getY() && this.yOffset() + (this.height - movementSpeed1) <= gameObject.getY() + gameObject.getWidth()))&&
+                        else if (((this.y + movementSpeed1 >= gameObject.getY() && this.y + movementSpeed1 <= gameObject.getY() + gameObject.getWidth())
+                            || (this.y + (this.height - movementSpeed1) >= gameObject.getY() && this.y + (this.height - movementSpeed1) <= gameObject.getY() + gameObject.getWidth()))&&
                                     (this.x + (this.width - movementSpeed1) <= gameObject.getX() && this.x + this.width >= gameObject.getX())){
                                 this.right = false;
                                 this.x -= movementSpeed;
@@ -176,22 +176,26 @@ public class Player extends GameObject {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(this.animation.getSprite(), x, y, null);
+        g.drawImage(this.animation.getSprite(), x + this.animation.getOffsetX(), y + this.animation.getOffsetY(), null);
     }
 
     @Override
     public void debugRender(Graphics g) {
         g.setColor(Color.blue);
-        g.drawRect(x, yOffset(), this.width, this.height);
+        g.drawRect(x, y, this.width, this.height);
     }
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x, yOffset(), this.width, this.height); //useful for collision for future
+        return new Rectangle(x, y, this.width, this.height); //useful for collision for future
     }
 
-    public int yOffset(){
-        return this.y + this.offset;
+    public int xOffset(int offset){
+        return this.x + offset;
+    }
+
+    public int yOffset(int offset){
+        return this.y + offset;
     }
 
     public void setAnimation(Animation animation) {

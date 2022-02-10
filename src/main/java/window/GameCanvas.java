@@ -18,7 +18,7 @@ public class GameCanvas extends Canvas implements Runnable{
     private SpriteSheet ss;
     private SpriteSheet characterSheet;
 
-    private DebugSettings debugSettings;
+    public DebugSettings debugSettings;
 
     private final Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
     public int HEIGHT = dimension.height;
@@ -36,9 +36,9 @@ public class GameCanvas extends Canvas implements Runnable{
     public GameCanvas() {
         this.handler = new Handler();
         camera = new Camera(0,0, HEIGHT, WIDTH);
-        this.debugSettings = new DebugSettings(true);
+        debugSettings = new DebugSettings(false);
 
-        addKeyListener(new KeyInput(handler));
+        addKeyListener(new KeyInput(handler, debugSettings));
 
         BufferedImageLoader loader = new BufferedImageLoader();
         level = loader.loadImage("/Levels/level1.png");
@@ -142,7 +142,7 @@ public class GameCanvas extends Canvas implements Runnable{
         }
 
         //Render every single object.
-        handler.render(g, this.debugSettings.isDebugMode());
+        handler.render(g, debugSettings.isDebugMode());
         g2d.translate(camera.getX(), camera.getY());
         //Write out fps
         g.setColor(Color.yellow);

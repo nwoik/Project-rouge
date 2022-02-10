@@ -1,5 +1,6 @@
 package inputs;
 
+import debug.DebugSettings;
 import object.Handler;
 import object.Player;
 import object.Player;
@@ -10,14 +11,15 @@ import java.awt.event.KeyListener;
 
 public class KeyInput implements KeyListener{
     private final Handler handler;
+    private DebugSettings debugSettings;
 
-    public KeyInput(Handler handler) {
+    public KeyInput(Handler handler, DebugSettings debugSettings) {
         this.handler = handler;
+        this.debugSettings = debugSettings;
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
@@ -39,6 +41,8 @@ public class KeyInput implements KeyListener{
                 this.handler.player.up = true;
                 this.handler.player.upPressed = true;
                 break;
+            case KeyEvent.VK_F1:
+                this.debugSettings.changeDebugMode();
         }
     }
 
@@ -49,15 +53,17 @@ public class KeyInput implements KeyListener{
                 this.handler.player.left = false;
                 this.handler.player.leftPressed = false;
                 this.handler.player.animation.stop();
-
-                this.handler.player.setAnimation(this.handler.player.standFacingLeft);
+                if (!this.handler.player.up||!this.handler.player.down) {
+                    this.handler.player.setAnimation(this.handler.player.standFacingLeft);
+                }
                 break;
             case KeyEvent.VK_D:
                 this.handler.player.right = false;
                 this.handler.player.rightPressed = false;
                 this.handler.player.animation.stop();
-                this.handler.player.setAnimation(this.handler.player.standFacingRight);
-
+                if (!this.handler.player.up||!this.handler.player.down) {
+                    this.handler.player.setAnimation(this.handler.player.standFacingRight);
+                }
                 break;
             case KeyEvent.VK_S:
                 this.handler.player.down = false;
