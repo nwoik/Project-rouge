@@ -4,6 +4,9 @@ import core.SpriteSheet;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+
 
 //template for creating any object we could possibly want in our game
 public abstract class GameObject {
@@ -37,7 +40,9 @@ public abstract class GameObject {
     public abstract void debugRender(Graphics g);
 
     // collision (everything has the hitbox of rectangle)
-    public abstract Rectangle getBounds();
+    public abstract Rectangle2D getBounds();
+
+    public abstract Ellipse2D getBoundsFOV();
 
 
     public ID getId(){
@@ -108,4 +113,6 @@ public abstract class GameObject {
     public void subY(int value) {
         this.y -= value;
     }
+
+    public int yOffset() {return this.y + this.offset;}
 }

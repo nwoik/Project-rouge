@@ -8,7 +8,9 @@ import object.ID;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Color;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+import java.awt.geom.Rectangle2D;
 
 public class Player extends GameObject {
 
@@ -19,6 +21,7 @@ public class Player extends GameObject {
     public boolean upPressed;
     public boolean downPressed;
     private final int movementSpeed1;
+    private Color colour = Color.black;
 
     public Player(int x, int y, ID id, Handler handler, SpriteSheet ss) {
         super(x, y, id, ss);
@@ -28,6 +31,7 @@ public class Player extends GameObject {
         this.width = 64;
         this.height = 64;
         this.offset = 32;
+
 
         playerImage = ss.grabImage(1,3,64,96);
     }
@@ -65,8 +69,7 @@ public class Player extends GameObject {
     //check collision with block
     private void collision(){
         try{
-            for(GameObject gameObject : handler.object){
-                if (gameObject.getId() == ID.Block){
+            for(GameObject gameObject : handler.block){
                     if (getBounds().intersects(gameObject.getBounds())){
                         System.out.println(gameObject.getHeight());
                         if ( ((this.x + movementSpeed1 >= gameObject.getX() && this.x + movementSpeed1 <= gameObject.getX() + gameObject.getHeight())
@@ -107,10 +110,24 @@ public class Player extends GameObject {
 
 
                     }
-                }
-            }}
+
+            }
+
+
+        checkEnemyDetection();
+        }
         catch (IndexOutOfBoundsException ignored) {
         }
+    }
+
+    public void checkEnemyDetection(){
+        for (GameObject gameObject : handler.enemy){
+            if (gameObject.getBoundsFOV().intersects(getBounds())){
+                colour = Color.magenta;
+                return;
+            }
+            colour = Color.black;
+            }
     }
 
     @Override
@@ -120,13 +137,18 @@ public class Player extends GameObject {
 
     @Override
     public void debugRender(Graphics g) {
-        g.setColor(Color.blue);
-        g.drawRect(x, yOffset(), this.width, this.width);
+        g.setColor(colour);
+        g.drawRect(x, yOffset(), this.width, this.height);
     }
 
     @Override
-    public Rectangle getBounds() {
-        return new Rectangle(x, yOffset(), this.width, this.width); //useful for collision for future
+    public Rectangle2D getBounds() {
+        return new Rectangle2D.Double(x, yOffset(), this.width, this.height); //useful for collision for future
+    }
+
+    @Override
+    public Ellipse2D getBoundsFOV() {
+        return null;
     }
 
     public int yOffset(){

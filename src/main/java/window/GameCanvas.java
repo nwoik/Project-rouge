@@ -107,7 +107,7 @@ public class GameCanvas extends Canvas implements Runnable{
         //camera follows player every tick
 
         camera.tick(handler.player);
-        this.handler.tick();
+        this.handler.tick(this.debugSettings.isDebugMode());
     }
     //Draw everything
     public void render(){

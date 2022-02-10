@@ -3,6 +3,8 @@ package object;
 import core.SpriteSheet;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 //Block class that represents each block pixel in level.png. Prevents player/enemy movement.
@@ -36,8 +38,13 @@ public class Block extends GameObject{
     }
 
 
-    public Rectangle getBounds() {
-        return new Rectangle(x, y, this.width, this.width);
+    public Rectangle2D getBounds() {
+        return new Rectangle2D.Double(x, y, this.width, this.width);
+    }
+
+    @Override
+    public Ellipse2D getBoundsFOV() {
+        return null;
     }
 
 }
