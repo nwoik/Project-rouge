@@ -72,7 +72,6 @@ public class Player extends GameObject {
         this.walkLeft = new Animation(this.walkingLeft, framedelay, 0, alignmentY);
         this.walkRight = new Animation(this.walkingRight, framedelay, -16, alignmentY);
 
-
         this.animation = this.standFacingDown;
     }
 
@@ -98,12 +97,12 @@ public class Player extends GameObject {
             subY(this.movementSpeed);
         }
 
-        if (leftPressed && (!this.up||!this.down)){
+        if (leftPressed){
             this.setAnimation(this.walkLeft);
             this.animation.start();
             this.left = true;
         }
-        if (rightPressed && (!this.up||!this.down)){
+        if (rightPressed){
             this.setAnimation(this.walkRight);
             this.animation.start();
             this.right = true;
@@ -171,7 +170,6 @@ public class Player extends GameObject {
         catch (IndexOutOfBoundsException ignored) {
         }
     }
-
 
 
     @Override

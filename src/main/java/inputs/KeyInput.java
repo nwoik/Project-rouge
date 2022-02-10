@@ -49,22 +49,6 @@ public class KeyInput implements KeyListener{
     @Override
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_A:
-                this.handler.player.left = false;
-                this.handler.player.leftPressed = false;
-                this.handler.player.animation.stop();
-                if (!this.handler.player.up||!this.handler.player.down) {
-                    this.handler.player.setAnimation(this.handler.player.standFacingLeft);
-                }
-                break;
-            case KeyEvent.VK_D:
-                this.handler.player.right = false;
-                this.handler.player.rightPressed = false;
-                this.handler.player.animation.stop();
-                if (!this.handler.player.up||!this.handler.player.down) {
-                    this.handler.player.setAnimation(this.handler.player.standFacingRight);
-                }
-                break;
             case KeyEvent.VK_S:
                 this.handler.player.down = false;
                 this.handler.player.downPressed = false;
@@ -76,6 +60,24 @@ public class KeyInput implements KeyListener{
                 this.handler.player.upPressed = false;
                 this.handler.player.animation.stop();
                 this.handler.player.setAnimation(this.handler.player.standFacingUp);
+                break;
+            case KeyEvent.VK_A:
+                this.handler.player.left = false;
+                this.handler.player.leftPressed = false;
+                this.handler.player.animation.stop();
+                if (this.handler.player.upPressed || this.handler.player.downPressed) {
+                    break;
+                }
+                this.handler.player.setAnimation(this.handler.player.standFacingLeft);
+                break;
+            case KeyEvent.VK_D:
+                this.handler.player.right = false;
+                this.handler.player.rightPressed = false;
+                this.handler.player.animation.stop();
+                if (this.handler.player.upPressed || this.handler.player.downPressed) {
+                    break;
+                }
+                this.handler.player.setAnimation(this.handler.player.standFacingRight);
                 break;
         }
     }
