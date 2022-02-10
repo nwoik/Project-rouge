@@ -6,9 +6,9 @@ import java.awt.*;
 
 import javax.swing.JFrame;
 
-public class GameWindow extends JFrame{
+public class GameWindow extends JFrame {
     private LayoutPanel layoutPanel = new LayoutPanel(this);
-    public GameWindow(int width, int height, String title){
+    public GameWindow(int width, int height, String title) throws Exception{
         setTitle(title);
         setPreferredSize(new Dimension(width, height));
         setMinimumSize(new Dimension(width, height));
