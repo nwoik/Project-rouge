@@ -48,18 +48,28 @@ public class KeyInput implements KeyListener{
             case KeyEvent.VK_A:
                 this.handler.player.left = false;
                 this.handler.player.leftPressed = false;
+                this.handler.player.animation.stop();
+
+                this.handler.player.setAnimation(this.handler.player.standFacingLeft);
                 break;
             case KeyEvent.VK_D:
                 this.handler.player.right = false;
                 this.handler.player.rightPressed = false;
+                this.handler.player.animation.stop();
+                this.handler.player.setAnimation(this.handler.player.standFacingRight);
+
                 break;
             case KeyEvent.VK_S:
                 this.handler.player.down = false;
                 this.handler.player.downPressed = false;
+                this.handler.player.animation.stop();
+                this.handler.player.setAnimation(this.handler.player.standFacingDown);
                 break;
             case KeyEvent.VK_W:
                 this.handler.player.up = false;
                 this.handler.player.upPressed = false;
+                this.handler.player.animation.stop();
+                this.handler.player.setAnimation(this.handler.player.standFacingUp);
                 break;
         }
     }

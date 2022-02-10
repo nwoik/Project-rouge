@@ -14,7 +14,7 @@ public class Animation {
 
     private List<Frame> frames = new ArrayList<Frame>();
 
-    public Animation(BufferedImage[] frames, int frameDelay) {
+    public Animation(List<BufferedImage> frames, int frameDelay) {
         this.frameDuration = frameDelay;
         this.stop = true;
 
@@ -58,6 +58,10 @@ public class Animation {
         this.stop = true;
         this.frameCount = 0;
         this.currentFrame = 0;
+    }
+
+    public BufferedImage getSprite() {
+        return frames.get(currentFrame).getFrame();
     }
 
     private void addFrame(BufferedImage frame, int duration) {

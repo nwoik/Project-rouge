@@ -42,14 +42,12 @@ public class LevelLoader {
                 if (colour.getRed() == 255 && colour.getGreen() == 0 && colour.getBlue() == 0) {
                     System.out.println();
                     handler.addObject(new Block(xx * 64, yy * 64, ID.Block, spriteSheet, BlockID.wall));
-                    System.out.println(cunt++ + " | " + handler.object.size());
                 }
                 else if (colour.getRed() == 0 && colour.getGreen() == 255 && colour.getBlue() == 0) {
                     handler.addObject(new Enemy(xx * 64, yy * 64, ID.Enemy, handler, spriteSheet));
                 }
                 else if (colour.getRed() == 0 && colour.getGreen() == 0 && colour.getBlue() == 255) {
                     characterSpawn.loadCharacter(xx, yy, colour);
-                    System.out.println("Plz spawn");
                 }
             }
         }
