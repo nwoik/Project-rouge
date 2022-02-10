@@ -64,7 +64,7 @@ public class Player extends GameObject {
 
         fillAnimationList(spriteSheet, this.walkingUp, 1, 3, 2, 72, 100, 10);
         fillAnimationList(spriteSheet, this.walkingDown, 1, 9, 2, 72, 96, 10);
-        fillAnimationList(spriteSheet, this.walkingLeft, 1, 5, 2, 82, 96, 10);
+        fillAnimationList(spriteSheet, this.walkingLeft, 1, 5, 2, 88, 96, 10);
         fillAnimationList(spriteSheet, this.walkingRight, 1, 7, 2, 82, 96, 10);
 
         this.walkUp = new Animation(this.walkingUp, framedelay, -4, alignmentY);
