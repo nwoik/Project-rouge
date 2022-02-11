@@ -30,7 +30,6 @@ public class Enemy extends GameObject{
         this.handler = handler;
         this.width = 64;
         this.height = 64;
-        this.offset = 32;
 
         enemyImage = ss.grabImage(2, 3, 64, 96);
     }
@@ -67,7 +66,7 @@ public class Enemy extends GameObject{
     }
 
     private void directMovement(){
-        this.center = plotLine(x +(width/2), y+offset+(height/2), handler.player.getX() +(handler.player.getWidth()/2), handler.player.getY()+offset+(handler.player.getHeight()/2));
+        this.center = plotLine(x +(width/2), y+(height/2), handler.player.getX() +(handler.player.getWidth()/2), handler.player.getY()+(handler.player.getHeight()/2));
         //If line collides with a block then return, otherwise implement line of sight actions
         for (GameObject gameObject: handler.block){
             if (center.intersects(gameObject.getBounds())){
@@ -81,22 +80,22 @@ public class Enemy extends GameObject{
         lineColour = Color.cyan;
         lineCollided = false;
         //Determine movement direction towards player
-        if (handler.player.getX() + (handler.player.getWidth()/2)  < x + (width/2) + 16 && handler.player.getX() + (handler.player.getWidth()/2)  > x + (width/2) - 16){
+        if (handler.player.getX() + (handler.player.getWidth()/2)  < x + (width/2) + 16 && handler.player.getX() + (handler.player.getWidth()/2)  > x + (width/2)){
             velX = 0;
         }
-        else if (handler.player.getX() + (handler.player.getWidth()/2)  > x + (width/2) + 16){
-             velX = movementSpeed;
+        else if (handler.player.getX() + (handler.player.getWidth()/2)  > x + (width/2)){
+            velX = movementSpeed;
         }
-        else if (handler.player.getX() + (handler.player.getWidth()/2)  < x + (width/2) - 16){
+        else if (handler.player.getX() + (handler.player.getWidth()/2)  < x + (width/2)){
             velX = -movementSpeed;
         }
-        if (handler.player.getY() + ((handler.player.getHeight()-handler.player.offset)/2)  < y + ((height-offset)/2) + 16 && handler.player.getY() + ((handler.player.getHeight()-handler.player.offset)/2)   > y + ((height-offset)/2) - 16){
+        if (handler.player.getY() + ((handler.player.getHeight())/2)  < y + ((height)/2) + 16 && handler.player.getY() + ((handler.player.getHeight())/2)   > y + ((height)/2)){
             velY = 0;
         }
-        else if (handler.player.getY() + ((handler.player.getHeight()-handler.player.offset)/2)   > y + ((height-offset)/2) + 16){
+        else if (handler.player.getY() + ((handler.player.getHeight())/2)   > y + ((height)/2)){
             velY = movementSpeed;
         }
-        else if (handler.player.getY() + ((handler.player.getHeight()-handler.player.offset)/2)   < y + ((height-offset)/2) - 16){
+        else if (handler.player.getY() + ((handler.player.getHeight())/2)   < y + ((height)/2)){
             velY = -movementSpeed;
         }
 
@@ -191,22 +190,22 @@ public class Enemy extends GameObject{
                 collided = true;
                 if ( ((this.x + movementSpeed1 >= gameObject.getX() && this.x + movementSpeed1 <= gameObject.getX() + gameObject.getHeight())
                         ||(this.x + (this.width - movementSpeed1) >= gameObject.getX() && this.x + (this.width - movementSpeed1) <= gameObject.getX() + gameObject.getHeight()))&&
-                        (this.yOffset() + movementSpeed1 >= gameObject.getY() + gameObject.getHeight() && this.yOffset() <= gameObject.getY() + gameObject.getHeight())){
+                        (this.y + movementSpeed1 >= gameObject.getY() + gameObject.getHeight() && this.y <= gameObject.getY() + gameObject.getHeight())){
                     velY = movementSpeed;
                 }
                 else if (((this.x + movementSpeed1 >= gameObject.getX() && this.x + movementSpeed1 <= gameObject.getX() + gameObject.getHeight())
                         ||(this.x + (this.width - movementSpeed1) >= gameObject.getX() && this.x + (this.width - movementSpeed1) <= gameObject.getX() + gameObject.getHeight()))&&
-                        (this.yOffset() + (this.height - movementSpeed1) <= gameObject.getY() && this.yOffset() + this.height >= gameObject.getY())){
+                        (this.y + (this.height - movementSpeed1) <= gameObject.getY() && this.y + this.height >= gameObject.getY())){
                     velY = -movementSpeed;
                 }
-                else if (((this.yOffset() + movementSpeed1 >= gameObject.getY() && this.yOffset() + movementSpeed1 <= gameObject.getY() + gameObject.getWidth())
-                        || (this.yOffset() + (this.height - movementSpeed1) >= gameObject.getY() && this.yOffset() + (this.height - movementSpeed1) <= gameObject.getY() + gameObject.getWidth()))&&
+                else if (((this.y + movementSpeed1 >= gameObject.getY() && this.y + movementSpeed1 <= gameObject.getY() + gameObject.getWidth())
+                        || (this.y + (this.height - movementSpeed1) >= gameObject.getY() && this.y + (this.height - movementSpeed1) <= gameObject.getY() + gameObject.getWidth()))&&
                         (this.x + movementSpeed1 >= gameObject.getX() + gameObject.getWidth() && this.x <= gameObject.getX() + gameObject.getWidth())){
                     velX = movementSpeed;
 
                 }
-                else if (((this.yOffset() + movementSpeed1 >= gameObject.getY() && this.yOffset() + movementSpeed1 <= gameObject.getY() + gameObject.getWidth())
-                        || (this.yOffset() + (this.height - movementSpeed1) >= gameObject.getY() && this.yOffset() + (this.height - movementSpeed1) <= gameObject.getY() + gameObject.getWidth()))&&
+                else if (((this.y + movementSpeed1 >= gameObject.getY() && this.y + movementSpeed1 <= gameObject.getY() + gameObject.getWidth())
+                        || (this.y + (this.height - movementSpeed1) >= gameObject.getY() && this.y + (this.height - movementSpeed1) <= gameObject.getY() + gameObject.getWidth()))&&
                         (this.x + (this.width - movementSpeed1) <= gameObject.getX() && this.x + this.width >= gameObject.getX())){
                     velX = -movementSpeed;
                 }
@@ -224,14 +223,14 @@ public class Enemy extends GameObject{
         }
     }
     public void render(Graphics g) {
-        g.drawImage(enemyImage, x, y, null);
+        g.drawImage(enemyImage, x, y-32, null);
     }
 
     @Override
     public void debugRender(Graphics g) {
         g.setColor(Color.red);
-        g.drawRect(x,y+offset,this.width,this.height);
-        g.drawOval((x-400) + (width/2),(y-400) + ((height+offset)/2), 800, 800);
+        g.drawRect(x,y,this.width,this.height);
+        g.drawOval((x-400) + (width/2),(y-400) + ((height)/2), 800, 800);
 //        The following options check if enemy is centered in its detection radius
 //        g.setColor(Color.pink);
 //        g.drawRect((x-400) + (width/2),(y-400) + ((height+offset)/2), 800, 800);
@@ -241,21 +240,19 @@ public class Enemy extends GameObject{
 //        If player is in range draw lines of sight
         if (playerInRange()) {
             g.setColor(lineColour);
-            g.drawLine(x +(width/2), y+offset+(height/2), handler.player.getX() +(handler.player.getWidth()/2),  handler.player.getY()+offset+(handler.player.getHeight()/2));
+            g.drawLine(x +(width/2), y+(height/2), handler.player.getX() +(handler.player.getWidth()/2),  handler.player.getY()+(handler.player.getHeight()/2));
         }
 
     }
 
-//   for collision
+    //   for collision
     public Rectangle2D getBounds() {
-        return new Rectangle2D.Double(x, y + offset, this.width, this.height);
+        return new Rectangle2D.Double(x, y, this.width, this.height);
     }
 
-//Get Radius of field of view and implement it
+    //Get Radius of field of view and implement it
     public Ellipse2D getBoundsFOV() {
-        return new Ellipse2D.Double((x-400) + ((double)(width)/2),(y-400) + ((double)(height +offset)/2),800,800) {
+        return new Ellipse2D.Double((x-400) + ((double)(width)/2),(y-400) + ((double)(height)/2),800,800) {
         };
     }
-
-
 }

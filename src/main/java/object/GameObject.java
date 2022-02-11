@@ -18,7 +18,6 @@ public abstract class GameObject {
     protected SpriteSheet spriteSheet;
     protected int width;
     protected int height;
-    protected int offset;
     public boolean up, down, left, right;
 
     public GameObject(int x, int y, ID id, SpriteSheet ss){
@@ -114,5 +113,4 @@ public abstract class GameObject {
         this.y -= value;
     }
 
-    public int yOffset() {return this.y + this.offset;}
 }
