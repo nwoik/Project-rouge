@@ -13,13 +13,14 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
 public class Settings extends JPanel {
     private float sfxVol;
     private float musicVol;
-
+    private ArrayList<String> movementSettings;
     public Settings(LayoutPanel layoutPanel) throws Exception{
         musicVol = 1;
         sfxVol = 1;
@@ -33,12 +34,15 @@ public class Settings extends JPanel {
         JLabel leftLabel = new JLabel("Move Left", SwingConstants.CENTER);
         JLabel rightLabel = new JLabel("Move Right", SwingConstants.CENTER);
 
-        readText();
+        this.movementSettings = new ArrayList<String>();
+        readText(this.movementSettings);
 
-        JButton moveUp = new JButton("w");
-        JButton moveDown = new JButton("s");
-        JButton moveLeft = new JButton("a");
-        JButton moveRight = new JButton("d");
+        JButton moveUp = new JButton(this.movementSettings.get(0));
+        JButton moveDown = new JButton(this.movementSettings.get(1));
+        JButton moveLeft = new JButton(this.movementSettings.get(2));
+        JButton moveRight = new JButton(this.movementSettings.get(3));
+
+        ArrayList<JButton> buttonList = new ArrayList<JButton>();
 
         moveUp.addActionListener(new ActionListener() {
 
@@ -81,6 +85,17 @@ public class Settings extends JPanel {
         });
 
         JButton saveButton = new JButton("Save");
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                movementSettings = null;
+
+                for (JButton btn : buttonList) {
+                    String newVal = btn.getText();
+                    movementSettings.add(newVal);
+                }
+            }
+        });
         JLabel validLabel = new JLabel("");
         JButton menuButton = new JButton(new SwapCardAction("Back", Menu.class.toString(), layoutPanel));
 
@@ -150,14 +165,24 @@ public class Settings extends JPanel {
         add(settingsPane);
     }
 
-    public void readText() throws IOException {
+    public void readText(ArrayList<String> arrayList) throws IOException {
         InputStream is = Settings.class.getResourceAsStream("/Settings.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         String line;
         while ((line = reader.readLine()) != null) {
-            System.out.println(line);
+            arrayList.add(line);
         }
     }
+
+    public void writeText(ArrayList<String> arrayList) throws IOException {
+        InputStream is = Settings.class.getResourceAsStream("/Settings.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        String line;
+        //reader.write(line);
+
+        reader.close();
+    }
+
     public float getSFXVol() {
         return sfxVol;
     }

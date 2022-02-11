@@ -1,4 +1,4 @@
-up:w
-down:s
-left:a
-right:d
+w
+s
+a
+d
