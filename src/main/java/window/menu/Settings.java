@@ -6,16 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.*;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.stream.Stream;
 
 public class Settings extends JPanel {
     private float sfxVol;
@@ -43,6 +35,10 @@ public class Settings extends JPanel {
         JButton moveRight = new JButton(this.movementSettings.get(3));
 
         ArrayList<JButton> buttonList = new ArrayList<JButton>();
+        buttonList.add(moveUp);
+        buttonList.add(moveDown);
+        buttonList.add(moveLeft);
+        buttonList.add(moveRight);
 
         moveUp.addActionListener(new ActionListener() {
 
@@ -85,14 +81,21 @@ public class Settings extends JPanel {
         });
 
         JButton saveButton = new JButton("Save");
-        saveButton.addActionListener(new ActionListener() {
+        saveButton.addActionListener(new ActionListener()  {
             @Override
             public void actionPerformed(ActionEvent e) {
-                movementSettings = null;
-
-                for (JButton btn : buttonList) {
-                    String newVal = btn.getText();
-                    movementSettings.add(newVal);
+                try {
+                    short inc = 0;
+                    System.out.println(buttonList);
+                    for (JButton btn : buttonList) {
+                        String newVal = btn.getText();
+                        movementSettings.set(inc, newVal);
+                        inc ++;
+                    }
+                    writeText(movementSettings);
+                    System.out.println("Settings saved");
+                    } catch(IOException a) {
+                        a.printStackTrace();
                 }
             }
         });
@@ -166,21 +169,37 @@ public class Settings extends JPanel {
     }
 
     public void readText(ArrayList<String> arrayList) throws IOException {
-        InputStream is = Settings.class.getResourceAsStream("/Settings.txt");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        File file = new File("src/main/java/window/menu/Settings.txt");
         String line;
+        BufferedReader reader = new BufferedReader(new FileReader(file));
         while ((line = reader.readLine()) != null) {
             arrayList.add(line);
         }
     }
 
     public void writeText(ArrayList<String> arrayList) throws IOException {
-        InputStream is = Settings.class.getResourceAsStream("/Settings.txt");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        String line;
-        //reader.write(line);
+        System.out.println(arrayList);
+        File newFile = new File("src/main/java/window/menu/Settings.txt");
+        FileWriter fileWriter = new FileWriter(newFile);
+        fileWriter.flush();
+        BufferedWriter writer = new BufferedWriter(fileWriter);
+        for (String line : arrayList) {
+            System.out.println("a");
+            writer.write(line);
+            writer.newLine();
+        }
+        writer.close();
+        fileWriter.close();
+        System.out.println("File Saved");
 
+        /*
+        InputStream is = Settings.class.getResourceAsStream("/Settings.txt");
+        BufferedWriter reader = new BufferedWriter(new FileWriter("/Settings.txt"));
+        for (String line : arrayList) {
+            reader.write(line);
+        }
         reader.close();
+        */
     }
 
     public float getSFXVol() {
