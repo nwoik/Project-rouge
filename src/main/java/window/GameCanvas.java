@@ -29,6 +29,7 @@ public class GameCanvas extends Canvas implements Runnable{
     private BufferedImage sprite_sheet = null;
     private BufferedImage floor = null;
     private BufferedImage character = null;
+    private BufferedImage skeleton = null;
 
     // For callFPS
     String outputFPS = "";
@@ -45,6 +46,7 @@ public class GameCanvas extends Canvas implements Runnable{
         level = loader.loadImage("/Levels/level1.png");
         sprite_sheet = loader.loadImage("/Levels/Dungeon_1.png");
         character = loader.loadImage("/Player/Character_Atlas.png");
+        skeleton = loader.loadImage("/Skelleton_Atlas.png");
 
         characterSheet = new SpriteSheet(character);
         ss = new SpriteSheet(sprite_sheet);
