@@ -7,6 +7,8 @@ import java.util.List;
 public class Animation {
     private int frameCount;
     private int frameDuration;
+    private int offsetX;
+    private int offsetY;
     private int currentFrame;
     private int animationDirection;
     private int totalFrames;
@@ -14,8 +16,10 @@ public class Animation {
 
     private List<Frame> frames = new ArrayList<Frame>();
 
-    public Animation(BufferedImage[] frames, int frameDelay) {
+    public Animation(List<BufferedImage> frames, int frameDelay, int offsetX, int offsetY) {
         this.frameDuration = frameDelay;
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
         this.stop = true;
 
         for (BufferedImage frame: frames) {
@@ -58,6 +62,18 @@ public class Animation {
         this.stop = true;
         this.frameCount = 0;
         this.currentFrame = 0;
+    }
+
+    public BufferedImage getSprite() {
+        return frames.get(currentFrame).getFrame();
+    }
+
+    public int getOffsetX() {
+        return offsetX;
+    }
+
+    public int getOffsetY() {
+        return offsetY;
     }
 
     private void addFrame(BufferedImage frame, int duration) {
