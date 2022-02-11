@@ -17,6 +17,7 @@ public class GameCanvas extends Canvas implements Runnable{
     private Thread thread;
     private SpriteSheet ss;
     private SpriteSheet characterSheet;
+    public Boolean stopped = false;
 
     public DebugSettings debugSettings;
 
@@ -38,7 +39,7 @@ public class GameCanvas extends Canvas implements Runnable{
         camera = new Camera(0,0, HEIGHT, WIDTH);
         debugSettings = new DebugSettings(false);
 
-        addKeyListener(new KeyInput(handler, debugSettings));
+        addKeyListener(new KeyInput(handler, debugSettings, this));
 
         BufferedImageLoader loader = new BufferedImageLoader();
         level = loader.loadImage("/Levels/level1.png");
@@ -86,12 +87,16 @@ public class GameCanvas extends Canvas implements Runnable{
             delta += (now - lastTime) / ns;
             lastTime = now;
             while(delta >= 1) {
-                tick();
+                if (!stopped) {
+                    tick();
+                }
                 //updates++;
                 delta--;
             }
-            this.render();
-            frames++;
+            if (!stopped) {
+                this.render();
+                frames++;
+            }
 
             if(System.currentTimeMillis()-timer>1000){
                 outputFPS = "" + frames;

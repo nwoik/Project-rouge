@@ -2,6 +2,7 @@ package inputs;
 
 import debug.DebugSettings;
 import object.Handler;
+import window.GameCanvas;
 import object.Player;
 import object.Player;
 
@@ -12,14 +13,17 @@ import java.awt.event.KeyListener;
 public class KeyInput implements KeyListener{
     private final Handler handler;
     private DebugSettings debugSettings;
+    private final GameCanvas gameCanvas;
 
-    public KeyInput(Handler handler, DebugSettings debugSettings) {
+    public KeyInput(Handler handler, DebugSettings debugSettings, GameCanvas gameCanvas) {
         this.handler = handler;
         this.debugSettings = debugSettings;
+        this.gameCanvas = gameCanvas;
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
+
     }
 
     @Override
@@ -43,6 +47,10 @@ public class KeyInput implements KeyListener{
                 break;
             case KeyEvent.VK_F1:
                 this.debugSettings.changeDebugMode();
+                break;
+            case KeyEvent.VK_F2:
+                this.gameCanvas.stopped = !this.gameCanvas.stopped;
+                break;
         }
     }
 
