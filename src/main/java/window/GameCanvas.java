@@ -49,7 +49,7 @@ public class GameCanvas extends Canvas implements Runnable{
         ss = new SpriteSheet(sprite_sheet);
 
         CharacterSpawn characterSpawn = new CharacterSpawn(this.handler, characterSheet);
-        LevelLoader levelLoader = new LevelLoader(this.handler, characterSpawn, ss);
+        LevelLoader levelLoader = new LevelLoader(this.handler, ss);
 
         floor = ss.grabImage(2,1,64,64);
 
