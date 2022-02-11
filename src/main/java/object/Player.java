@@ -175,11 +175,9 @@ public class Player extends GameObject {
 
                     }
                 }
+            checkEnemyDetection();
             }
 
-
-        checkEnemyDetection();
-        }
         catch (IndexOutOfBoundsException ignored) {
         }
     }
@@ -201,7 +199,7 @@ public class Player extends GameObject {
 
     @Override
     public void debugRender(Graphics g) {
-        g.setColor(Color.blue);
+        g.setColor(colour);
         g.drawRect(x, y, this.width, this.height);
     }
 
