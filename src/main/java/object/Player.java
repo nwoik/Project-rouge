@@ -18,8 +18,6 @@ public class Player extends GameObject {
     public boolean upPressed;
     public boolean downPressed;
     private final int movementSpeed1;
-    private int framedelay = 2;
-    private final int alignmentY = -32;
 
     public Animation animation;
 
@@ -57,6 +55,8 @@ public class Player extends GameObject {
         this.standingFacingUp.add(spriteSheet.grabImage(3, 1, 64, 96));
         this.standingFacingRight.add(spriteSheet.grabImage(4, 1, 64, 96));
 
+        int alignmentY = -32;
+        int framedelay = 2;
         this.standFacingDown = new Animation(this.standingFacingDown, framedelay, 0, alignmentY);
         this.standFacingLeft = new Animation(this.standingFacingLeft, framedelay, 0, alignmentY);
         this.standFacingUp = new Animation(this.standingFacingUp, framedelay, 0, alignmentY);
@@ -188,13 +188,13 @@ public class Player extends GameObject {
         return new Rectangle(x, y, this.width, this.height); //useful for collision for future
     }
 
-    public int xOffset(int offset){
-        return this.x + offset;
-    }
-
-    public int yOffset(int offset){
-        return this.y + offset;
-    }
+//    public int xOffset(int offset){
+//        return this.x + offset;
+//    }
+//
+//    public int yOffset(int offset){
+//        return this.y + offset;
+//    }
 
     public void setAnimation(Animation animation) {
         this.animation = animation;
