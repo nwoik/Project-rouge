@@ -17,6 +17,7 @@ public class Enemy extends GameObject{
     int hp = 100;
     int movementSpeed = 3;
     int movementSpeed1 = this.movementSpeed +1;
+    int movementSpeed2 = this.movementSpeed1 * 2;
     private boolean collided = false;
     private boolean lineCollided = false;
 
@@ -60,6 +61,9 @@ public class Enemy extends GameObject{
     //Check if player is within 800 units of enemy
     private Boolean playerInRange(){
         if (getBoundsFOV().intersects(handler.player.getBounds())) {
+            if (!handler.player.inRange) {
+                handler.player.inRange = true;
+            }
             return true;
         }
         return false;
@@ -102,6 +106,8 @@ public class Enemy extends GameObject{
         //Check if enemy is close enough to player to attack
         if (Math.abs(center.getX1() - center.getX2()) < 100 && Math.abs(center.getY1() - center.getY2()) < 100){
             lineColour = Color.white;
+//            velX = 0;
+//            velY = 0;
         }
         else{
             lineColour = Color.cyan;
@@ -123,7 +129,6 @@ public class Enemy extends GameObject{
 
         //Get a random number
         choose = r.nextInt(200);
-
 
         //randomly change movement (or stop movement)
         switch (choose) {
@@ -188,36 +193,17 @@ public class Enemy extends GameObject{
             //if collide with wall, go the opposite way
             if(getBounds().intersects(gameObject.getBounds())){
                 collided = true;
-                if ( ((this.x + movementSpeed1 >= gameObject.getX() && this.x + movementSpeed1 <= gameObject.getX() + gameObject.getHeight())
-                        ||(this.x + (this.width - movementSpeed1) >= gameObject.getX() && this.x + (this.width - movementSpeed1) <= gameObject.getX() + gameObject.getHeight()))&&
-                        (this.y + movementSpeed1 >= gameObject.getY() + gameObject.getHeight() && this.y <= gameObject.getY() + gameObject.getHeight())){
+                if (getBoundsSmall(x + movementSpeed2, y, this.width - 2* movementSpeed2, movementSpeed2).intersects(gameObject.getBounds())){
                     velY = movementSpeed;
                 }
-                else if (((this.x + movementSpeed1 >= gameObject.getX() && this.x + movementSpeed1 <= gameObject.getX() + gameObject.getHeight())
-                        ||(this.x + (this.width - movementSpeed1) >= gameObject.getX() && this.x + (this.width - movementSpeed1) <= gameObject.getX() + gameObject.getHeight()))&&
-                        (this.y + (this.height - movementSpeed1) <= gameObject.getY() && this.y + this.height >= gameObject.getY())){
-                    velY = -movementSpeed;
+                if (getBoundsSmall(x + movementSpeed2, y + this.height - movementSpeed2, this.width - 2* movementSpeed2, movementSpeed2).intersects(gameObject.getBounds())){
+                    velY = -(movementSpeed);
                 }
-                else if (((this.y + movementSpeed1 >= gameObject.getY() && this.y + movementSpeed1 <= gameObject.getY() + gameObject.getWidth())
-                        || (this.y + (this.height - movementSpeed1) >= gameObject.getY() && this.y + (this.height - movementSpeed1) <= gameObject.getY() + gameObject.getWidth()))&&
-                        (this.x + movementSpeed1 >= gameObject.getX() + gameObject.getWidth() && this.x <= gameObject.getX() + gameObject.getWidth())){
+                if (getBoundsSmall(x, y + movementSpeed2, movementSpeed2, this.height - 2*movementSpeed2).intersects(gameObject.getBounds())){
                     velX = movementSpeed;
-
                 }
-                else if (((this.y + movementSpeed1 >= gameObject.getY() && this.y + movementSpeed1 <= gameObject.getY() + gameObject.getWidth())
-                        || (this.y + (this.height - movementSpeed1) >= gameObject.getY() && this.y + (this.height - movementSpeed1) <= gameObject.getY() + gameObject.getWidth()))&&
-                        (this.x + (this.width - movementSpeed1) <= gameObject.getX() && this.x + this.width >= gameObject.getX())){
-                    velX = -movementSpeed;
-                }
-
-                else{
-                    if (this.x + movementSpeed1 <= gameObject.getX() + gameObject.getWidth() && this.x + (2*movementSpeed1) >= gameObject.getX() + gameObject.getWidth()){
-                        velX = movementSpeed;
-
-                    }
-                    else if (this.x + (this.width - movementSpeed1) >= gameObject.getX() && this.x + (this.width - (movementSpeed1*2)) <= gameObject.getX()){
-                        velX = -movementSpeed;
-                    }
+                if (getBoundsSmall(x + this.width - movementSpeed2 , y + movementSpeed2, movementSpeed2, this.height - 2*movementSpeed2).intersects(gameObject.getBounds())){
+                    velX = -(movementSpeed);
                 }
             }
         }
@@ -247,12 +233,16 @@ public class Enemy extends GameObject{
 
     //   for collision
     public Rectangle2D getBounds() {
-        return new Rectangle2D.Double(x, y, this.width, this.height);
+        return new Rectangle2D.Float(x, y, this.width, this.height);
+    }
+
+    public Rectangle2D getBoundsSmall(int x,int y,int width,int height) {
+        return new Rectangle2D.Float(x,y,width,height);
     }
 
     //Get Radius of field of view and implement it
     public Ellipse2D getBoundsFOV() {
-        return new Ellipse2D.Double((x-400) + ((double)(width)/2),(y-400) + ((double)(height)/2),800,800) {
+        return new Ellipse2D.Float((x-400) + ((float)(width)/2),(y-400) + ((float)(height)/2),800,800) {
         };
     }
 }

@@ -39,7 +39,7 @@ public class Block extends GameObject{
 
 
     public Rectangle2D getBounds() {
-        return new Rectangle2D.Double(x, y, this.width, this.width);
+        return new Rectangle2D.Float(x, y, this.width, this.width);
     }
 
     @Override
