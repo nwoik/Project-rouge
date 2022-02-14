@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class Settings extends JPanel {
     private float sfxVol;
@@ -39,6 +42,9 @@ public class Settings extends JPanel {
         buttonList.add(moveDown);
         buttonList.add(moveLeft);
         buttonList.add(moveRight);
+
+        JLabel validLabel = new JLabel("");
+        JButton menuButton = new JButton(new SwapCardAction("Back", Menu.class.toString(), layoutPanel));
 
         moveUp.addActionListener(new ActionListener() {
 
@@ -85,22 +91,32 @@ public class Settings extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    Set<String> newMovesSettings = new LinkedHashSet<String>();
+                    boolean error = false;
                     short inc = 0;
                     System.out.println(buttonList);
                     for (JButton btn : buttonList) {
+                        System.out.println(btn);
                         String newVal = btn.getText();
-                        movementSettings.set(inc, newVal);
+                        if (!newMovesSettings.add(newVal)) {
+                            validLabel.setText("Invalid inputs");
+                            System.out.println("Error: Duplication of keys");
+                            error = true;
+                            break;
+                        }
+                        //newMovesSettings.add(newVal);
                         inc ++;
                     }
-                    writeText(movementSettings);
+                    if (!error) {
+                        validLabel.setText("Valid inputs");
+                        writeText(newMovesSettings);
+                    }
                     System.out.println("Settings saved");
                     } catch(IOException a) {
                         a.printStackTrace();
                 }
             }
         });
-        JLabel validLabel = new JLabel("");
-        JButton menuButton = new JButton(new SwapCardAction("Back", Menu.class.toString(), layoutPanel));
 
         JPanel keyBind1Pane = new JPanel();
         keyBind1Pane.setOpaque( false );
@@ -177,7 +193,7 @@ public class Settings extends JPanel {
         }
     }
 
-    public void writeText(ArrayList<String> arrayList) throws IOException {
+    public void writeText(Set<String> arrayList) throws IOException {
         System.out.println(arrayList);
         File newFile = new File("src/main/java/window/menu/Settings.txt");
         FileWriter fileWriter = new FileWriter(newFile);
