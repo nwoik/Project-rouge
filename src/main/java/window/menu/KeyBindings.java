@@ -9,14 +9,18 @@ import java.util.Map;
 
 class KeyBindings extends KeyAdapter {
     JButton button;
+    ArrayList<Integer> keysList;
+    int keyPos;
     Map<Integer, String> arrowMap = new HashMap<>();
     /*
     arrowMap.put(letter[i], gpa[i]);
     arrowMap.put(letter[i], gpa[i]);
     arrowMap.put(letter[i], gpa[i]);*/
 
-    public KeyBindings(JButton button) {
+    public KeyBindings(JButton button, ArrayList<Integer> keysList, int keyPos) {
         this.button=button;
+        this.keysList=keysList;
+        this.keyPos=keyPos;
         this.arrowMap.put(37, "LeftArrow");
         this.arrowMap.put(38, "UpArrow");
         this.arrowMap.put(39, "RightArrow");
@@ -28,12 +32,12 @@ class KeyBindings extends KeyAdapter {
         char key = event.getKeyChar();
         if (this.arrowMap.containsKey(keyNum)) {
             String arrowKey = arrowMap.get(keyNum);
-            System.out.println(""+arrowKey);
             this.button.setText(""+arrowKey);
+            this.keysList.set(this.keyPos, keyNum);
             return;
         }
 
-        System.out.println(""+key);
         this.button.setText(""+key);
+        this.keysList.set(this.keyPos, keyNum);
     }
 }

@@ -1,4 +1,8 @@
-UpArr
-DownArr
-LeftArr
-RightArr
+w
+s
+a
+d
+87
+83
+65
+68

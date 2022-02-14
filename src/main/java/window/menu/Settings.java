@@ -16,6 +16,7 @@ public class Settings extends JPanel {
     private float sfxVol;
     private float musicVol;
     private ArrayList<String> movementSettings;
+    private ArrayList<Integer> keyCodeList;
     public Settings(LayoutPanel layoutPanel) throws Exception{
         musicVol = 1;
         sfxVol = 1;
@@ -30,7 +31,8 @@ public class Settings extends JPanel {
         JLabel rightLabel = new JLabel("Move Right", SwingConstants.CENTER);
 
         this.movementSettings = new ArrayList<String>();
-        readText(this.movementSettings);
+        this.keyCodeList = new ArrayList<Integer>();
+        readText(this.movementSettings, this.keyCodeList);
 
         JButton moveUp = new JButton(this.movementSettings.get(0));
         JButton moveDown = new JButton(this.movementSettings.get(1));
@@ -52,7 +54,7 @@ public class Settings extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 //your actions
                 moveUp.setText("  ");
-                moveUp.addKeyListener(new KeyBindings(moveUp));
+                moveUp.addKeyListener(new KeyBindings(moveUp, keyCodeList, 0));
             }
         });
 
@@ -62,7 +64,7 @@ public class Settings extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 //your actions
                 moveDown.setText("  ");
-                moveDown.addKeyListener(new KeyBindings(moveDown));
+                moveDown.addKeyListener(new KeyBindings(moveDown, keyCodeList, 1));
             }
         });
 
@@ -72,7 +74,7 @@ public class Settings extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 //your actions
                 moveLeft.setText("  ");
-                moveLeft.addKeyListener(new KeyBindings(moveLeft));
+                moveLeft.addKeyListener(new KeyBindings(moveLeft, keyCodeList, 2));
             }
         });
 
@@ -82,7 +84,7 @@ public class Settings extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 //your actions
                 moveRight.setText("  ");
-                moveRight.addKeyListener(new KeyBindings(moveRight));
+                moveRight.addKeyListener(new KeyBindings(moveRight, keyCodeList, 3));
             }
         });
 
@@ -94,24 +96,25 @@ public class Settings extends JPanel {
                     Set<String> newMovesSettings = new LinkedHashSet<String>();
                     boolean error = false;
                     short inc = 0;
-                    System.out.println(buttonList);
                     for (JButton btn : buttonList) {
-                        System.out.println(btn);
                         String newVal = btn.getText();
                         //Check if it's usable
-
-                        //Check for duplicates
-                        if (!newMovesSettings.add(newVal)) {
-                            validLabel.setText("Invalid inputs");
-                            System.out.println("Error: Duplication of keys/No inputs");
-                            error = true;
-                            break;
+                        int keycode = keyCodeList.get(inc);
+                        if ((keycode > 47 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 37 && keycode < 40)) {
+                            //Check for duplicates
+                            if (!newMovesSettings.add(newVal)) {
+                                validLabel.setText("Invalid inputs");
+                                System.out.println("Error: Duplication of keys/No inputs");
+                                error = true;
+                                break;
+                            }
                         }
+                        else {break;}
                         inc ++;
                     }
                     if (!error) {
                         validLabel.setText("Valid inputs");
-                        writeText(newMovesSettings);
+                        writeText(newMovesSettings, keyCodeList);
                     }
                     System.out.println("Settings saved");
                     } catch(IOException a) {
@@ -186,24 +189,36 @@ public class Settings extends JPanel {
         add(settingsPane);
     }
 
-    public void readText(ArrayList<String> arrayList) throws IOException {
+    public void readText(ArrayList<String> buttonList, ArrayList<Integer> keysList) throws IOException {
+        short inc = 0;
         File file = new File("src/main/java/window/menu/Settings.txt");
         String line;
         BufferedReader reader = new BufferedReader(new FileReader(file));
         while ((line = reader.readLine()) != null) {
-            arrayList.add(line);
+            if (inc < 4) {
+                buttonList.add(line);
+            }
+            else {
+                int key=Integer.parseInt(line);
+                keysList.add(key);
+            }
+            inc ++;
         }
     }
 
-    public void writeText(Set<String> arrayList) throws IOException {
-        System.out.println(arrayList);
+    public void writeText(Set<String> arrayList, ArrayList<Integer> keysList) throws IOException {
+        System.out.println(arrayList);System.out.println(keysList);
         File newFile = new File("src/main/java/window/menu/Settings.txt");
         FileWriter fileWriter = new FileWriter(newFile);
         fileWriter.flush();
         BufferedWriter writer = new BufferedWriter(fileWriter);
         for (String line : arrayList) {
-            System.out.println("a");
             writer.write(line);
+            writer.newLine();
+        }
+
+        for (Integer num : keysList) {
+            writer.write(Integer.toString(num));
             writer.newLine();
         }
         writer.close();
