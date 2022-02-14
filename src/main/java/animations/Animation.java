@@ -12,15 +12,17 @@ public class Animation {
     private int currentFrame;
     private int animationDirection;
     private int totalFrames;
-    private boolean stop;
+    public boolean stop;
+    private boolean playOnce;
 
     private List<Frame> frames = new ArrayList<Frame>();
 
-    public Animation(List<BufferedImage> frames, int frameDelay, int offsetX, int offsetY) {
+    public Animation(List<BufferedImage> frames, int frameDelay, int offsetX, int offsetY, boolean playOnce) {
         this.frameDuration = frameDelay;
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.stop = true;
+        this.playOnce = playOnce;
 
         for (BufferedImage frame: frames) {
             addFrame(frame, frameDelay);
@@ -94,9 +96,15 @@ public class Animation {
                 currentFrame += animationDirection;
                 if (currentFrame > totalFrames - 1) {
                     currentFrame = 0;
+                    if (this.playOnce) {
+                        this.stop = true;
+                    }
                 }
                 else if (currentFrame < 0) {
                     currentFrame = totalFrames - 1;
+                    if (this.playOnce) {
+                        this.stop = true;
+                    }
                 }
             }
         }

@@ -23,12 +23,15 @@ public class KeyInput implements KeyListener{
 
     @Override
     public void keyTyped(KeyEvent e) {
-
+        
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
+            case KeyEvent.VK_G:
+                this.handler.player.attack = true;
+                break;
             case KeyEvent.VK_A:
                 this.handler.player.left = true;
                 this.handler.player.leftPressed = true;

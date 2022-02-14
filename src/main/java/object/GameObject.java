@@ -18,7 +18,7 @@ public abstract class GameObject {
     protected SpriteSheet spriteSheet;
     protected int width;
     protected int height;
-    public boolean up, down, left, right;
+    public boolean up, down, left, right, attack;
 
     public GameObject(int x, int y, ID id, SpriteSheet ss){
         this.x = x;
