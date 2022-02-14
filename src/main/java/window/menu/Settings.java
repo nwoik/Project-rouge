@@ -98,13 +98,15 @@ public class Settings extends JPanel {
                     for (JButton btn : buttonList) {
                         System.out.println(btn);
                         String newVal = btn.getText();
+                        //Check if it's usable
+
+                        //Check for duplicates
                         if (!newMovesSettings.add(newVal)) {
                             validLabel.setText("Invalid inputs");
-                            System.out.println("Error: Duplication of keys");
+                            System.out.println("Error: Duplication of keys/No inputs");
                             error = true;
                             break;
                         }
-                        //newMovesSettings.add(newVal);
                         inc ++;
                     }
                     if (!error) {
