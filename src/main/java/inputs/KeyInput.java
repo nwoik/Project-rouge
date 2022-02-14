@@ -51,6 +51,9 @@ public class KeyInput implements KeyListener{
             case KeyEvent.VK_F2:
                 this.gameCanvas.stopped = !this.gameCanvas.stopped;
                 break;
+            case KeyEvent.VK_SPACE:
+                this.handler.player.dash = true;
+                break;
         }
     }
 

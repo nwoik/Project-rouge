@@ -9,9 +9,7 @@ import java.util.Random;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 
-//Class for creating enemy objects. Might need to expand this more or make more variations for different enemies,
-//not sure yet how to implement this
-public class Enemy extends GameObject{
+public class EnemyMelee extends GameObject{
     private Random r = new Random();
     private int choose = 0;
     private int hp = 100;
@@ -26,7 +24,7 @@ public class Enemy extends GameObject{
     //enemy image to be drawn
     private BufferedImage enemyImage;
 
-    public Enemy(int x, int y, ID id, Handler handler, SpriteSheet ss) {
+    public EnemyMelee(int x, int y, ID id, Handler handler, SpriteSheet ss) {
         super(x, y, id, ss);
         this.handler = handler;
         this.width = 64;
@@ -104,10 +102,10 @@ public class Enemy extends GameObject{
         }
 
         //Check if enemy is close enough to player to attack
-        if (getLineLength(this.center) < 400){
+        if (Math.abs(this.center.getX1() - this.center.getX2()) < 100 && Math.abs(this.center.getY1() - this.center.getY2()) < 100){
             this.lineColour = Color.white;
-            this.velX = 0;
-            this.velY = 0;
+//            this.velX = 0;
+//            this.velY = 0;
         }
         else{
             this.lineColour = Color.cyan;
@@ -216,7 +214,7 @@ public class Enemy extends GameObject{
     public void debugRender(Graphics g) {
         g.setColor(Color.red);
         g.drawRect(this.x,this.y,this.width,this.height);
-        g.drawOval((this.x-600) + (this.width/2),(this.y-600) + ((this.height)/2), 1200, 1200);
+        g.drawOval((this.x-400) + (this.width/2),(this.y-400) + ((this.height)/2), 800, 800);
 //        The following options check if enemy is centered in its detection radius
 //        g.setColor(Color.pink);
 //        g.drawRect((x-400) + (width/2),(y-400) + ((height+offset)/2), 800, 800);
@@ -240,15 +238,8 @@ public class Enemy extends GameObject{
         return new Rectangle2D.Float(x,y,width,height);
     }
 
-    private int getLineLength(Line2D line){
-        return (int)(Math.sqrt(Math.pow(line.getX2() - line.getX1(), 2) + Math.pow(line.getY2() - line.getY1(), 2)));
-    }
-
-    public Ellipse2D getBoundsSmallFOV(int x, int y, int width, int height) {
-        return new Ellipse2D.Float(x,y,width,height);
-    }
     //Get Radius of field of view and implement it
     public Ellipse2D getBoundsFOV() {
-        return new Ellipse2D.Float((this.x-600) + ((float)(this.width)/2),(this.y-600) + ((float)(this.height)/2),1200,1200);
+        return new Ellipse2D.Float((this.x-400) + ((float)(this.width)/2),(this.y-400) + ((float)(this.height)/2),800,800);
     }
 }

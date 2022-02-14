@@ -1,11 +1,9 @@
 package object;
 
 import animations.Animation;
-import animations.Frame;
 import core.SpriteSheet;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
@@ -21,10 +19,15 @@ public class Player extends GameObject {
     public boolean downPressed;
     private final int movementSpeed1;
     private final int movementSpeed2;
+
     private Color colour = Color.black;
     public boolean inRange = false;
     private int knockBackFrames = 7;
-    private String knockBackDirection;
+    private String knockBackDirection = "";
+
+    public boolean dash = false;
+    private String dashDirection = "";
+    private int dashCooldown = 100;
 
     public Animation animation;
 
@@ -92,8 +95,18 @@ public class Player extends GameObject {
 
     @Override
     public void tick() {
+        //check dash cooldown
+        if (this.dashCooldown < 100){
+            this.dashCooldown++;
+            this.dash = false;
+        }
+        //if dash off cooldown and pressed, check if would collide with wall, if not, dash
+        else if (this.dash){
+            dash();
+        }
 
-        if (knockBackFrames > 6) {
+        //Player getting knocked back after being hit
+        if (this.knockBackFrames > 6) {
             if (this.right) {
                 addX(this.movementSpeed);
             }
@@ -108,7 +121,7 @@ public class Player extends GameObject {
             }
         }
         else {
-            if (knockBackFrames == 0) {
+            if (this.knockBackFrames == 0) {
                 this.movementSpeed = 10;
             }
 
@@ -118,102 +131,156 @@ public class Player extends GameObject {
                 case "left" -> subX(this.movementSpeed);
                 case "right" -> addX(this.movementSpeed);
             }
-            if (knockBackFrames == 6){
+            if (this.knockBackFrames == 6){
                 this.movementSpeed = 6;
             }
-            knockBackFrames += 1;
+            this.knockBackFrames += 1;
         }
 
-        if (leftPressed){
+        //animations for movement
+        if (this.leftPressed){
             this.setAnimation(this.walkLeft);
             this.animation.start();
             this.left = true;
         }
-        if (rightPressed){
+        if (this.rightPressed){
             this.setAnimation(this.walkRight);
             this.animation.start();
             this.right = true;
         }
-        if (upPressed){
+        if (this.upPressed){
             this.setAnimation(this.walkUp);
             this.animation.start();
             this.up = true;
         }
-        if (downPressed){
+        if (this.downPressed){
             this.setAnimation(this.walkDown);
             this.animation.start();
             this.down = true;
         }
 
-        animation.update();
+        this.animation.update();
         collision();
+        checkEnemyDetection();
         this.inRange = false;
     }
 
-//    private void knockBack
 
-    //check collision with block
+    //checks if player can dash or if it would collide, if not, dash
+    private void dash(){
+        if (this.rightPressed){
+            for (GameObject gameObject : this.handler.block){
+                if (gameObject.getBounds().intersects(getBoundsSmall(this.x + this.width, this.y, this.width*2, this.height))){
+                    this.dash = false;
+                    return;
+                }
+            }
+            this.dashDirection = "right";
+        }
+        else if (this.leftPressed){
+            for (GameObject gameObject : this.handler.block){
+                if (gameObject.getBounds().intersects(getBoundsSmall(this.x - (this.width * 2), y, this.width*2, this.height))){
+                    this.dash = false;
+                    return;
+                }
+            }
+            this.dashDirection = "left";
+        }
+        else if (this.upPressed) {
+            for (GameObject gameObject : this.handler.block){
+                if (gameObject.getBounds().intersects(getBoundsSmall(this.x, y - (this.height*2), this.width, this.height*2))){
+                    this.dash = false;
+                    return;
+                }
+            }
+            this.dashDirection = "up";
+        }
+        else if (this.downPressed){
+            for (GameObject gameObject : this.handler.block){
+                if (gameObject.getBounds().intersects(getBoundsSmall(this.x, y + this.height, this.width, this.height*2))){
+                    this.dash = false;
+                    return;
+                }
+            }
+            this.dashDirection = "down";
+        }
+        else{
+            this.dash = false;
+            return;
+        }
+        switch (this.dashDirection) {
+            case "up" -> this.y -= (this.height*1.5);
+            case "down" -> this.y += (this.height*1.5);
+            case "left" -> this.x -= (this.width*1.5);
+            case "right" -> this.x += (this.width*1.5);
+        }
+        this.dash = false;
+        this.dashDirection = "";
+        this.dashCooldown = 0;
+    }
+
+    //check collision with block/enemy
     private void collision(){
         try{
             int tempX = 0;
             int tempY = 0;
             if (this.inRange) {
 
-                for (GameObject gameObject : handler.enemy) {
+                for (GameObject gameObject : this.handler.enemy) {
                     if (getBounds().intersects(gameObject.getBounds())) {
-                        if (getBoundsSmall(x + movementSpeed2, y, this.width - 2 * movementSpeed2, movementSpeed2).intersects(gameObject.getBounds())) {
-                            tempY = movementSpeed;
-                            knockBackDirection = "down";
+                        if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2 * this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())) {
+                            tempY = this.movementSpeed;
+                            this.knockBackDirection = "down";
                         }
-                        if (getBoundsSmall(x + movementSpeed2, y + this.height - movementSpeed2, this.width - 2 * movementSpeed2, movementSpeed2).intersects(gameObject.getBounds())) {
-                            tempY = -(movementSpeed);
-                            knockBackDirection = "up";
+                        if (getBoundsSmall(this.x + this.movementSpeed2, this.y + this.height - this.movementSpeed2, this.width - 2 * this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())) {
+                            tempY = -(this.movementSpeed);
+                            this.knockBackDirection = "up";
                         }
-                        if (getBoundsSmall(x, y + movementSpeed2, movementSpeed2, this.height - 2 * movementSpeed2).intersects(gameObject.getBounds())) {
-                            tempX = movementSpeed;
-                            knockBackDirection = "right";
+                        if (getBoundsSmall(this.x, this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2 * this.movementSpeed2).intersects(gameObject.getBounds())) {
+                            tempX = this.movementSpeed;
+                            this.knockBackDirection = "right";
                         }
-                        if (getBoundsSmall(x + this.width - movementSpeed2, y + movementSpeed2, movementSpeed2, this.height - 2 * movementSpeed2).intersects(gameObject.getBounds())) {
-                            tempX = -(movementSpeed);
-                            knockBackDirection = "left";
+                        if (getBoundsSmall(x + this.width - this.movementSpeed2, this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2 * this.movementSpeed2).intersects(gameObject.getBounds())) {
+                            tempX = -(this.movementSpeed);
+                            this.knockBackDirection = "left";
                         }
-                        knockBackFrames = 0;
+                        this.knockBackFrames = 0;
                     }
                 }
             }
-            for(GameObject gameObject : handler.block){
+            for(GameObject gameObject : this.handler.block){
                 if (getBounds().intersects(gameObject.getBounds())){
-                        if (getBoundsSmall(x + movementSpeed2, y, this.width - 2* movementSpeed2, movementSpeed2).intersects(gameObject.getBounds())){
-                            tempY = movementSpeed;
+                        if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                            tempY = this.movementSpeed;
                         }
-                        if (getBoundsSmall(x + movementSpeed2, y + this.height - movementSpeed2, this.width - 2* movementSpeed2, movementSpeed2).intersects(gameObject.getBounds())){
-                            tempY = -(movementSpeed);
+                        if (getBoundsSmall(this.x + this.movementSpeed2, this.y + this.height - this.movementSpeed2, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                            tempY = -(this.movementSpeed);
                         }
-                        if (getBoundsSmall(x, y + movementSpeed2, movementSpeed2, this.height - 2*movementSpeed2).intersects(gameObject.getBounds())){
-                            tempX = movementSpeed;
+                        if (getBoundsSmall(this.x, this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                            tempX = this.movementSpeed;
                         }
-                        if (getBoundsSmall(x + this.width - movementSpeed2 , y + movementSpeed2, movementSpeed2, this.height - 2*movementSpeed2).intersects(gameObject.getBounds())){
-                            tempX = -(movementSpeed);
+                        if (getBoundsSmall(this.x + this.width - this.movementSpeed2 , this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                            tempX = -(this.movementSpeed);
                         }
                 }
             }
 
             this.x += tempX;
             this.y += tempY;
-            checkEnemyDetection();
         }
 
         catch (IndexOutOfBoundsException ignored) {
         }
     }
 
+    //Check if player is detected by enemy. For debugging
     public void checkEnemyDetection(){
-        for (GameObject gameObject : handler.enemy){
+        for (GameObject gameObject : this.handler.enemy){
             if (gameObject.getBoundsFOV().intersects(getBounds())){
-                colour = Color.magenta;
+                this.colour = Color.magenta;
                 return;
             }
-            colour = Color.black;
+            this.colour = Color.black;
         }
     }
 
@@ -224,17 +291,18 @@ public class Player extends GameObject {
 
     @Override
     public void debugRender(Graphics g) {
-        g.setColor(colour);
-        g.drawRect(x, y, this.width, this.height);
+        g.setColor(this.colour);
+        g.drawRect(this.x, this.y, this.width, this.height);
     }
 
+    //Helper method for more precise collision checking
     public Rectangle2D getBoundsSmall(int x,int y,int width,int height) {
         return new Rectangle2D.Float(x,y,width,height);
     }
 
     @Override
     public Rectangle2D getBounds() {
-        return new Rectangle2D.Float(x, y, this.width, this.height); //useful for collision for future
+        return new Rectangle2D.Float(this.x, this.y, this.width, this.height); //useful for collision for future
     }
 
     @Override
