@@ -61,8 +61,8 @@ public class AudioHandler {
 
 
 
-    public Clip getClip(String fileName) {
-        final URL soundFile = AudioHandler.class.getResource("/Audio/" + fileName);
+    public Clip getClip(String filePath) {
+        final URL soundFile = AudioHandler.class.getResource("/Audio/" + filePath);
 
         try(AudioInputStream audioInputStream = AudioSystem.getAudioInputStream((soundFile))) {
             final Clip clip = AudioSystem.getClip();
