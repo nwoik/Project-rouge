@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,12 +24,12 @@ public class Settings extends JPanel {
 
         setBackground(new Color(150, 200, 255));
 
-        JLabel title = new JLabel("Settings", SwingConstants.CENTER);
-        JLabel keyLabel = new JLabel("Key Bindings", SwingConstants.CENTER);
-        JLabel upLabel = new JLabel("Move Up", SwingConstants.CENTER);
-        JLabel downLabel = new JLabel("Move Down", SwingConstants.CENTER);
-        JLabel leftLabel = new JLabel("Move Left", SwingConstants.CENTER);
-        JLabel rightLabel = new JLabel("Move Right", SwingConstants.CENTER);
+        JLabel title = new JLabel("", SwingConstants.CENTER);
+        JLabel keyLabel = new JLabel("", SwingConstants.CENTER);
+        JLabel upLabel = new JLabel("", SwingConstants.CENTER);
+        JLabel downLabel = new JLabel("", SwingConstants.CENTER);
+        JLabel leftLabel = new JLabel("", SwingConstants.CENTER);
+        JLabel rightLabel = new JLabel("", SwingConstants.CENTER);
 
         this.movementSettings = new ArrayList<String>();
         this.keyCodeList = new ArrayList<Integer>();
@@ -38,6 +39,33 @@ public class Settings extends JPanel {
         JButton moveDown = new JButton(this.movementSettings.get(1));
         JButton moveLeft = new JButton(this.movementSettings.get(2));
         JButton moveRight = new JButton(this.movementSettings.get(3));
+
+        BufferedImageLoader image = new BufferedImageLoader();
+        BufferedImage wordAtlas = image.loadImage("/Word Sheet.png");
+
+        Image titleImage = wordAtlas.getSubimage(1,1,63,10);
+        Image scaledTitleImage = titleImage.getScaledInstance(350, 70,  java.awt.Image.SCALE_SMOOTH);
+        title.setIcon(new ImageIcon(scaledTitleImage));
+
+        Image controlsImage = wordAtlas.getSubimage(1,25,68,10);
+        Image scaledControlsImage = controlsImage.getScaledInstance(240, 50,  java.awt.Image.SCALE_SMOOTH);
+        keyLabel.setIcon(new ImageIcon(scaledControlsImage));
+
+        Image upImage = wordAtlas.getSubimage(1,73,18,10);
+        Image scaledUpImage = upImage.getScaledInstance(50, 30,  java.awt.Image.SCALE_SMOOTH);
+        upLabel.setIcon(new ImageIcon(scaledUpImage));
+
+        Image downImage = wordAtlas.getSubimage(1,85,36,10);
+        Image scaledDownImage = downImage.getScaledInstance(90, 30,  java.awt.Image.SCALE_SMOOTH);
+        downLabel.setIcon(new ImageIcon(scaledDownImage));
+
+        Image leftImage = wordAtlas.getSubimage(1,97,30,10);
+        Image scaledLeftImage = leftImage.getScaledInstance(70, 30,  java.awt.Image.SCALE_SMOOTH);
+        leftLabel.setIcon(new ImageIcon(scaledLeftImage));
+
+        Image rightImage = wordAtlas.getSubimage(1,109,39,10);
+        Image scaledRightImage = rightImage.getScaledInstance(90, 30,  java.awt.Image.SCALE_SMOOTH);
+        rightLabel.setIcon(new ImageIcon(scaledRightImage));
 
         ArrayList<JButton> buttonList = new ArrayList<JButton>();
         buttonList.add(moveUp);
