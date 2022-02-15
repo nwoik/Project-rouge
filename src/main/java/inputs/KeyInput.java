@@ -65,25 +65,22 @@ public class KeyInput extends KeyAdapter{
             case KeyEvent.VK_A -> {
                 this.handler.player.left = true;
                 this.handler.player.leftPressed = true;
-                break;
-            case KeyEvent.VK_D:
+            }
+            case KeyEvent.VK_D -> {
                 this.handler.player.right = true;
                 this.handler.player.rightPressed = true;
-                break;
-            case KeyEvent.VK_S:
+            }
+            case KeyEvent.VK_S -> {
                 this.handler.player.down = true;
                 this.handler.player.downPressed = true;
-                break;
-            case KeyEvent.VK_W:
+            }
+            case KeyEvent.VK_W -> {
                 this.handler.player.up = true;
                 this.handler.player.upPressed = true;
-                break;
-            case KeyEvent.VK_F1:
-                this.debugSettings.changeDebugMode();
-                break;
-            case KeyEvent.VK_F2:
-                this.gameCanvas.stopped = !this.gameCanvas.stopped;
-                break;
+            }
+            case KeyEvent.VK_G -> this.handler.player.attack = true;
+            case KeyEvent.VK_F1 -> this.debugSettings.changeDebugMode();
+            case KeyEvent.VK_F2 -> this.gameCanvas.stopped = !this.gameCanvas.stopped;
         }
     }
 

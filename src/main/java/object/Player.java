@@ -130,8 +130,7 @@ public class Player extends GameObject {
                 this.setAnimation(this.attackDown);
                 this.animation.start();
                 return;
-            }
-            else if (this.animation.stop && this.animation == this.attackDown) {
+            } else if (this.animation.stop && this.animation == this.attackDown) {
                 this.attack = false;
                 this.setAnimation(standFacingDown);
             }
@@ -139,8 +138,7 @@ public class Player extends GameObject {
                 this.setAnimation(this.attackUp);
                 this.animation.start();
                 return;
-            }
-            else if (this.animation.stop && this.animation == this.attackUp) {
+            } else if (this.animation.stop && this.animation == this.attackUp) {
                 this.attack = false;
                 this.setAnimation(standFacingUp);
             }
@@ -148,8 +146,7 @@ public class Player extends GameObject {
                 this.setAnimation(this.attackLeft);
                 this.animation.start();
                 return;
-            }
-            else if (this.animation.stop && this.animation == this.attackLeft) {
+            } else if (this.animation.stop && this.animation == this.attackLeft) {
                 this.attack = false;
                 this.setAnimation(standFacingLeft);
             }
@@ -157,8 +154,7 @@ public class Player extends GameObject {
                 this.setAnimation(this.attackRight);
                 this.animation.start();
                 return;
-            }
-            else if (this.animation.stop && this.animation == this.attackRight) {
+            } else if (this.animation.stop && this.animation == this.attackRight) {
                 this.attack = false;
                 this.setAnimation(standFacingRight);
             }
@@ -187,6 +183,7 @@ public class Player extends GameObject {
             }
             if (this.up & !attack) {
                 subY(this.movementSpeed);
+            }
         }
         else {
             if (this.knockBackFrames == 0) {
@@ -232,6 +229,7 @@ public class Player extends GameObject {
         checkEnemyDetection();
         this.inRange = false;
     }
+
 
 
     //checks if player can dash or if it would collide, if not, dash
@@ -318,18 +316,18 @@ public class Player extends GameObject {
             }
             for(GameObject gameObject : this.handler.block){
                 if (getBounds().intersects(gameObject.getBounds())){
-                        if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
-                            tempY = this.movementSpeed;
-                        }
-                        if (getBoundsSmall(this.x + this.movementSpeed2, this.y + this.height - this.movementSpeed2, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
-                            tempY = -(this.movementSpeed);
-                        }
-                        if (getBoundsSmall(this.x, this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
-                            tempX = this.movementSpeed;
-                        }
-                        if (getBoundsSmall(this.x + this.width - this.movementSpeed2 , this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
-                            tempX = -(this.movementSpeed);
-                        }
+                    if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                        tempY = this.movementSpeed;
+                    }
+                    if (getBoundsSmall(this.x + this.movementSpeed2, this.y + this.height - this.movementSpeed2, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                        tempY = -(this.movementSpeed);
+                    }
+                    if (getBoundsSmall(this.x, this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                        tempX = this.movementSpeed;
+                    }
+                    if (getBoundsSmall(this.x + this.width - this.movementSpeed2 , this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                        tempX = -(this.movementSpeed);
+                    }
                 }
             }
 
