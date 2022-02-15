@@ -35,9 +35,9 @@ public class AudioHandler {
 
     public void clear() {
         audioList.forEach(audio1 -> {
-                audio1.finish();
-                audioList.remove(audio1);
+            audio1.finish();
         });
+        audioList.clear();
     }
 
     public void playMusic() {

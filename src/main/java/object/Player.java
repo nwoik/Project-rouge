@@ -1,9 +1,11 @@
 package object;
 
 import animations.Animation;
+import animations.Frame;
 import core.SpriteSheet;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
@@ -20,7 +22,7 @@ public class Player extends GameObject {
     private final int movementSpeed1;
     private final int movementSpeed2;
 
-    private Color colour = Color.black;
+    private Color colour = Color.blue;
     public boolean inRange = false;
     private int knockBackFrames = 7;
     private String knockBackDirection = "";
@@ -51,6 +53,16 @@ public class Player extends GameObject {
     private Animation walkLeft;
     private Animation walkRight;
 
+    private List<BufferedImage> attackingDown = new ArrayList<BufferedImage>();
+    private List<BufferedImage> attackingUp = new ArrayList<BufferedImage>();
+    private List<BufferedImage> attackingLeft = new ArrayList<BufferedImage>();
+    private List<BufferedImage> attackingRight = new ArrayList<BufferedImage>();
+
+    private Animation attackDown;
+    private Animation attackUp;
+    private Animation attackLeft;
+    private Animation attackRight;
+
 
     public Player(int x, int y, ID id, Handler handler, SpriteSheet spriteSheet) {
         super(x, y, id, spriteSheet);
@@ -61,27 +73,45 @@ public class Player extends GameObject {
         this.width = 64;
         this.height = 64;
 
+        int alignmentY = -32;
+        int framedelay = 2;
+
         this.standingFacingDown.add(spriteSheet.grabImage(1, 1, 64, 96));
         this.standingFacingLeft.add(spriteSheet.grabImage(2, 1, 64, 96));
         this.standingFacingUp.add(spriteSheet.grabImage(3, 1, 64, 96));
         this.standingFacingRight.add(spriteSheet.grabImage(4, 1, 64, 96));
 
-        int alignmentY = -32;
-        int framedelay = 2;
-        this.standFacingDown = new Animation(this.standingFacingDown, framedelay, 0, alignmentY);
-        this.standFacingLeft = new Animation(this.standingFacingLeft, framedelay, 0, alignmentY);
-        this.standFacingUp = new Animation(this.standingFacingUp, framedelay, 0, alignmentY);
-        this.standFacingRight = new Animation(this.standingFacingRight, framedelay, 0, alignmentY);
+        this.standFacingDown = new Animation(this.standingFacingDown, framedelay, 0, alignmentY, true);
+        this.standFacingLeft = new Animation(this.standingFacingLeft, framedelay, 0, alignmentY, true);
+        this.standFacingUp = new Animation(this.standingFacingUp, framedelay, 0, alignmentY, true);
+        this.standFacingRight = new Animation(this.standingFacingRight, framedelay, 0, alignmentY, true);
 
         fillAnimationList(spriteSheet, this.walkingUp, 1, 3, 2, 72, 100, 10);
         fillAnimationList(spriteSheet, this.walkingDown, 1, 9, 2, 72, 96, 10);
         fillAnimationList(spriteSheet, this.walkingLeft, 1, 5, 2, 88, 96, 10);
         fillAnimationList(spriteSheet, this.walkingRight, 1, 7, 2, 82, 96, 10);
 
-        this.walkUp = new Animation(this.walkingUp, framedelay, -4, alignmentY);
-        this.walkDown = new Animation(this.walkingDown, framedelay, -4, alignmentY);
-        this.walkLeft = new Animation(this.walkingLeft, framedelay, 0, alignmentY);
-        this.walkRight = new Animation(this.walkingRight, framedelay, -16, alignmentY);
+        this.walkUp = new Animation(this.walkingUp, framedelay, -4, alignmentY, true);
+        this.walkDown = new Animation(this.walkingDown, framedelay, -4, alignmentY, true);
+        this.walkLeft = new Animation(this.walkingLeft, framedelay, 0, alignmentY, true);
+        this.walkRight = new Animation(this.walkingRight, framedelay, -16, alignmentY, true);
+
+        //for seperated sword that I could'nt get workin
+        // fillAnimationList(spriteSheet, this.attackingDown, 2, 11, 3, 80, 100, 5);
+        // fillAnimationList(spriteSheet, this.attackingUp, 2, 15, 3, 88, 96, 5);
+        // fillAnimationList(spriteSheet, this.attackingLeft, 2, 19, 3, 72, 100, 5);
+        // fillAnimationList(spriteSheet, this.attackingRight, 2, 24, 3, 72, 100, 5);
+
+        // Sword combined
+        fillAnimationList(spriteSheet, this.attackingDown, 1, 11, 3, 192, 128, 5);
+        fillAnimationList(spriteSheet, this.attackingUp, 1, 13, 3, 192, 192, 5);
+        fillAnimationList(spriteSheet, this.attackingLeft, 1, 16, 3, 192, 192, 5);
+        fillAnimationList(spriteSheet, this.attackingRight, 2, 20, 3, 128, 192, 5);
+
+        this.attackDown = new Animation(this.attackingDown, framedelay, -64, alignmentY, true);
+        this.attackUp = new Animation(this.attackingUp, framedelay, -64, -96, true);
+        this.attackLeft = new Animation(this.attackingLeft, framedelay, -64, -96, true);
+        this.attackRight = new Animation(this.attackingRight, framedelay, 0, alignmentY, true);
 
         this.animation = this.standFacingDown;
     }
@@ -95,6 +125,41 @@ public class Player extends GameObject {
 
     @Override
     public void tick() {
+        if (this.attack) {
+            if (this.animation == this.standFacingDown || this.animation == this.walkDown) {
+                this.setAnimation(this.attackDown);
+                this.animation.start();
+                return;
+            } else if (this.animation.stop && this.animation == this.attackDown) {
+                this.attack = false;
+                this.setAnimation(standFacingDown);
+            }
+            if (this.animation == this.standFacingUp || this.animation == this.walkUp) {
+                this.setAnimation(this.attackUp);
+                this.animation.start();
+                return;
+            } else if (this.animation.stop && this.animation == this.attackUp) {
+                this.attack = false;
+                this.setAnimation(standFacingUp);
+            }
+            if (this.animation == this.standFacingLeft || this.animation == this.walkLeft) {
+                this.setAnimation(this.attackLeft);
+                this.animation.start();
+                return;
+            } else if (this.animation.stop && this.animation == this.attackLeft) {
+                this.attack = false;
+                this.setAnimation(standFacingLeft);
+            }
+            if (this.animation == this.standFacingRight || this.animation == this.walkRight) {
+                this.setAnimation(this.attackRight);
+                this.animation.start();
+                return;
+            } else if (this.animation.stop && this.animation == this.attackRight) {
+                this.attack = false;
+                this.setAnimation(standFacingRight);
+            }
+        }
+
         //check dash cooldown
         if (this.dashCooldown < 100){
             this.dashCooldown++;
@@ -107,16 +172,16 @@ public class Player extends GameObject {
 
         //Player getting knocked back after being hit
         if (this.knockBackFrames > 6) {
-            if (this.right) {
+            if (this.right & !attack) {
                 addX(this.movementSpeed);
             }
-            if (this.left) {
+            if (this.left & !attack) {
                 subX(this.movementSpeed);
             }
-            if (this.down) {
+            if (this.down & !attack) {
                 addY(this.movementSpeed);
             }
-            if (this.up) {
+            if (this.up & !attack) {
                 subY(this.movementSpeed);
             }
         }
@@ -138,22 +203,22 @@ public class Player extends GameObject {
         }
 
         //animations for movement
-        if (this.leftPressed){
+        if (this.leftPressed & !attack){
             this.setAnimation(this.walkLeft);
             this.animation.start();
             this.left = true;
         }
-        if (this.rightPressed){
+        if (this.rightPressed & !attack){
             this.setAnimation(this.walkRight);
             this.animation.start();
             this.right = true;
         }
-        if (this.upPressed){
+        if (this.upPressed & !attack){
             this.setAnimation(this.walkUp);
             this.animation.start();
             this.up = true;
         }
-        if (this.downPressed){
+        if (this.downPressed & !attack){
             this.setAnimation(this.walkDown);
             this.animation.start();
             this.down = true;
@@ -164,6 +229,7 @@ public class Player extends GameObject {
         checkEnemyDetection();
         this.inRange = false;
     }
+
 
 
     //checks if player can dash or if it would collide, if not, dash
@@ -250,18 +316,18 @@ public class Player extends GameObject {
             }
             for(GameObject gameObject : this.handler.block){
                 if (getBounds().intersects(gameObject.getBounds())){
-                        if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
-                            tempY = this.movementSpeed;
-                        }
-                        if (getBoundsSmall(this.x + this.movementSpeed2, this.y + this.height - this.movementSpeed2, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
-                            tempY = -(this.movementSpeed);
-                        }
-                        if (getBoundsSmall(this.x, this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
-                            tempX = this.movementSpeed;
-                        }
-                        if (getBoundsSmall(this.x + this.width - this.movementSpeed2 , this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
-                            tempX = -(this.movementSpeed);
-                        }
+                    if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                        tempY = this.movementSpeed;
+                    }
+                    if (getBoundsSmall(this.x + this.movementSpeed2, this.y + this.height - this.movementSpeed2, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                        tempY = -(this.movementSpeed);
+                    }
+                    if (getBoundsSmall(this.x, this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                        tempX = this.movementSpeed;
+                    }
+                    if (getBoundsSmall(this.x + this.width - this.movementSpeed2 , this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                        tempX = -(this.movementSpeed);
+                    }
                 }
             }
 
@@ -280,7 +346,7 @@ public class Player extends GameObject {
                 this.colour = Color.magenta;
                 return;
             }
-            this.colour = Color.black;
+            this.colour = Color.blue;
         }
     }
 
@@ -309,14 +375,6 @@ public class Player extends GameObject {
     public Ellipse2D getBoundsFOV() {
         return null;
     }
-
-//    public int xOffset(int offset){
-//        return this.x + offset;
-//    }
-//
-//    public int yOffset(int offset){
-//        return this.y + offset;
-//    }
 
     public void setAnimation(Animation animation) {
         this.animation = animation;
