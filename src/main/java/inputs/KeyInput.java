@@ -61,45 +61,48 @@ public class KeyInput extends KeyAdapter{
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        switch (indexOf(key, this.keysList)) {
-            case 2 -> {
+        switch (key) {
+            case KeyEvent.VK_A -> {
                 this.handler.player.left = true;
                 this.handler.player.leftPressed = true;
-            }
-            case 3 -> {
+                break;
+            case KeyEvent.VK_D:
                 this.handler.player.right = true;
                 this.handler.player.rightPressed = true;
-            }
-            case 1 -> {
+                break;
+            case KeyEvent.VK_S:
                 this.handler.player.down = true;
                 this.handler.player.downPressed = true;
-            }
-            case 0 -> {
+                break;
+            case KeyEvent.VK_W:
                 this.handler.player.up = true;
                 this.handler.player.upPressed = true;
-            }
-            case KeyEvent.VK_F1 -> this.debugSettings.changeDebugMode();
-            case KeyEvent.VK_F2 -> this.gameCanvas.stopped = !this.gameCanvas.stopped;
-            case KeyEvent.VK_SPACE -> this.handler.player.dash = true;
+                break;
+            case KeyEvent.VK_F1:
+                this.debugSettings.changeDebugMode();
+                break;
+            case KeyEvent.VK_F2:
+                this.gameCanvas.stopped = !this.gameCanvas.stopped;
+                break;
         }
     }
 
+    @Override
     public void keyReleased(KeyEvent e) {
-        int key = e.getKeyCode();
-        switch (indexOf(key, this.keysList)) {
-            case 1 -> {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_S:
                 this.handler.player.down = false;
                 this.handler.player.downPressed = false;
                 this.handler.player.animation.stop();
                 this.handler.player.setAnimation(this.handler.player.standFacingDown);
-            }
-            case 0 -> {
+                break;
+            case KeyEvent.VK_W:
                 this.handler.player.up = false;
                 this.handler.player.upPressed = false;
                 this.handler.player.animation.stop();
                 this.handler.player.setAnimation(this.handler.player.standFacingUp);
-            }
-            case 2 -> {
+                break;
+            case KeyEvent.VK_A:
                 this.handler.player.left = false;
                 this.handler.player.leftPressed = false;
                 this.handler.player.animation.stop();
@@ -107,8 +110,8 @@ public class KeyInput extends KeyAdapter{
                     break;
                 }
                 this.handler.player.setAnimation(this.handler.player.standFacingLeft);
-            }
-            case 3 -> {
+                break;
+            case KeyEvent.VK_D:
                 this.handler.player.right = false;
                 this.handler.player.rightPressed = false;
                 this.handler.player.animation.stop();
@@ -116,9 +119,7 @@ public class KeyInput extends KeyAdapter{
                     break;
                 }
                 this.handler.player.setAnimation(this.handler.player.standFacingRight);
-            }
+                break;
         }
     }
-
 }
-
