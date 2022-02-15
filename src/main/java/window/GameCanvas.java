@@ -45,7 +45,7 @@ public class GameCanvas extends Canvas implements Runnable{
         BufferedImageLoader loader = new BufferedImageLoader();
         level = loader.loadImage("/Levels/level1.png");
         sprite_sheet = loader.loadImage("/Levels/Dungeon_1.png");
-        character = loader.loadImage("/Player/Character_Atlas-Recovered.png");
+        character = loader.loadImage("/Player/Character_Atlas.png");
         skeleton = loader.loadImage("/Skelleton_Atlas.png");
 
         characterSheet = new SpriteSheet(character);
