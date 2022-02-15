@@ -1,5 +1,6 @@
 package window.menu;
 
+import audio.AudioHandler;
 import core.BufferedImageLoader;
 
 import javax.swing.*;
@@ -81,6 +82,9 @@ public class Settings extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //your actions
+
+                AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
+                audio1.playMusic();
                 moveUp.setText("  ");
                 moveUp.addKeyListener(new KeyBindings(moveUp, keyCodeList, 0));
             }
@@ -91,6 +95,9 @@ public class Settings extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //your actions
+
+                AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
+                audio1.playMusic();
                 moveDown.setText("  ");
                 moveDown.addKeyListener(new KeyBindings(moveDown, keyCodeList, 1));
             }
@@ -101,6 +108,9 @@ public class Settings extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //your actions
+
+                AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
+                audio1.playMusic();
                 moveLeft.setText("  ");
                 moveLeft.addKeyListener(new KeyBindings(moveLeft, keyCodeList, 2));
             }
@@ -111,6 +121,9 @@ public class Settings extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //your actions
+
+                AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
+                audio1.playMusic();
                 moveRight.setText("  ");
                 moveRight.addKeyListener(new KeyBindings(moveRight, keyCodeList, 3));
             }
@@ -120,6 +133,9 @@ public class Settings extends JPanel {
         saveButton.addActionListener(new ActionListener()  {
             @Override
             public void actionPerformed(ActionEvent e) {
+                AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
+                audio1.playMusic();
+
                 try {
                     Set<String> newMovesSettings = new LinkedHashSet<String>();
                     boolean error = false;
@@ -150,6 +166,11 @@ public class Settings extends JPanel {
                 }
             }
         });
+
+        menuButton.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) {
+            AudioHandler audio2 = new AudioHandler("sfx/menu/wood_click.wav");
+            audio2.playMusic();
+        }});
 
         JPanel keyBind1Pane = new JPanel();
         keyBind1Pane.setOpaque( false );
