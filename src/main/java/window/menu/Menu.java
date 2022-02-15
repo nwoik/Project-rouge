@@ -58,19 +58,22 @@ public class Menu extends JPanel {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GameCanvas gameCanvas = new GameCanvas();
+//                GameCanvas gameCanvas = new GameCanvas();
+//                gameWindow.setVisible(false);
+//                gameWindow.add(gameCanvas);
+
+                SceneTransition sceneTransition = new SceneTransition();
 
                 setVisible(false);
                 settings.setVisible(false);
                 layoutPanel.setVisible(false);
 
-                gameWindow.add(gameCanvas);
-                gameCanvas.start();
+                gameWindow.add(sceneTransition);
+                sceneTransition.load(gameWindow);
 
-                System.out.println(audio.audioList);
+//                gameWindow.setVisible(true);
+
                 audio.clear();
-//                audio.audioList.remove(audio.clip);
-                System.out.println(audio.audioList);
             }
         });
         exitButton.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) {System.exit(0);}});
