@@ -100,7 +100,7 @@ public class Settings extends JPanel {
                         String newVal = btn.getText();
                         //Check if it's usable
                         int keycode = keyCodeList.get(inc);
-                        if ((keycode > 47 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 37 && keycode < 40)) {
+                        if ((keycode > 47 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode >= 37 && keycode <= 40)) {
                             //Check for duplicates
                             if (!newMovesSettings.add(newVal)) {
                                 validLabel.setText("Invalid inputs");

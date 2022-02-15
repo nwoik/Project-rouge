@@ -42,58 +42,64 @@ public class KeyInput extends KeyAdapter{
         BufferedReader reader = new BufferedReader(new FileReader(file));
         while ((line = reader.readLine()) != null) {
             if (inc >= 4) {
-                int key=Integer.parseInt(line);
-                keysList.add(key);
+                String key = line;
+                keysList.add(Integer.parseInt(key));
             }
             inc ++;
         }
     }
 
+    public int indexOf(int value, ArrayList<Integer> array){
+        for(int i = 0; i < array.size(); i++){
+            if(array.get(i).equals(value)){
+                return i;
+            }
+        }
+        //return a place holder value
+        return -1;
+    }
+
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_A:
+        int key = e.getKeyCode();
+        switch (indexOf(key, this.keysList)) {
+            case 2 -> {
                 this.handler.player.left = true;
                 this.handler.player.leftPressed = true;
-                break;
-            case KeyEvent.VK_D:
+            }
+            case 3 -> {
                 this.handler.player.right = true;
                 this.handler.player.rightPressed = true;
-                break;
-            case KeyEvent.VK_S:
+            }
+            case 1 -> {
                 this.handler.player.down = true;
                 this.handler.player.downPressed = true;
-                break;
-            case KeyEvent.VK_W:
+            }
+            case 0 -> {
                 this.handler.player.up = true;
                 this.handler.player.upPressed = true;
-                break;
-            case KeyEvent.VK_F1:
-                this.debugSettings.changeDebugMode();
-                break;
-            case KeyEvent.VK_F2:
-                this.gameCanvas.stopped = !this.gameCanvas.stopped;
-                break;
-            case KeyEvent.VK_SPACE:
-                this.handler.player.dash = true;
-                break;
+            }
+            case KeyEvent.VK_F1 -> this.debugSettings.changeDebugMode();
+            case KeyEvent.VK_F2 -> this.gameCanvas.stopped = !this.gameCanvas.stopped;
+            case KeyEvent.VK_SPACE -> this.handler.player.dash = true;
         }
     }
 
     public void keyReleased(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_S:
+        int key = e.getKeyCode();
+        switch (indexOf(key, this.keysList)) {
+            case 1 -> {
                 this.handler.player.down = false;
                 this.handler.player.downPressed = false;
                 this.handler.player.animation.stop();
                 this.handler.player.setAnimation(this.handler.player.standFacingDown);
-                break;
-            case KeyEvent.VK_W:
+            }
+            case 0 -> {
                 this.handler.player.up = false;
                 this.handler.player.upPressed = false;
                 this.handler.player.animation.stop();
                 this.handler.player.setAnimation(this.handler.player.standFacingUp);
-                break;
-            case KeyEvent.VK_A:
+            }
+            case 2 -> {
                 this.handler.player.left = false;
                 this.handler.player.leftPressed = false;
                 this.handler.player.animation.stop();
@@ -101,8 +107,8 @@ public class KeyInput extends KeyAdapter{
                     break;
                 }
                 this.handler.player.setAnimation(this.handler.player.standFacingLeft);
-                break;
-            case KeyEvent.VK_D:
+            }
+            case 3 -> {
                 this.handler.player.right = false;
                 this.handler.player.rightPressed = false;
                 this.handler.player.animation.stop();
@@ -110,7 +116,7 @@ public class KeyInput extends KeyAdapter{
                     break;
                 }
                 this.handler.player.setAnimation(this.handler.player.standFacingRight);
-                break;
+            }
         }
     }
 
