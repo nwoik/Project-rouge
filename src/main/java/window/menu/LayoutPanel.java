@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 
 public class LayoutPanel extends JPanel {
@@ -19,7 +20,7 @@ public class LayoutPanel extends JPanel {
     private Menu menu;
     private Settings settings = new Settings(this);
 
-    public LayoutPanel(GameWindow gameWindow) {
+    public LayoutPanel(GameWindow gameWindow) throws Exception{
         this.gameWindow = gameWindow;
         menu = new Menu(this, this.gameWindow, settings);
         setLayout(cardLayout);

@@ -8,9 +8,15 @@ import object.Player;
 
 import javax.swing.text.PlainDocument;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.awt.event.KeyAdapter;
 
-public class KeyInput implements KeyListener{
+public class KeyInput extends KeyAdapter{
+    ArrayList<Integer> keysList = new ArrayList<Integer>();
     private final Handler handler;
     private DebugSettings debugSettings;
     private final GameCanvas gameCanvas;
@@ -19,14 +25,30 @@ public class KeyInput implements KeyListener{
         this.handler = handler;
         this.debugSettings = debugSettings;
         this.gameCanvas = gameCanvas;
+        this.keysList=keysList;
+
+        try {
+            readText(this.keysList);
+        }
+        catch(IOException a) {
+            a.printStackTrace();
+        }
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-
+    public void readText(ArrayList<Integer> keysList) throws IOException {
+        short inc = 0;
+        File file = new File("src/main/java/window/menu/Settings.txt");
+        String line;
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        while ((line = reader.readLine()) != null) {
+            if (inc >= 4) {
+                int key=Integer.parseInt(line);
+                keysList.add(key);
+            }
+            inc ++;
+        }
     }
 
-    @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_A:
@@ -57,7 +79,6 @@ public class KeyInput implements KeyListener{
         }
     }
 
-    @Override
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_S:
@@ -92,4 +113,6 @@ public class KeyInput implements KeyListener{
                 break;
         }
     }
+
 }
+

@@ -1,21 +1,43 @@
 package window.menu;
 
+import javax.swing.*;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class KeyBindings implements KeyListener {
+class KeyBindings extends KeyAdapter {
+    JButton button;
+    ArrayList<Integer> keysList;
+    int keyPos;
+    Map<Integer, String> arrowMap = new HashMap<>();
+    /*
+    arrowMap.put(letter[i], gpa[i]);
+    arrowMap.put(letter[i], gpa[i]);
+    arrowMap.put(letter[i], gpa[i]);*/
 
-    @Override
-    public void keyTyped(KeyEvent e) {
+    public KeyBindings(JButton button, ArrayList<Integer> keysList, int keyPos) {
+        this.button=button;
+        this.keysList=keysList;
+        this.keyPos=keyPos;
+        this.arrowMap.put(37, "LeftArrow");
+        this.arrowMap.put(38, "UpArrow");
+        this.arrowMap.put(39, "RightArrow");
+        this.arrowMap.put(40, "DownArrow");
     }
-
     @Override
-    public void keyPressed(KeyEvent e) {
-        System.out.println("keyPressed="+KeyEvent.getKeyText(e.getKeyCode()));
-    }
+    public void keyPressed(KeyEvent event) {
+        int keyNum = event.getKeyCode();
+        char key = event.getKeyChar();
+        if (this.arrowMap.containsKey(keyNum)) {
+            String arrowKey = arrowMap.get(keyNum);
+            this.button.setText(""+arrowKey);
+            this.keysList.set(this.keyPos, keyNum);
+            return;
+        }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-        System.out.println("keyReleased="+KeyEvent.getKeyText(e.getKeyCode()));
+        this.button.setText(""+key);
+        this.keysList.set(this.keyPos, keyNum);
     }
 }

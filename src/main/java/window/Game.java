@@ -8,11 +8,11 @@ public class Game{
     public int HEIGHT = dimension.height;
     public int WIDTH = dimension.width;
 
-    public Game(){
+    public Game() throws Exception{
         this.gameWindow = new GameWindow(WIDTH,HEIGHT,"Once Upon a Dungeon");
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception{
         new Game();
     }
 }
