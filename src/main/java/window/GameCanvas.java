@@ -40,7 +40,7 @@ public class GameCanvas extends Canvas implements Runnable{
         camera = new Camera(0,0, HEIGHT, WIDTH);
         debugSettings = new DebugSettings(false);
 
-        addKeyListener(new KeyInput(handler));
+        addKeyListener(new KeyInput(handler,debugSettings, this));
         setBackground(new Color(0, 0, 0));
         addKeyListener(new KeyInput(handler, debugSettings, this));
 
