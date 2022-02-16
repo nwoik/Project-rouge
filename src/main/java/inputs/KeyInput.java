@@ -42,7 +42,7 @@ public class KeyInput extends KeyAdapter{
         String line;
         BufferedReader reader = new BufferedReader(new FileReader(file));
         while ((line = reader.readLine()) != null) {
-            if (inc >= 5) {
+            if (inc >= 6) {
                 keysList.add(Integer.parseInt(line));
             }
             inc ++;
@@ -83,6 +83,10 @@ public class KeyInput extends KeyAdapter{
                 this.debugSettings.changeDebugMode();
             }
             case 6 -> this.gameCanvas.stopped = !this.gameCanvas.stopped;
+            case 7 -> {
+                this.handler.player.dash = true;
+                this.handler.player.dashFrames = 0;
+            }
         }
     }
 

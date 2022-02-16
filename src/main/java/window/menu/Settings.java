@@ -32,6 +32,7 @@ public class Settings extends JPanel {
         JLabel leftLabel = new JLabel("", SwingConstants.CENTER);
         JLabel rightLabel = new JLabel("", SwingConstants.CENTER);
         JLabel weapon1Label = new JLabel("", SwingConstants.CENTER);
+        JLabel dashLabel = new JLabel("", SwingConstants.CENTER);
 
         this.movementSettings = new ArrayList<String>();
         this.keyCodeList = new ArrayList<Integer>();
@@ -42,6 +43,7 @@ public class Settings extends JPanel {
         JButton moveLeft = new JButton(this.movementSettings.get(2));
         JButton moveRight = new JButton(this.movementSettings.get(3));
         JButton weapon1 = new JButton(this.movementSettings.get(4));
+        JButton dash = new JButton(this.movementSettings.get(5));
 
         BufferedImageLoader image = new BufferedImageLoader();
         BufferedImage wordAtlas = image.loadImage("/Word Sheet.png");
@@ -74,12 +76,17 @@ public class Settings extends JPanel {
         Image scaledWeapon1Image = weapon1Image.getScaledInstance(160, 30,  java.awt.Image.SCALE_SMOOTH);
         weapon1Label.setIcon(new ImageIcon(scaledWeapon1Image));
 
+        Image dashImage = wordAtlas.getSubimage(1,121,58,10);
+        Image scaledDashImage = dashImage.getScaledInstance(160, 30,  java.awt.Image.SCALE_SMOOTH);
+        dashLabel.setIcon(new ImageIcon(scaledDashImage));
+
         ArrayList<JButton> buttonList = new ArrayList<JButton>();
         buttonList.add(moveUp);
         buttonList.add(moveDown);
         buttonList.add(moveLeft);
         buttonList.add(moveRight);
         buttonList.add(weapon1);
+        buttonList.add(dash);
 
         JLabel validLabel = new JLabel("");
         JButton menuButton = new JButton(new SwapCardAction("Back", Menu.class.toString(), layoutPanel));
@@ -146,6 +153,19 @@ public class Settings extends JPanel {
                 audio1.playMusic();
                 weapon1.setText("  ");
                 weapon1.addKeyListener(new KeyBindings(weapon1, keyCodeList, 4));
+            }
+        });
+
+        dash.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //your actions
+
+                AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
+                audio1.playMusic();
+                dash.setText("  ");
+                dash.addKeyListener(new KeyBindings(dash, keyCodeList, 5));
             }
         });
 
@@ -287,7 +307,7 @@ public class Settings extends JPanel {
         String line;
         BufferedReader reader = new BufferedReader(new FileReader(file));
         while ((line = reader.readLine()) != null) {
-            if (inc < 5) {
+            if (inc < 6) {
                 buttonList.add(line);
             }
             else {

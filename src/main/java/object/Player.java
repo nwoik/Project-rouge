@@ -27,6 +27,11 @@ public class Player extends GameObject {
     private int knockBackFrames = 7;
     private String knockBackDirection = "";
 
+    public boolean dash = false;
+    private String dashDirection = "";
+    public int dashFrames = 6;
+    private int dashCooldown = 100;
+
     public Animation animation;
 
     private List<BufferedImage> standingFacingDown = new ArrayList<BufferedImage>();
@@ -156,37 +161,61 @@ public class Player extends GameObject {
             }
         }
 
+        //check dash cooldown
+        if (this.dashCooldown < 100){
+            this.dashCooldown++;
+            this.dash = false;
+        }
+        //if dash off cooldown and pressed, check if would collide with wall, if not, dash
+        else if (this.dash){
+            if (this.dashFrames == 0){
+                this.dashCheck();
+                System.out.println(this.movementSpeed + "why is it six");
+            }
+            System.out.println("I run");
+            System.out.println(this.dashFrames);
+            dash();
+            if (this.dashFrames >= 5){
+                this.dash = false;
+                this.dashDirection = "";
+                this.dashCooldown = 0;
+                this.movementSpeed=6;
+            }
+            this.dashFrames++;
+
+        }
 
         //Player getting knocked back after being hit
-        if (this.knockBackFrames > 6) {
-            if (this.right & !attack) {
-                addX(this.movementSpeed);
-            }
-            if (this.left & !attack) {
-                subX(this.movementSpeed);
-            }
-            if (this.down & !attack) {
-                addY(this.movementSpeed);
-            }
-            if (this.up & !attack) {
-                subY(this.movementSpeed);
-            }
-        }
-        else {
-            if (this.knockBackFrames == 0) {
-                this.movementSpeed = 10;
-            }
+        if (!this.dash) {
+            if (this.knockBackFrames > 6) {
+                if (this.right & !attack) {
+                    addX(this.movementSpeed);
+                }
+                if (this.left & !attack) {
+                    subX(this.movementSpeed);
+                }
+                if (this.down & !attack) {
+                    addY(this.movementSpeed);
+                }
+                if (this.up & !attack) {
+                    subY(this.movementSpeed);
+                }
+            } else {
+                if (this.knockBackFrames == 0) {
+                    this.movementSpeed = 10;
+                }
 
-            switch(knockBackDirection){
-                case "up" -> subY(this.movementSpeed);
-                case "down" -> addY(this.movementSpeed);
-                case "left" -> subX(this.movementSpeed);
-                case "right" -> addX(this.movementSpeed);
+                switch (knockBackDirection) {
+                    case "up" -> subY(this.movementSpeed);
+                    case "down" -> addY(this.movementSpeed);
+                    case "left" -> subX(this.movementSpeed);
+                    case "right" -> addX(this.movementSpeed);
+                }
+                if (this.knockBackFrames == 6) {
+                    this.movementSpeed = 6;
+                }
+                this.knockBackFrames += 1;
             }
-            if (this.knockBackFrames == 6){
-                this.movementSpeed = 6;
-            }
-            this.knockBackFrames += 1;
         }
 
         //animations for movement
@@ -215,6 +244,89 @@ public class Player extends GameObject {
         collision();
         checkEnemyDetection();
         this.inRange = false;
+    }
+
+    private void dash(){
+        System.out.println("dash direction = " + this.dashDirection);
+        System.out.println("ms = " + this.movementSpeed);
+        switch (this.dashDirection) {
+            case "up" -> this.y -= this.movementSpeed;
+            case "down" -> this.y += this.movementSpeed;
+            case "right" -> this.x += this.movementSpeed;
+            case "left" -> this.x -= this.movementSpeed;
+        }
+    }
+    //checks if player can dash or if it would collide, if not, dash
+    private void dashCheck(){
+
+        System.out.println("pls");
+        if (this.rightPressed){
+            for (GameObject gameObject : this.handler.block){
+                if (gameObject.getBounds().intersects(getBoundsSmall(this.x + this.width, this.y, this.width*2, this.height))){
+                    this.dash = false;
+                    return;
+                }
+            }
+            for (GameObject gameObject : this.handler.enemy){
+                if (gameObject.getBounds().intersects(getBoundsSmall(this.x + this.width, this.y, this.width*2, this.height))){
+                    this.dash = false;
+                    return;
+                }
+            }
+            this.dashDirection = "right";
+            this.movementSpeed = 20;
+        }
+        else if (this.leftPressed){
+            for (GameObject gameObject : this.handler.block){
+                if (gameObject.getBounds().intersects(getBoundsSmall(this.x - (this.width * 2), y, this.width*2, this.height))){
+                    this.dash = false;
+                    return;
+                }
+            }
+            for (GameObject gameObject : this.handler.enemy){
+                if (gameObject.getBounds().intersects(getBoundsSmall(this.x - (this.width * 2), y, this.width*2, this.height))){
+                    this.dash = false;
+                    return;
+                }
+            }
+            this.dashDirection = "left";
+            this.movementSpeed = 20;
+        }
+        else if (this.upPressed) {
+            for (GameObject gameObject : this.handler.block){
+                if (gameObject.getBounds().intersects(getBoundsSmall(this.x, y - (this.height*2), this.width, this.height*2))){
+                    this.dash = false;
+                    return;
+                }
+            }
+            for (GameObject gameObject : this.handler.enemy){
+                if (gameObject.getBounds().intersects(getBoundsSmall(this.x, y - (this.height*2), this.width, this.height*2))){
+                    this.dash = false;
+                    return;
+                }
+            }
+            this.dashDirection = "up";
+            this.movementSpeed = 20;
+        }
+        else if (this.downPressed){
+            for (GameObject gameObject : this.handler.block){
+                if (gameObject.getBounds().intersects(getBoundsSmall(this.x, y + this.height, this.width, this.height*2))){
+                    this.dash = false;
+                    return;
+                }
+            }
+            for (GameObject gameObject : this.handler.enemy){
+                if (gameObject.getBounds().intersects(getBoundsSmall(this.x, y + this.height, this.width, this.height*2))){
+                    this.dash = false;
+                    return;
+                }
+            }
+            this.dashDirection = "down";
+            this.movementSpeed = 20;
+        }
+        else{
+            this.dash = false;
+        }
     }
 
 
