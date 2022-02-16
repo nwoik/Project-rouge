@@ -53,11 +53,15 @@ public class Menu extends JPanel {
         exitButton.setOpaque(false);
         exitButton.setIcon(new ImageIcon(scaledExitImage));
 
-        AudioHandler audio = new AudioHandler("Once_upon_a_dungeon.wav");
+        AudioHandler audio = new AudioHandler("music/Once_upon_a_dungeon.wav");
 
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                audio.clear();
+                AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
+                audio1.playMusic();
+
 //                GameCanvas gameCanvas = new GameCanvas();
 //                gameWindow.setVisible(false);
 //                gameWindow.add(gameCanvas);
@@ -72,11 +76,17 @@ public class Menu extends JPanel {
                 sceneTransition.load(gameWindow);
 
 //                gameWindow.setVisible(true);
-
-                audio.clear();
             }
         });
-        exitButton.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) {System.exit(0);}});
+        settingsButton.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) {
+            AudioHandler audio2 = new AudioHandler("sfx/menu/wood_click.wav");
+            audio2.playMusic();
+        }});
+        exitButton.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) {
+            AudioHandler audio2 = new AudioHandler("sfx/menu/wood_click.wav");
+            audio2.playMusic();
+            System.exit(0);
+        }});
 
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
