@@ -17,6 +17,7 @@ import java.awt.event.KeyAdapter;
 
 public class KeyInput extends KeyAdapter{
     ArrayList<Integer> keysList = new ArrayList<Integer>();
+
     private final Handler handler;
     private DebugSettings debugSettings;
     private final GameCanvas gameCanvas;
@@ -41,9 +42,8 @@ public class KeyInput extends KeyAdapter{
         String line;
         BufferedReader reader = new BufferedReader(new FileReader(file));
         while ((line = reader.readLine()) != null) {
-            if (inc >= 4) {
-                String key = line;
-                keysList.add(Integer.parseInt(key));
+            if (inc >= 6) {
+                keysList.add(Integer.parseInt(line));
             }
             inc ++;
         }
@@ -59,6 +59,74 @@ public class KeyInput extends KeyAdapter{
         return -1;
     }
 
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+        switch (indexOf(key, this.keysList)) {
+            case 2 -> {
+                this.handler.player.left = true;
+                this.handler.player.leftPressed = true;
+            }
+            case 3 -> {
+                this.handler.player.right = true;
+                this.handler.player.rightPressed = true;
+            }
+            case 1 -> {
+                this.handler.player.down = true;
+                this.handler.player.downPressed = true;
+            }
+            case 0 -> {
+                this.handler.player.up = true;
+                this.handler.player.upPressed = true;
+            }
+            case 4 -> this.handler.player.attack = true;
+            case 5 -> {
+                this.debugSettings.changeDebugMode();
+            }
+            case 6 -> this.gameCanvas.stopped = !this.gameCanvas.stopped;
+            case 7 -> {
+                this.handler.player.dash = true;
+                this.handler.player.dashFrames = 0;
+            }
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
+        switch (indexOf(key, this.keysList)) {
+            case 1 -> {
+                this.handler.player.down = false;
+                this.handler.player.downPressed = false;
+                this.handler.player.animation.stop();
+                this.handler.player.setAnimation(this.handler.player.standFacingDown);
+            }
+            case 0 -> {
+                this.handler.player.up = false;
+                this.handler.player.upPressed = false;
+                this.handler.player.animation.stop();
+                this.handler.player.setAnimation(this.handler.player.standFacingUp);
+            }
+            case 2 -> {
+                this.handler.player.left = false;
+                this.handler.player.leftPressed = false;
+                this.handler.player.animation.stop();
+                if (this.handler.player.upPressed || this.handler.player.downPressed) {
+                    break;
+                }
+                this.handler.player.setAnimation(this.handler.player.standFacingLeft);
+            }
+            case 3 -> {
+                this.handler.player.right = false;
+                this.handler.player.rightPressed = false;
+                this.handler.player.animation.stop();
+                if (this.handler.player.upPressed || this.handler.player.downPressed) {
+                    break;
+                }
+                this.handler.player.setAnimation(this.handler.player.standFacingRight);
+            }
+        }
+    }
+/*
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         switch (key) {
@@ -118,5 +186,5 @@ public class KeyInput extends KeyAdapter{
                 this.handler.player.setAnimation(this.handler.player.standFacingRight);
                 break;
         }
-    }
+    }*/
 }

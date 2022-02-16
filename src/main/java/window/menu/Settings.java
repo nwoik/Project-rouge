@@ -31,6 +31,8 @@ public class Settings extends JPanel {
         JLabel downLabel = new JLabel("", SwingConstants.CENTER);
         JLabel leftLabel = new JLabel("", SwingConstants.CENTER);
         JLabel rightLabel = new JLabel("", SwingConstants.CENTER);
+        JLabel weapon1Label = new JLabel("", SwingConstants.CENTER);
+        JLabel dashLabel = new JLabel("", SwingConstants.CENTER);
 
         this.movementSettings = new ArrayList<String>();
         this.keyCodeList = new ArrayList<Integer>();
@@ -40,6 +42,8 @@ public class Settings extends JPanel {
         JButton moveDown = new JButton(this.movementSettings.get(1));
         JButton moveLeft = new JButton(this.movementSettings.get(2));
         JButton moveRight = new JButton(this.movementSettings.get(3));
+        JButton weapon1 = new JButton(this.movementSettings.get(4));
+        JButton dash = new JButton(this.movementSettings.get(5));
 
         BufferedImageLoader image = new BufferedImageLoader();
         BufferedImage wordAtlas = image.loadImage("/Word Sheet.png");
@@ -68,11 +72,21 @@ public class Settings extends JPanel {
         Image scaledRightImage = rightImage.getScaledInstance(90, 30,  java.awt.Image.SCALE_SMOOTH);
         rightLabel.setIcon(new ImageIcon(scaledRightImage));
 
+        Image weapon1Image = wordAtlas.getSubimage(1,121,58,10);
+        Image scaledWeapon1Image = weapon1Image.getScaledInstance(160, 30,  java.awt.Image.SCALE_SMOOTH);
+        weapon1Label.setIcon(new ImageIcon(scaledWeapon1Image));
+
+        Image dashImage = wordAtlas.getSubimage(1,121,58,10);
+        Image scaledDashImage = dashImage.getScaledInstance(160, 30,  java.awt.Image.SCALE_SMOOTH);
+        dashLabel.setIcon(new ImageIcon(scaledDashImage));
+
         ArrayList<JButton> buttonList = new ArrayList<JButton>();
         buttonList.add(moveUp);
         buttonList.add(moveDown);
         buttonList.add(moveLeft);
         buttonList.add(moveRight);
+        buttonList.add(weapon1);
+        buttonList.add(dash);
 
         JLabel validLabel = new JLabel("");
         JButton menuButton = new JButton(new SwapCardAction("Back", Menu.class.toString(), layoutPanel));
@@ -129,6 +143,33 @@ public class Settings extends JPanel {
             }
         });
 
+        weapon1.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //your actions
+
+                AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
+                audio1.playMusic();
+                weapon1.setText("  ");
+                weapon1.addKeyListener(new KeyBindings(weapon1, keyCodeList, 4));
+            }
+        });
+
+        dash.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //your actions
+
+                AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
+                audio1.playMusic();
+                dash.setText("  ");
+                dash.addKeyListener(new KeyBindings(dash, keyCodeList, 5));
+            }
+        });
+
+
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(new ActionListener()  {
             @Override
@@ -177,7 +218,7 @@ public class Settings extends JPanel {
         keyBind1Pane.setLayout(new BoxLayout(keyBind1Pane, BoxLayout.LINE_AXIS));
         keyBind1Pane.add(Box.createHorizontalGlue());
         keyBind1Pane.add(upLabel);
-        keyBind1Pane.add(Box.createRigidArea(new Dimension(50, 0)));
+        keyBind1Pane.add(Box.createRigidArea(new Dimension(100, 0)));
         keyBind1Pane.add(downLabel);
 
         JPanel keyBind2Pane = new JPanel();
@@ -193,16 +234,32 @@ public class Settings extends JPanel {
         keyBind3Pane.setLayout(new BoxLayout(keyBind3Pane, BoxLayout.LINE_AXIS));
         keyBind3Pane.add(Box.createHorizontalGlue());
         keyBind3Pane.add(leftLabel);
-        keyBind3Pane.add(Box.createRigidArea(new Dimension(50, 0)));
+        keyBind3Pane.add(Box.createRigidArea(new Dimension(100, 0)));
         keyBind3Pane.add(rightLabel);
 
         JPanel keyBind4Pane = new JPanel();
         keyBind4Pane.setOpaque( false );
         keyBind4Pane.setLayout(new BoxLayout(keyBind4Pane, BoxLayout.LINE_AXIS));
-        keyBind3Pane.add(Box.createHorizontalGlue());
+        keyBind4Pane.add(Box.createHorizontalGlue());
         keyBind4Pane.add(moveLeft);
         keyBind4Pane.add(Box.createRigidArea(new Dimension(90, 0)));
         keyBind4Pane.add(moveRight);
+
+        JPanel keyBind5Pane = new JPanel();
+        keyBind5Pane.setOpaque( false );
+        keyBind5Pane.setLayout(new BoxLayout(keyBind5Pane, BoxLayout.LINE_AXIS));
+        keyBind5Pane.add(Box.createHorizontalGlue());
+        keyBind5Pane.add(Box.createRigidArea(new Dimension(50, 0)));
+        keyBind5Pane.add(weapon1Label);
+        keyBind5Pane.add(Box.createRigidArea(new Dimension(50, 0)));
+
+        JPanel keyBind6Pane = new JPanel();
+        keyBind6Pane.setOpaque( false );
+        keyBind6Pane.setLayout(new BoxLayout(keyBind6Pane, BoxLayout.LINE_AXIS));
+        keyBind6Pane.add(Box.createHorizontalGlue());
+        keyBind6Pane.add(Box.createRigidArea(new Dimension(30, 0)));
+        keyBind6Pane.add(weapon1);
+        keyBind6Pane.add(Box.createRigidArea(new Dimension(120, 0)));
 
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         keyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -210,6 +267,8 @@ public class Settings extends JPanel {
         keyBind2Pane.setAlignmentX(Component.CENTER_ALIGNMENT);
         keyBind3Pane.setAlignmentX(Component.CENTER_ALIGNMENT);
         keyBind4Pane.setAlignmentX(Component.CENTER_ALIGNMENT);
+        keyBind5Pane.setAlignmentX(Component.CENTER_ALIGNMENT);
+        keyBind6Pane.setAlignmentX(Component.CENTER_ALIGNMENT);
         validLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         saveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         menuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -230,6 +289,10 @@ public class Settings extends JPanel {
         settingsPane.add(Box.createRigidArea(new Dimension(0, 10)));
         settingsPane.add(keyBind4Pane);
         settingsPane.add(Box.createRigidArea(new Dimension(0, 20)));
+        settingsPane.add(keyBind5Pane);
+        settingsPane.add(Box.createRigidArea(new Dimension(0, 10)));
+        settingsPane.add(keyBind6Pane);
+        settingsPane.add(Box.createRigidArea(new Dimension(0, 20)));
         settingsPane.add(validLabel);
         settingsPane.add(Box.createRigidArea(new Dimension(0, 30)));
         settingsPane.add(saveButton);
@@ -244,7 +307,7 @@ public class Settings extends JPanel {
         String line;
         BufferedReader reader = new BufferedReader(new FileReader(file));
         while ((line = reader.readLine()) != null) {
-            if (inc < 4) {
+            if (inc < 6) {
                 buttonList.add(line);
             }
             else {
