@@ -49,7 +49,7 @@ public class Settings extends JPanel {
         BufferedImage wordAtlas = image.loadImage("/Word Sheet.png");
 
         Image titleImage = wordAtlas.getSubimage(1,1,63,10);
-        Image scaledTitleImage = titleImage.getScaledInstance(350, 70,  java.awt.Image.SCALE_SMOOTH);
+        Image scaledTitleImage = titleImage.getScaledInstance(400, 80,  java.awt.Image.SCALE_SMOOTH);
         title.setIcon(new ImageIcon(scaledTitleImage));
 
         Image controlsImage = wordAtlas.getSubimage(1,25,68,10);
@@ -76,7 +76,7 @@ public class Settings extends JPanel {
         Image scaledWeapon1Image = weapon1Image.getScaledInstance(160, 30,  java.awt.Image.SCALE_SMOOTH);
         weapon1Label.setIcon(new ImageIcon(scaledWeapon1Image));
 
-        Image dashImage = wordAtlas.getSubimage(1,121,58,10);
+        Image dashImage = wordAtlas.getSubimage(1,133,62,10);
         Image scaledDashImage = dashImage.getScaledInstance(160, 30,  java.awt.Image.SCALE_SMOOTH);
         dashLabel.setIcon(new ImageIcon(scaledDashImage));
 
@@ -218,23 +218,25 @@ public class Settings extends JPanel {
         keyBind1Pane.setLayout(new BoxLayout(keyBind1Pane, BoxLayout.LINE_AXIS));
         keyBind1Pane.add(Box.createHorizontalGlue());
         keyBind1Pane.add(upLabel);
-        keyBind1Pane.add(Box.createRigidArea(new Dimension(100, 0)));
+        keyBind1Pane.add(Box.createRigidArea(new Dimension(90, 0)));
         keyBind1Pane.add(downLabel);
+        keyBind1Pane.add(Box.createRigidArea(new Dimension(30, 0)));
 
         JPanel keyBind2Pane = new JPanel();
         keyBind2Pane.setOpaque( false );
         keyBind2Pane.setLayout(new BoxLayout(keyBind2Pane, BoxLayout.LINE_AXIS));
         keyBind2Pane.add(Box.createHorizontalGlue());
         keyBind2Pane.add(moveUp);
-        keyBind2Pane.add(Box.createRigidArea(new Dimension(90, 0)));
+        keyBind2Pane.add(Box.createRigidArea(new Dimension(120, 0)));
         keyBind2Pane.add(moveDown);
+        keyBind2Pane.add(Box.createRigidArea(new Dimension(50, 0)));
 
         JPanel keyBind3Pane = new JPanel();
         keyBind3Pane.setOpaque( false );
         keyBind3Pane.setLayout(new BoxLayout(keyBind3Pane, BoxLayout.LINE_AXIS));
         keyBind3Pane.add(Box.createHorizontalGlue());
         keyBind3Pane.add(leftLabel);
-        keyBind3Pane.add(Box.createRigidArea(new Dimension(100, 0)));
+        keyBind3Pane.add(Box.createRigidArea(new Dimension(120, 0)));
         keyBind3Pane.add(rightLabel);
 
         JPanel keyBind4Pane = new JPanel();
@@ -242,24 +244,26 @@ public class Settings extends JPanel {
         keyBind4Pane.setLayout(new BoxLayout(keyBind4Pane, BoxLayout.LINE_AXIS));
         keyBind4Pane.add(Box.createHorizontalGlue());
         keyBind4Pane.add(moveLeft);
-        keyBind4Pane.add(Box.createRigidArea(new Dimension(90, 0)));
+        keyBind4Pane.add(Box.createRigidArea(new Dimension(120, 0)));
         keyBind4Pane.add(moveRight);
+        keyBind4Pane.add(Box.createRigidArea(new Dimension(50, 0)));
 
         JPanel keyBind5Pane = new JPanel();
         keyBind5Pane.setOpaque( false );
         keyBind5Pane.setLayout(new BoxLayout(keyBind5Pane, BoxLayout.LINE_AXIS));
         keyBind5Pane.add(Box.createHorizontalGlue());
-        keyBind5Pane.add(Box.createRigidArea(new Dimension(50, 0)));
         keyBind5Pane.add(weapon1Label);
-        keyBind5Pane.add(Box.createRigidArea(new Dimension(50, 0)));
+        keyBind5Pane.add(Box.createRigidArea(new Dimension(20, 0)));
+        keyBind5Pane.add(dashLabel);
 
         JPanel keyBind6Pane = new JPanel();
         keyBind6Pane.setOpaque( false );
         keyBind6Pane.setLayout(new BoxLayout(keyBind6Pane, BoxLayout.LINE_AXIS));
         keyBind6Pane.add(Box.createHorizontalGlue());
-        keyBind6Pane.add(Box.createRigidArea(new Dimension(30, 0)));
         keyBind6Pane.add(weapon1);
         keyBind6Pane.add(Box.createRigidArea(new Dimension(120, 0)));
+        keyBind6Pane.add(dash);
+        keyBind6Pane.add(Box.createRigidArea(new Dimension(50, 0)));
 
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         keyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
