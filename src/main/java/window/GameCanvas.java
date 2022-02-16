@@ -38,11 +38,10 @@ public class GameCanvas extends Canvas implements Runnable{
     public GameCanvas() {
         this.handler = new Handler();
         camera = new Camera(0,0, HEIGHT, WIDTH);
-        debugSettings = new DebugSettings(false);
+        this.debugSettings = new DebugSettings(false);
 
-        addKeyListener(new KeyInput(handler,debugSettings, this));
+        addKeyListener(new KeyInput(handler,this.debugSettings, this));
         setBackground(new Color(0, 0, 0));
-        addKeyListener(new KeyInput(handler, debugSettings, this));
 
         BufferedImageLoader loader = new BufferedImageLoader();
         level = loader.loadImage("/Levels/level1.png");
@@ -151,7 +150,8 @@ public class GameCanvas extends Canvas implements Runnable{
         }
 
         //Render every single object.
-        handler.render(g, debugSettings.isDebugMode());
+        System.out.println(this.debugSettings.isDebugMode());
+        handler.render(g, this.debugSettings.isDebugMode());
         g2d.translate(camera.getX(), camera.getY());
         //Write out fps
         g.setColor(Color.yellow);

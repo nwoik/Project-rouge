@@ -104,8 +104,8 @@ public class EnemyMelee extends GameObject{
         //Check if enemy is close enough to player to attack
         if (Math.abs(this.center.getX1() - this.center.getX2()) < 100 && Math.abs(this.center.getY1() - this.center.getY2()) < 100){
             this.lineColour = Color.white;
-//            this.velX = 0;
-//            this.velY = 0;
+            this.velX = 0;
+            this.velY = 0;
         }
         else{
             this.lineColour = Color.cyan;

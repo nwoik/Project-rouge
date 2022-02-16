@@ -44,7 +44,7 @@ public class LevelLoader {
 
                 }
                 else if (colour.getRed() == 0 && colour.getGreen() == 255 && colour.getBlue() == 0) {
-                    handler.addObject(new Enemy(xx * 64, yy * 64, ID.Enemy, handler, spriteSheet), handler.enemy);
+                    handler.addObject(new EnemyMelee(xx * 64, yy * 64, ID.Enemy, handler, spriteSheet), handler.enemy);
                 }
                 else if (colour.getRed() == 0 && colour.getGreen() == 0 && colour.getBlue() == 255) {
                     characterSpawn.loadCharacter(xx, yy, colour);

@@ -79,7 +79,9 @@ public class KeyInput extends KeyAdapter{
                 this.handler.player.upPressed = true;
             }
             case 4 -> this.handler.player.attack = true;
-            case 5 -> this.debugSettings.changeDebugMode();
+            case 5 -> {
+                this.debugSettings.changeDebugMode();
+            }
             case 6 -> this.gameCanvas.stopped = !this.gameCanvas.stopped;
         }
     }
