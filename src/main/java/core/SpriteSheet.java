@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 //Class for loading sprite sheets and resizing them to 64x64
 public class SpriteSheet {
 
-    private BufferedImage image;
+    public BufferedImage image;
     int width;
     int height;
 
@@ -23,7 +23,7 @@ public class SpriteSheet {
         Graphics graphics = resizedImage.getGraphics();
         graphics.drawImage(image, 0, 0, width*4, height*4, null);
         graphics.dispose();
-        image = resizedImage;
+        this.image = resizedImage;
     }
 
     public BufferedImage grabImage(int col, int row, int width, int height){
