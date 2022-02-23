@@ -1,33 +1,31 @@
 package object;
 
+import animations.Animation;
 import core.SpriteSheet;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 
 //template for creating any object we could possibly want in our game
 public abstract class GameObject {
     protected Handler handler;
     protected int x, y;
-    protected float velX = 0, velY = 0;
-    protected int movementSpeed;
+
     protected ID id;
     protected SpriteSheet spriteSheet;
     protected int width;
     protected int height;
-    public boolean up, down, left, right, attack;
 
     public GameObject(int x, int y, ID id, SpriteSheet ss){
         this.x = x;
         this.y = y;
         this.id = id;
-        this.left = false;
-        this.right = false;
-        this.up = false;
-        this.down = false;
         this.spriteSheet = ss;
     }
 
@@ -53,27 +51,10 @@ public abstract class GameObject {
     public int getX(){
         return x;
     }
-    public void setX(int x) {
-        this.x = x;
-    }
     public int getY(){
         return y;
     }
-    public void setY(int y) {
-        this.y = y;
-    }
-    public float getVelX(){
-        return velX;
-    }
-    public void setVelX(float velX) {
-        this.velX = velX;
-    }
-    public float getVelY(){
-        return velY;
-    }
-    public void setVelY(float velY) {
-        this.velY = velY;
-    }
+
     public SpriteSheet getSpriteSheet() {
         return spriteSheet;
     }
@@ -95,22 +76,6 @@ public abstract class GameObject {
 
     public void setHeight(int height) {
         this.height = height;
-    }
-
-    public void addX(int value) {
-        this.x += value;
-    }
-
-    public void subX(int value) {
-        this.x -= value;
-    }
-
-    public void addY(int value) {
-        this.y += value;
-    }
-
-    public void subY(int value) {
-        this.y -= value;
     }
 
 }
