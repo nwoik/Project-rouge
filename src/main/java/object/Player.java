@@ -13,7 +13,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player extends GameObject {
+public class Player extends AnimateObject {
 
     public boolean leftPressed;
     public boolean rightPressed;
@@ -32,38 +32,6 @@ public class Player extends GameObject {
     public int dashFrames = 6;
     private int dashCooldown = 100;
 
-    public Animation animation;
-
-    private List<BufferedImage> standingFacingDown = new ArrayList<BufferedImage>();
-    private List<BufferedImage> standingFacingLeft = new ArrayList<BufferedImage>();
-    private List<BufferedImage> standingFacingUp = new ArrayList<BufferedImage>();
-    private List<BufferedImage> standingFacingRight = new ArrayList<BufferedImage>();
-
-    public Animation standFacingDown;
-    public Animation standFacingLeft;
-    public Animation standFacingUp;
-    public Animation standFacingRight;
-
-    private List<BufferedImage> walkingUp = new ArrayList<BufferedImage>();
-    private List<BufferedImage> walkingLeft = new ArrayList<BufferedImage>();
-    private List<BufferedImage> walkingRight = new ArrayList<BufferedImage>();
-    private List<BufferedImage> walkingDown = new ArrayList<BufferedImage>();
-
-    private Animation walkDown;
-    private Animation walkUp;
-    private Animation walkLeft;
-    private Animation walkRight;
-
-    private List<BufferedImage> attackingDown = new ArrayList<BufferedImage>();
-    private List<BufferedImage> attackingUp = new ArrayList<BufferedImage>();
-    private List<BufferedImage> attackingLeft = new ArrayList<BufferedImage>();
-    private List<BufferedImage> attackingRight = new ArrayList<BufferedImage>();
-
-    private Animation attackDown;
-    private Animation attackUp;
-    private Animation attackLeft;
-    private Animation attackRight;
-
 
     public Player(int x, int y, ID id, Handler handler, SpriteSheet spriteSheet) {
         super(x, y, id, spriteSheet);
@@ -74,8 +42,7 @@ public class Player extends GameObject {
         this.width = 64;
         this.height = 64;
 
-        int alignmentY = -32;
-        int framedelay = 2;
+        this.alignmentY = -32;
 
         this.standingFacingDown.add(spriteSheet.grabImage(1, 1, 64, 96));
         this.standingFacingLeft.add(spriteSheet.grabImage(2, 1, 64, 96));
@@ -96,12 +63,6 @@ public class Player extends GameObject {
         this.walkDown = new Animation(this.walkingDown, framedelay, -4, alignmentY, true);
         this.walkLeft = new Animation(this.walkingLeft, framedelay, 0, alignmentY, true);
         this.walkRight = new Animation(this.walkingRight, framedelay, -16, alignmentY, true);
-
-        //for seperated sword that I could'nt get workin
-        // fillAnimationList(spriteSheet, this.attackingDown, 2, 11, 3, 80, 100, 5);
-        // fillAnimationList(spriteSheet, this.attackingUp, 2, 15, 3, 88, 96, 5);
-        // fillAnimationList(spriteSheet, this.attackingLeft, 2, 19, 3, 72, 100, 5);
-        // fillAnimationList(spriteSheet, this.attackingRight, 2, 24, 3, 72, 100, 5);
 
         // Sword combined
         fillAnimationList(spriteSheet, this.attackingDown, 1, 11, 3, 192, 128, 5);
