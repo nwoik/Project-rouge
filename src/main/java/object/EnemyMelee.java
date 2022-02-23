@@ -10,7 +10,7 @@ import java.util.Random;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 
-public class EnemyMelee extends AnimateObject{
+public class EnemyMelee extends AnimateObject {
     private Random r = new Random();
     private int choose = 0;
     private int hp = 100;
