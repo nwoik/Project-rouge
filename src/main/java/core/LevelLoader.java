@@ -1,6 +1,8 @@
 package core;
 
 import java.awt.image.BufferedImage;
+
+import core.spawns.CharacterSpawn;
 import object.*;
 
 public class LevelLoader {
@@ -12,6 +14,7 @@ public class LevelLoader {
         this.spriteSheet = ss;
         this.handler = handler;
         this.characterSpawn = characterSpawn;
+
     }
 
     //might be useful for loading new level
@@ -44,7 +47,7 @@ public class LevelLoader {
 
                 }
                 else if (colour.getRed() == 0 && colour.getGreen() == 255 && colour.getBlue() == 0) {
-                    handler.addObject(new EnemyMelee(xx * 64, yy * 64, ID.Enemy, handler, spriteSheet), handler.enemy);
+                    handler.addObject(new Skeleton(xx * 64, yy * 64, ID.Enemy, handler, spriteSheet), handler.enemy);
                 }
                 else if (colour.getRed() == 0 && colour.getGreen() == 0 && colour.getBlue() == 255) {
                     characterSpawn.loadCharacter(xx, yy, colour);
