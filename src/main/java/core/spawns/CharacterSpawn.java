@@ -1,5 +1,7 @@
-package core;
+package core.spawns;
 
+import core.Colour;
+import core.SpriteSheet;
 import object.*;
 
 import java.awt.image.BufferedImage;

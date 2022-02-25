@@ -1,6 +1,7 @@
 package window;
 
 import core.*;
+import core.spawns.CharacterSpawn;
 import debug.DebugSettings;
 import inputs.KeyInput;
 import object.Handler;
@@ -50,7 +51,7 @@ public class GameCanvas extends Canvas implements Runnable{
         level = loader.loadImage("/Levels/level1.png");
         sprite_sheet = loader.loadImage("/Levels/Dungeon_1.png");
         character = loader.loadImage("/Player/Character_Atlas.png");
-        skeleton = loader.loadImage("/Skelleton_Atlas.png");
+        skeleton = loader.loadImage("/Skeleton_Atlas.png");
         ui = loader.loadImage("/UI.png");
 
         uiSheet = new SpriteSheet(ui);
