@@ -1,6 +1,7 @@
 package window;
 
 import core.*;
+import core.spawns.CharacterSpawn;
 import debug.DebugSettings;
 import inputs.KeyInput;
 import object.Handler;
@@ -17,6 +18,7 @@ public class GameCanvas extends Canvas implements Runnable{
     private Thread thread;
     private SpriteSheet ss;
     private SpriteSheet characterSheet;
+    private SpriteSheet uiSheet;
     public Boolean stopped = false;
 
     public DebugSettings debugSettings;
@@ -30,6 +32,7 @@ public class GameCanvas extends Canvas implements Runnable{
     private BufferedImage floor = null;
     private BufferedImage character = null;
     private BufferedImage skeleton = null;
+    private BufferedImage ui = null;
 
     // For callFPS
     String outputFPS = "";
@@ -48,8 +51,10 @@ public class GameCanvas extends Canvas implements Runnable{
         level = loader.loadImage("/Levels/level1.png");
         sprite_sheet = loader.loadImage("/Levels/Dungeon_1.png");
         character = loader.loadImage("/Player/Character_Atlas.png");
-        skeleton = loader.loadImage("/Skelleton_Atlas.png");
+        skeleton = loader.loadImage("/Skeleton_Atlas.png");
+        ui = loader.loadImage("/UI.png");
 
+        uiSheet = new SpriteSheet(ui);
         characterSheet = new SpriteSheet(character);
         ss = new SpriteSheet(sprite_sheet);
 
@@ -153,6 +158,7 @@ public class GameCanvas extends Canvas implements Runnable{
         //Render every single object.
         handler.render(g, this.debugSettings.isDebugMode());
         g2d.translate(camera.getX(), camera.getY());
+        g.drawImage(this.uiSheet.image, 20,20, null);
         //Write out fps
         g.setColor(Color.yellow);
         g.drawString(outputFPS, 20, 20);

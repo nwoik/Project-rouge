@@ -1,5 +1,6 @@
 package object;
 
+import animations.Animation;
 import core.SpriteSheet;
 
 import java.awt.*;
@@ -9,13 +10,12 @@ import java.util.Random;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 
-public class EnemyMelee extends GameObject{
+public class Skeleton extends AnimateObject {
     private Random r = new Random();
     private int choose = 0;
     private int hp = 100;
-    private int movementSpeed = 3;
-    private int movementSpeed1 = this.movementSpeed +1;
-    private int movementSpeed2 = this.movementSpeed1 * 2;
+    private int movementSpeed1;
+    private int movementSpeed2;
     private boolean collided = false;
     private boolean lineCollided = false;
 
@@ -24,13 +24,21 @@ public class EnemyMelee extends GameObject{
     //enemy image to be drawn
     private BufferedImage enemyImage;
 
-    public EnemyMelee(int x, int y, ID id, Handler handler, SpriteSheet ss) {
+    public Skeleton(int x, int y, ID id, Handler handler, SpriteSheet ss) {
         super(x, y, id, ss);
         this.handler = handler;
         this.width = 64;
         this.height = 64;
+        this.movementSpeed = 3;
+        this.movementSpeed1 = this.movementSpeed +1;
+        this.movementSpeed2 = this.movementSpeed1 * 2;
+        this.alignmentY = -32;
 
-        this.enemyImage = ss.grabImage(2, 3, 64, 96);
+        this.standingFacingDown.add(spriteSheet.grabImage(2, 3, 64, 96));
+
+        this.standFacingDown = new Animation(this.standingFacingDown, framedelay, 0, alignmentY, true);
+
+        this.animation = this.standFacingDown;
     }
 
     //updates enemy every tick. Mostly for checking movement and collision with blocks
@@ -207,7 +215,7 @@ public class EnemyMelee extends GameObject{
         }
     }
     public void render(Graphics g) {
-        g.drawImage(this.enemyImage, this.x, this.y-32, null);
+        g.drawImage(this.animation.getSprite(), x + this.animation.getOffsetX(), y + this.animation.getOffsetY(), null);
     }
 
     @Override

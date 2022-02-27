@@ -11,7 +11,7 @@ import java.awt.geom.Line2D;
 
 //Class for creating enemy objects. Might need to expand this more or make more variations for different enemies,
 //not sure yet how to implement this
-public class Enemy extends GameObject{
+public class Enemy extends AnimateObject {
     private Random r = new Random();
     private int choose = 0;
     private int hp = 100;
