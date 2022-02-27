@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 
@@ -28,25 +30,31 @@ public class Menu extends JPanel {
         BufferedImageLoader image = new BufferedImageLoader();
         BufferedImage wordAtlas = image.loadImage("/Word Sheet.png");
 
-        Image newGameImage = wordAtlas.getSubimage(1,13,63,10);
+        Image newGameImage = wordAtlas.getSubimage(0,12,65,12);
         Image scaledNewGameImage = newGameImage.getScaledInstance(360, 60,  java.awt.Image.SCALE_SMOOTH);
+        Image newGameHover = wordAtlas.getSubimage(74,12,65,12);
+        Image scaledNewGameHover = newGameHover.getScaledInstance(360, 60,  java.awt.Image.SCALE_SMOOTH);
         playButton.setBorderPainted(false);
         playButton.setContentAreaFilled(false);
         playButton.setFocusPainted(false);
         playButton.setOpaque(false);
         playButton.setIcon(new ImageIcon(scaledNewGameImage));
 
-        Image settingsImage = wordAtlas.getSubimage(1,1,63,10);
+        Image settingsImage = wordAtlas.getSubimage(74,0,65,12);
         Image scaledSettingsImage = settingsImage.getScaledInstance(360, 60,  java.awt.Image.SCALE_SMOOTH);
+        Image settingsHover = wordAtlas.getSubimage(0,0,65,12);
+        Image scaledSettingsHover = settingsHover.getScaledInstance(360, 60,  java.awt.Image.SCALE_SMOOTH);
         settingsButton.setText("");
         settingsButton.setBorderPainted(false);
         settingsButton.setContentAreaFilled(false);
         settingsButton.setFocusPainted(false);
         settingsButton.setOpaque(false);
-        settingsButton.setIcon(new ImageIcon(scaledSettingsImage));
+        settingsButton.setIcon(new ImageIcon(scaledSettingsHover));
 
-        Image exitImage = wordAtlas.getSubimage(1,37,29,10);
+        Image exitImage = wordAtlas.getSubimage(0,36,31,12);
         Image scaledExitImage = exitImage.getScaledInstance(200, 60,  java.awt.Image.SCALE_SMOOTH);
+        Image exitHover = wordAtlas.getSubimage(74,36,31,12);
+        Image scaledExitHover = exitHover.getScaledInstance(200, 60,  java.awt.Image.SCALE_SMOOTH);
         exitButton.setBorderPainted(false);
         exitButton.setContentAreaFilled(false);
         exitButton.setFocusPainted(false);
@@ -54,6 +62,57 @@ public class Menu extends JPanel {
         exitButton.setIcon(new ImageIcon(scaledExitImage));
 
         AudioHandler audio = new AudioHandler("music/Once_upon_a_dungeon.wav");
+
+        playButton.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseReleased(MouseEvent arg0) {}
+            @Override
+            public void mousePressed(MouseEvent arg0) {}
+            @Override
+            public void mouseExited(MouseEvent arg0) {
+                playButton.setIcon(new ImageIcon(scaledNewGameImage));
+            }
+            @Override
+            public void mouseEntered(MouseEvent arg0) {
+                playButton.setIcon(new ImageIcon(scaledNewGameHover));
+            }
+            @Override
+            public void mouseClicked(MouseEvent arg0) {}
+        });
+
+        settingsButton.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseReleased(MouseEvent arg0) {}
+            @Override
+            public void mousePressed(MouseEvent arg0) {}
+            @Override
+            public void mouseExited(MouseEvent arg0) {
+                settingsButton.setIcon(new ImageIcon(scaledSettingsHover));
+            }
+            @Override
+            public void mouseEntered(MouseEvent arg0) {
+                settingsButton.setIcon(new ImageIcon(scaledSettingsImage));
+            }
+            @Override
+            public void mouseClicked(MouseEvent arg0) {}
+        });
+
+        exitButton.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseReleased(MouseEvent arg0) {}
+            @Override
+            public void mousePressed(MouseEvent arg0) {}
+            @Override
+            public void mouseExited(MouseEvent arg0) {
+                exitButton.setIcon(new ImageIcon(scaledExitImage));
+            }
+            @Override
+            public void mouseEntered(MouseEvent arg0) {
+                exitButton.setIcon(new ImageIcon(scaledExitHover));
+            }
+            @Override
+            public void mouseClicked(MouseEvent arg0) {}
+        });
 
         playButton.addActionListener(new ActionListener() {
             @Override
