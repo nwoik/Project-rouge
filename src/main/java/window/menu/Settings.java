@@ -48,12 +48,12 @@ public class Settings extends JPanel {
         BufferedImageLoader image = new BufferedImageLoader();
         BufferedImage wordAtlas = image.loadImage("/Word Sheet.png");
 
-        Image titleImage = wordAtlas.getSubimage(0,0,63,10);
+        Image titleImage = wordAtlas.getSubimage(0,0,64,10);
         Image scaledTitleImage = titleImage.getScaledInstance(400, 80,  java.awt.Image.SCALE_SMOOTH);
         title.setIcon(new ImageIcon(scaledTitleImage));
 
-        Image controlsImage = wordAtlas.getSubimage(0,25,68,10);
-        Image scaledControlsImage = controlsImage.getScaledInstance(240, 50,  java.awt.Image.SCALE_SMOOTH);
+        Image controlsImage = wordAtlas.getSubimage(0,25,69,10);
+        Image scaledControlsImage = controlsImage.getScaledInstance(280, 50,  java.awt.Image.SCALE_SMOOTH);
         keyLabel.setIcon(new ImageIcon(scaledControlsImage));
 
         Image upImage = wordAtlas.getSubimage(0,73,18,10);
