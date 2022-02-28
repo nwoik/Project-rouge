@@ -72,7 +72,7 @@ public class Enemy extends AnimateObject {
     private void directMovement(){
         this.center = plotLine(this.x +(this.width/2), this.y+(this.height/2), this.handler.player.getX() +(this.handler.player.getWidth()/2), this.handler.player.getY()+(this.handler.player.getHeight()/2));
         //If line collides with a block then return, otherwise implement line of sight actions
-        for (GameObject gameObject: this.handler.block){
+        for (GameObject gameObject: this.handler.walls){
             if (this.center.intersects(gameObject.getBounds())){
                 this.lineColour = Color.orange;
                 this.lineCollided = true;
@@ -188,7 +188,7 @@ public class Enemy extends AnimateObject {
     }
     //Check if enemy collided with block
     private void collision(){
-        for(GameObject gameObject : this.handler.block){
+        for(GameObject gameObject : this.handler.walls){
 
             //if collide with wall, go the opposite way
             if(getBounds().intersects(gameObject.getBounds())){

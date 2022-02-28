@@ -16,9 +16,14 @@ public class CharacterSpawn {
         this.handler = handler;
     }
 
-    public void loadCharacter(int xx, int yy, Colour colour){
+    public void loadCharacter(int xx, int yy){
         handler.player = new Player(xx * 64, yy * 64, ID.Player, handler, spriteSheet);
 
+    }
+
+    public void setPosition(int xx, int yy) {
+        handler.player.setX(xx);
+        handler.player.setY(yy);
     }
 
     public SpriteSheet getSpriteSheet() {
