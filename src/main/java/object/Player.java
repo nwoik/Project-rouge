@@ -1,16 +1,13 @@
 package object;
 
 import animations.Animation;
-import animations.Frame;
 import core.SpriteSheet;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends AnimateObject {
@@ -222,13 +219,13 @@ public class Player extends AnimateObject {
 
         System.out.println("pls");
         if (this.rightPressed){
-            for (GameObject gameObject : this.handler.block){
+            for (GameObject gameObject : this.handler.walls){
                 if (gameObject.getBounds().intersects(getBoundsSmall(this.x + this.width, this.y, this.width*2, this.height))){
                     this.dash = false;
                     return;
                 }
             }
-            for (GameObject gameObject : this.handler.enemy){
+            for (GameObject gameObject : this.handler.enemies){
                 if (gameObject.getBounds().intersects(getBoundsSmall(this.x + this.width, this.y, this.width*2, this.height))){
                     this.dash = false;
                     return;
@@ -238,13 +235,13 @@ public class Player extends AnimateObject {
             this.movementSpeed = 20;
         }
         else if (this.leftPressed){
-            for (GameObject gameObject : this.handler.block){
+            for (GameObject gameObject : this.handler.walls){
                 if (gameObject.getBounds().intersects(getBoundsSmall(this.x - (this.width * 2), y, this.width*2, this.height))){
                     this.dash = false;
                     return;
                 }
             }
-            for (GameObject gameObject : this.handler.enemy){
+            for (GameObject gameObject : this.handler.enemies){
                 if (gameObject.getBounds().intersects(getBoundsSmall(this.x - (this.width * 2), y, this.width*2, this.height))){
                     this.dash = false;
                     return;
@@ -254,13 +251,13 @@ public class Player extends AnimateObject {
             this.movementSpeed = 20;
         }
         else if (this.upPressed) {
-            for (GameObject gameObject : this.handler.block){
+            for (GameObject gameObject : this.handler.walls){
                 if (gameObject.getBounds().intersects(getBoundsSmall(this.x, y - (this.height*2), this.width, this.height*2))){
                     this.dash = false;
                     return;
                 }
             }
-            for (GameObject gameObject : this.handler.enemy){
+            for (GameObject gameObject : this.handler.enemies){
                 if (gameObject.getBounds().intersects(getBoundsSmall(this.x, y - (this.height*2), this.width, this.height*2))){
                     this.dash = false;
                     return;
@@ -270,13 +267,13 @@ public class Player extends AnimateObject {
             this.movementSpeed = 20;
         }
         else if (this.downPressed){
-            for (GameObject gameObject : this.handler.block){
+            for (GameObject gameObject : this.handler.walls){
                 if (gameObject.getBounds().intersects(getBoundsSmall(this.x, y + this.height, this.width, this.height*2))){
                     this.dash = false;
                     return;
                 }
             }
-            for (GameObject gameObject : this.handler.enemy){
+            for (GameObject gameObject : this.handler.enemies){
                 if (gameObject.getBounds().intersects(getBoundsSmall(this.x, y + this.height, this.width, this.height*2))){
                     this.dash = false;
                     return;
@@ -298,7 +295,7 @@ public class Player extends AnimateObject {
             int tempY = 0;
             if (this.inRange) {
 
-                for (GameObject gameObject : this.handler.enemy) {
+                for (GameObject gameObject : this.handler.enemies) {
                     if (getBounds().intersects(gameObject.getBounds())) {
                         boolean check = false;
                         if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2 * this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())) {
@@ -335,7 +332,7 @@ public class Player extends AnimateObject {
                     }
                 }
             }
-            for(GameObject gameObject : this.handler.block){
+            for(GameObject gameObject : this.handler.walls){
                 if (getBounds().intersects(gameObject.getBounds())){
                     if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
                         tempY = this.movementSpeed;
@@ -362,7 +359,7 @@ public class Player extends AnimateObject {
 
     //Check if player is detected by enemy. For debugging
     public void checkEnemyDetection(){
-        for (GameObject gameObject : this.handler.enemy){
+        for (GameObject gameObject : this.handler.enemies){
             if (gameObject.getBoundsFOV().intersects(getBounds())){
                 this.colour = Color.magenta;
                 return;

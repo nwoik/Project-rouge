@@ -1,17 +1,16 @@
 package core;
 
-import java.awt.image.BufferedImage;
-
 import core.spawns.CharacterSpawn;
 import object.*;
+
+import java.util.Arrays;
 
 public class LevelLoader {
     private Handler handler;
     private SpriteSheet spriteSheet;
     private CharacterSpawn characterSpawn;
 
-    public LevelLoader(Handler handler, CharacterSpawn characterSpawn, SpriteSheet ss){
-        this.spriteSheet = ss;
+    public LevelLoader(Handler handler, CharacterSpawn characterSpawn) {
         this.handler = handler;
         this.characterSpawn = characterSpawn;
 
@@ -22,36 +21,24 @@ public class LevelLoader {
         handler.emptyList();
     }
 
+
+
     //loads level given buffered image
-    public void loadLevel(BufferedImage image){
+    public void loadLevel(Level level){
         clearLevel();
-        int w = image.getWidth();
-        int h = image.getHeight();
 
-        Colour colour = new Colour();
-        int cunt = 0;
-
-        for(int xx=0; xx<w; xx++){
-            for(int yy=0; yy<h; yy++){
-                int pixel = image.getRGB(xx, yy);
-                colour.setRed((pixel >> 16) & 0xff);
-                colour.setGreen((pixel >> 8) & 0xff);
-                colour.setBlue((pixel) & 0xff);
-
-                //To add a new color to be read from the level, just simply put in the RGB values of that color
-                //in a new else if statement, and add the appropriate object to the handler. For example, for different
-                //block types we can implement the texture variation with BlockID enum
-
-                if (colour.getRed() == 255 && colour.getGreen() == 0 && colour.getBlue() == 0) {
-                    handler.addObject(new Block(xx * 64, yy * 64, ID.Block, spriteSheet, BlockID.wall), handler.block);
-
+        for (String[] row : level.floorFile.rows) {
+            int yy = level.floorFile.rows.indexOf(row)*64;
+            int x = 0;
+            for (String item: row) {
+                int xx = x*64;
+                switch (item) {
+                    case "0":
+                        characterSpawn.loadCharacter(xx, yy);
+                        handler.floors.add(new Floor(xx, yy, ID.Block, level.tileMap.floorTiles.get(item), BlockID.floor));
+                        break;
                 }
-                else if (colour.getRed() == 0 && colour.getGreen() == 255 && colour.getBlue() == 0) {
-                    handler.addObject(new Skeleton(xx * 64, yy * 64, ID.Enemy, handler, spriteSheet), handler.enemy);
-                }
-                else if (colour.getRed() == 0 && colour.getGreen() == 0 && colour.getBlue() == 255) {
-                    characterSpawn.loadCharacter(xx, yy, colour);
-                }
+                x++;
             }
         }
     }
