@@ -43,8 +43,8 @@ public class GameCanvas extends Canvas implements Runnable{
         addKeyListener(new KeyInput(handler, debugSettings, this));
         setBackground(new Color(0, 0, 0));
 
-        ReadCSVFile csvFile1 = new ReadCSVFile("src/main/java/core/test_Floor.csv");
-        ReadCSVFile csvFile2 = new ReadCSVFile("src/main/java/core/test_Walls.csv");
+        ReadCSVFile csvFile1 = new ReadCSVFile("src/main/java/core/levels/BoxMap_Floor.csv");
+        ReadCSVFile csvFile2 = new ReadCSVFile("src/main/java/core/levels/BoxMap_Walls.csv");
 
         BufferedImageLoader loader = new BufferedImageLoader();
         character = loader.loadImage("/Player/Character_Atlas.png");
