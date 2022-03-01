@@ -44,7 +44,7 @@ public class GameCanvas extends Canvas implements Runnable{
         this.debugSettings = new DebugSettings(false);
 
         addKeyListener(new KeyInput(handler, debugSettings, this));
-        setBackground(new Color(0, 0, 0));
+        setBackground(new Color(0, 0, 0, 199));
 
 
         BufferedImageLoader loader = new BufferedImageLoader();
@@ -65,8 +65,8 @@ public class GameCanvas extends Canvas implements Runnable{
 
         levelLoader.loadLevel(level);
 
-
     }
+
     //stop game
     public void start(){
         isRunning = true;
@@ -120,10 +120,16 @@ public class GameCanvas extends Canvas implements Runnable{
     //updates everything in the game. updated 60 times per second
     public void tick(){
         //camera follows player every tick
-
         camera.tick(handler.player);
         this.handler.tick(this.debugSettings.isDebugMode());
     }
+
+    public void openMenu(){
+        stop();
+        SubMenu submenu = new SubMenu();
+        submenu.setVisible(true);
+    }
+
     //Draw everything
     public void render(){
         BufferStrategy bs = this.getBufferStrategy();
