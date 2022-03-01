@@ -43,7 +43,8 @@ public class GameCanvas extends Canvas implements Runnable{
         addKeyListener(new KeyInput(handler, debugSettings, this));
         setBackground(new Color(0, 0, 0));
 
-        ReadCSVFile csvFile1 = new ReadCSVFile("/core/test_Floor.csv");
+        ReadCSVFile csvFile1 = new ReadCSVFile("src/main/java/core/test_Floor.csv");
+        ReadCSVFile csvFile2 = new ReadCSVFile("src/main/java/core/test_Walls.csv");
 
         BufferedImageLoader loader = new BufferedImageLoader();
         character = loader.loadImage("/Player/Character_Atlas.png");
@@ -55,7 +56,7 @@ public class GameCanvas extends Canvas implements Runnable{
         dungeon1Sheet = new SpriteSheet(dungeon1);
 
         TileMap tileMap1 = new TileMap(dungeon1Sheet);
-        Level level1 = new Level(tileMap1, csvFile1);
+        Level level1 = new Level(tileMap1, csvFile1, csvFile2);
 
         CharacterSpawn characterSpawn = new CharacterSpawn(this.handler, characterSheet);
         LevelLoader levelLoader = new LevelLoader(this.handler, characterSpawn);
@@ -143,6 +144,7 @@ public class GameCanvas extends Canvas implements Runnable{
         //Print the floor. Floor is represented by black pixels on level.png (for now as black is unassigned)
         //Basically every part of the level that isn't obstructed by something reveals the floor, even though floor
         //is drawn everywhere (but some things are drawn over it.)
+        handler.renderFloors(g);
 
         //Render every single object.
         handler.render(g, this.debugSettings.isDebugMode());

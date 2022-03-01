@@ -16,6 +16,8 @@ public class Block extends GameObject{
     public Block(int x, int y, ID id, SpriteSheet ss, BlockID bID) {
         super(x, y, id, ss);
         this.blockID = bID;
+        this.width = 64;
+        this.height = 64;
         this.block_image = ss.grabImage(1, 1, this.width, this.height);
     }
 
@@ -23,9 +25,6 @@ public class Block extends GameObject{
 
     }
 
-    public void setBlock_image(BufferedImage block_image) {
-        this.block_image = block_image;
-    }
 
     public void render(Graphics g) {
         g.drawImage(block_image, x, y, null);

@@ -1,40 +1,56 @@
 package core;
 
-import object.Block;
-import object.Wall;
-import org.w3c.dom.Node;
-
-import java.awt.image.BufferedImage;
 import java.util.*;
 
 public class TileMap {
     private SpriteSheet spriteSheet;
-    private SpriteSheet floorTile0, floorTile1, floorTile2, floorTile3, floorTile4, floorTile5, floorTile6, floorTile7;
-    public Map<String, SpriteSheet> floorTiles = new HashMap<>();
+    public SpriteSheet floorTile0, floorTile1, floorTile2, floorTile3, floorTile4, floorTile5, floorTile6, floorTile7;
+    public Map<String, SpriteSheet> tiles = new HashMap<>();
 
-    public Wall horizontalWallTile, verticalWallTileR, verticalWallTileL,
+    public SpriteSheet horizontalWallTile, verticalWallTileR, verticalWallTileL,
             separatorTop, separatorMiddle, separatorBottom,
             topLeft, bottomLeft, topRight, bottomRight;
 
     public TileMap(SpriteSheet spriteSheet){
         this.spriteSheet = spriteSheet;
-        this.floorTile0 = new SpriteSheet(this.spriteSheet.grabImage(1, 1, 16, 16));
-        this.floorTile1 = new SpriteSheet(this.spriteSheet.grabImage(2, 1, 16, 16));
-        this.floorTile2 = new SpriteSheet(this.spriteSheet.grabImage(3, 1, 16, 16));
-        this.floorTile3 = new SpriteSheet(this.spriteSheet.grabImage(1, 2, 16, 16));
-        this.floorTile4 = new SpriteSheet(this.spriteSheet.grabImage(2, 2, 16, 16));
-        this.floorTile5 = new SpriteSheet(this.spriteSheet.grabImage(3, 2, 16, 16));
-        this.floorTile6 = new SpriteSheet(this.spriteSheet.grabImage(2, 3, 16, 16));
-        this.floorTile7 = new SpriteSheet(this.spriteSheet.grabImage(3, 3, 16, 16));
+        this.floorTile0 = this.spriteSheet;
+        this.floorTile1 = this.spriteSheet;
+        this.floorTile2 = this.spriteSheet;
+        this.floorTile3 = this.spriteSheet;
+        this.floorTile4 = this.spriteSheet;
+        this.floorTile5 = this.spriteSheet;
+        this.floorTile6 = this.spriteSheet;
+        this.floorTile7 = this.spriteSheet;
 
-        this.floorTiles.put("0", this.floorTile0);
-        this.floorTiles.put("1", this.floorTile1);
-        this.floorTiles.put("2", this.floorTile2);
-        this.floorTiles.put("5", this.floorTile3);
-        this.floorTiles.put("6", this.floorTile4);
-        this.floorTiles.put("7", this.floorTile5);
-        this.floorTiles.put("11", this.floorTile6);
-        this.floorTiles.put("12", this.floorTile7);
+        this.horizontalWallTile = this.spriteSheet;
+        this.verticalWallTileR = this.spriteSheet;
+        this.verticalWallTileL = this.spriteSheet;
+        this.separatorTop = this.spriteSheet;
+        this.separatorMiddle = this.spriteSheet;
+        this.separatorBottom = this.spriteSheet;
+        this.topLeft = this.spriteSheet;
+        this.bottomLeft = this.spriteSheet;
+        this.topRight = this.spriteSheet;
+        this.bottomRight = this.spriteSheet;
+
+        this.tiles.put("0", this.floorTile0);
+        this.tiles.put("1", this.floorTile1);
+        this.tiles.put("2", this.floorTile2);
+        this.tiles.put("5", this.floorTile3);
+        this.tiles.put("6", this.floorTile4);
+        this.tiles.put("7", this.floorTile5);
+        this.tiles.put("11", this.floorTile6);
+        this.tiles.put("12", this.floorTile7);
+        this.tiles.put("15", this.horizontalWallTile);
+        this.tiles.put("16", this.verticalWallTileR);
+        this.tiles.put("17", this.verticalWallTileL);
+        this.tiles.put("20", this.separatorTop);
+        this.tiles.put("21", this.separatorMiddle);
+        this.tiles.put("22", this.separatorBottom);
+        this.tiles.put("25", this.topLeft);
+        this.tiles.put("26", this.bottomLeft);
+        this.tiles.put("27", this.topRight);
+        this.tiles.put("28", this.bottomRight);
 
 
     }

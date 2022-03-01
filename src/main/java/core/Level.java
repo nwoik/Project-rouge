@@ -7,10 +7,9 @@ public class Level {
     public ReadCSVFile floorFile;
     public ReadCSVFile wallFile;
 
-    public Level(TileMap tileMap, ReadCSVFile floorFile) {
+    public Level(TileMap tileMap, ReadCSVFile floorFile, ReadCSVFile wallFile) {
         this.tileMap = tileMap;
         this.floorFile = floorFile;
-//        this.wallFile = wallFile;
-
+        this.wallFile = wallFile;
     }
 }
