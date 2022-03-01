@@ -12,7 +12,7 @@ public class Handler {
 
     //ticks every object in our list.
     public void tick(boolean debugMode) {
-        for(GameObject gameObject : floors){
+        for(GameObject gameObject : walls){
             gameObject.tick();
         }
         for(GameObject gameObject : enemies){
@@ -26,12 +26,7 @@ public class Handler {
 
     //renders every object in list
     public void render(Graphics g, boolean debugMode) {
-        for(GameObject gameObject : floors){
-            gameObject.render(g);
-            if (debugMode) {
-                gameObject.debugRender(g);
-            }
-        }
+
         for(GameObject gameObject : walls){
             gameObject.render(g);
             if (debugMode) {
@@ -49,6 +44,12 @@ public class Handler {
             player.debugRender(g);
         }
 
+    }
+
+    public void renderFloors(Graphics g) {
+        for(GameObject gameObject : floors){
+            gameObject.render(g);
+        }
     }
 
     //empty list (for loading new level)
