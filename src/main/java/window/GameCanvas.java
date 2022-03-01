@@ -117,6 +117,13 @@ public class GameCanvas extends Canvas implements Runnable{
         stop();
     }
 
+    public void comeBack(){
+        setFocusable(true);
+        this.stopped = !this.stopped;
+        this.stopped = !this.stopped;
+
+    }
+
     //updates everything in the game. updated 60 times per second
     public void tick(){
         //camera follows player every tick
@@ -125,9 +132,11 @@ public class GameCanvas extends Canvas implements Runnable{
     }
 
     public void openMenu(){
-        stop();
-        SubMenu submenu = new SubMenu();
-        submenu.setVisible(true);
+        this.stopped = !this.stopped;
+        SubWindow subWindow;
+        if (this.stopped) {
+            subWindow = new SubWindow(this);
+        }
     }
 
     //Draw everything

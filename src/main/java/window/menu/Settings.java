@@ -95,8 +95,6 @@ public class Settings extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //your actions
-
                 AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
                 audio1.playMusic();
                 moveUp.setText("  ");
@@ -108,8 +106,6 @@ public class Settings extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //your actions
-
                 AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
                 audio1.playMusic();
                 moveDown.setText("  ");
@@ -121,8 +117,6 @@ public class Settings extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //your actions
-
                 AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
                 audio1.playMusic();
                 moveLeft.setText("  ");
@@ -134,7 +128,6 @@ public class Settings extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //your actions
 
                 AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
                 audio1.playMusic();
@@ -147,7 +140,6 @@ public class Settings extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //your actions
 
                 AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
                 audio1.playMusic();
@@ -160,8 +152,6 @@ public class Settings extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //your actions
-
                 AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
                 audio1.playMusic();
                 dash.setText("  ");
