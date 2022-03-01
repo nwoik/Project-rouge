@@ -6,11 +6,12 @@ import object.*;
 public class LevelLoader {
     private Handler handler;
     private CharacterSpawn characterSpawn;
+    int playerSpawnx, playerSpawny;
 
     public LevelLoader(Handler handler, CharacterSpawn characterSpawn) {
         this.handler = handler;
         this.characterSpawn = characterSpawn;
-        this.characterSpawn.loadCharacter(0, 1);
+        this.characterSpawn.loadCharacter(5, 5);
 
     }
 
@@ -34,7 +35,8 @@ public class LevelLoader {
                 switch (item) {
                     case "0":
                         System.out.println("Spawn character");
-
+                        this.playerSpawnx = xx;
+                        this.playerSpawny = yy;
                         floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
                         floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(1, 1, 64, 64));
                         handler.addObject(floor, handler.floors);
@@ -95,7 +97,6 @@ public class LevelLoader {
                 Wall wall;
                 switch (item) {
                     case "15":
-                        System.out.println(item + " " + xx + " " + yy);
                         wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(1, 4, 64, 64));
                         handler.addObject(wall, handler.walls);
