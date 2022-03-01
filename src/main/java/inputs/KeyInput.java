@@ -87,6 +87,7 @@ public class KeyInput extends KeyAdapter{
                 this.handler.player.dash = true;
                 this.handler.player.dashFrames = 0;
             }
+            case 8 -> this.gameCanvas.openMenu();
         }
     }
 

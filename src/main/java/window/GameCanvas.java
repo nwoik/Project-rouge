@@ -9,7 +9,6 @@ import object.Handler;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class GameCanvas extends Canvas implements Runnable{
     private Handler handler;
@@ -17,7 +16,8 @@ public class GameCanvas extends Canvas implements Runnable{
     public boolean isRunning = false;
     private Panel panel;
     private Thread thread;
-    private SpriteSheet characterSheet, dungeon1Sheet;
+    private SpriteSheet ss;
+    private SpriteSheet characterSheet;
     private SpriteSheet uiSheet;
     public Boolean stopped = false;
 
@@ -27,41 +27,46 @@ public class GameCanvas extends Canvas implements Runnable{
     public int HEIGHT = dimension.height;
     public int WIDTH = dimension.width;
 
+    private BufferedImage level = null;
+    private BufferedImage sprite_sheet = null;
+    private BufferedImage floor = null;
     private BufferedImage character = null;
+    private BufferedImage skeleton = null;
     private BufferedImage ui = null;
-    private final BufferedImage dungeon1;
 
     // For callFPS
     String outputFPS = "";
 
     //initialise the game canvas
-    public GameCanvas() throws IOException {
+    public GameCanvas() {
         this.handler = new Handler();
         camera = new Camera(0,0, HEIGHT, WIDTH);
         this.debugSettings = new DebugSettings(false);
 
         addKeyListener(new KeyInput(handler, debugSettings, this));
-        setBackground(new Color(0, 0, 0));
+        setBackground(new Color(0, 0, 0, 199));
 
-        ReadCSVFile csvFile1 = new ReadCSVFile("src/main/java/core/levels/BoxMap_Floor.csv");
-        ReadCSVFile csvFile2 = new ReadCSVFile("src/main/java/core/levels/BoxMap_Walls.csv");
 
         BufferedImageLoader loader = new BufferedImageLoader();
+        level = loader.loadImage("/Levels/level1.png");
+        sprite_sheet = loader.loadImage("/Levels/Dungeon_1.png");
         character = loader.loadImage("/Player/Character_Atlas.png");
+        skeleton = loader.loadImage("/Skeleton_Atlas.png");
         ui = loader.loadImage("/UI.png");
-        dungeon1 = loader.loadImage("/Dungeon 1 atlas.png");
 
         uiSheet = new SpriteSheet(ui);
         characterSheet = new SpriteSheet(character);
-        dungeon1Sheet = new SpriteSheet(dungeon1);
-
-        TileMap tileMap1 = new TileMap(dungeon1Sheet);
-        Level level1 = new Level(tileMap1, csvFile1, csvFile2);
+        ss = new SpriteSheet(sprite_sheet);
 
         CharacterSpawn characterSpawn = new CharacterSpawn(this.handler, characterSheet);
-        LevelLoader levelLoader = new LevelLoader(this.handler, characterSpawn);
-        levelLoader.loadLevel(level1);
+        LevelLoader levelLoader = new LevelLoader(this.handler, characterSpawn, ss);
+
+        floor = ss.grabImage(2,1,64,64);
+
+        levelLoader.loadLevel(level);
+
     }
+
     //stop game
     public void start(){
         isRunning = true;
@@ -115,10 +120,16 @@ public class GameCanvas extends Canvas implements Runnable{
     //updates everything in the game. updated 60 times per second
     public void tick(){
         //camera follows player every tick
-
         camera.tick(handler.player);
         this.handler.tick(this.debugSettings.isDebugMode());
     }
+
+    public void openMenu(){
+        stop();
+        SubMenu submenu = new SubMenu();
+        submenu.setVisible(true);
+    }
+
     //Draw everything
     public void render(){
         BufferStrategy bs = this.getBufferStrategy();
@@ -134,7 +145,7 @@ public class GameCanvas extends Canvas implements Runnable{
         //Anything between these comments will be drawn.
 
         //Set background (What's outside level, otherwise looks glitchy)
-        g.setColor(Color.black);
+        g.setColor(Color.gray);
         g.fillRect(0,0, WIDTH, HEIGHT);
 
         //Pans camera. Most things that move in level go between the two translations. Static things like FPS and UI
@@ -144,7 +155,11 @@ public class GameCanvas extends Canvas implements Runnable{
         //Print the floor. Floor is represented by black pixels on level.png (for now as black is unassigned)
         //Basically every part of the level that isn't obstructed by something reveals the floor, even though floor
         //is drawn everywhere (but some things are drawn over it.)
-        handler.renderFloors(g);
+        for (int xx=0; xx<60*70; xx+=128){
+            for(int yy = 0; yy<60*70; yy+=128){
+                g.drawImage(floor, xx, yy, null);
+            }
+        }
 
         //Render every single object.
         handler.render(g, this.debugSettings.isDebugMode());
