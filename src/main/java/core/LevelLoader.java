@@ -1,19 +1,17 @@
 package core;
 
-import java.awt.image.BufferedImage;
-
 import core.spawns.CharacterSpawn;
 import object.*;
 
 public class LevelLoader {
     private Handler handler;
-    private SpriteSheet spriteSheet;
     private CharacterSpawn characterSpawn;
+    int playerSpawnX, playerSpawnY;
 
-    public LevelLoader(Handler handler, CharacterSpawn characterSpawn, SpriteSheet ss){
-        this.spriteSheet = ss;
+    public LevelLoader(Handler handler, CharacterSpawn characterSpawn) {
         this.handler = handler;
         this.characterSpawn = characterSpawn;
+        this.characterSpawn.loadCharacter(5, 5);
 
     }
 
@@ -22,36 +20,161 @@ public class LevelLoader {
         handler.emptyList();
     }
 
+
+
     //loads level given buffered image
-    public void loadLevel(BufferedImage image){
+    public void loadLevel(Level level){
         clearLevel();
-        int w = image.getWidth();
-        int h = image.getHeight();
 
-        Colour colour = new Colour();
-        int cunt = 0;
-
-        for(int xx=0; xx<w; xx++){
-            for(int yy=0; yy<h; yy++){
-                int pixel = image.getRGB(xx, yy);
-                colour.setRed((pixel >> 16) & 0xff);
-                colour.setGreen((pixel >> 8) & 0xff);
-                colour.setBlue((pixel) & 0xff);
-
-                //To add a new color to be read from the level, just simply put in the RGB values of that color
-                //in a new else if statement, and add the appropriate object to the handler. For example, for different
-                //block types we can implement the texture variation with BlockID enum
-
-                if (colour.getRed() == 255 && colour.getGreen() == 0 && colour.getBlue() == 0) {
-                    handler.addObject(new Block(xx * 64, yy * 64, ID.Block, spriteSheet, BlockID.wall), handler.block);
+        for (String[] row : level.floorFile.rows) {
+            int yy = level.floorFile.rows.indexOf(row)*64;
+            int x = 0;
+            for (String item: row) {
+                int xx = x*64;
+                Floor floor;
+                switch (item) {
+                    case "0":
+                        System.out.println("Spawn character");
+                        this.playerSpawnX = xx;
+                        this.playerSpawnY = yy;
+                        floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
+                        floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(1, 1, 64, 64));
+                        handler.addObject(floor, handler.floors);
+                        break;
+                    case "1":
+                        System.out.println(item + " " + xx + " " + yy);
+                        floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
+                        floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(2, 1, 64, 64));
+                        handler.addObject(floor, handler.floors);
+                        break;
+                    case "2":
+                        System.out.println(item + " " + xx + " " + yy);
+                        floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
+                        floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(3, 1, 64, 64));
+                        handler.addObject(floor, handler.floors);
+                        break;
+                    case "5":
+                        System.out.println(item + " " + xx + " " + yy);
+                        floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
+                        floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(1, 2, 64, 64));
+                        handler.addObject(floor, handler.floors);
+                        break;
+                    case "6":
+                        System.out.println(item + " " + xx + " " + yy);
+                        floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
+                        floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(2, 2, 64, 64));
+                        handler.addObject(floor, handler.floors);
+                        break;
+                    case "7":
+                        System.out.println(item + " " + xx + " " + yy);
+                        floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
+                        floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(3, 2, 64, 64));
+                        handler.addObject(floor, handler.floors);
+                        break;
+                    case "11":
+                        System.out.println(item + " " + xx + " " + yy);
+                        floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
+                        floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(2, 3, 64, 64));
+                        handler.addObject(floor, handler.floors);
+                        break;
+                    case "12":
+                        System.out.println(item + " " + xx + " " + yy);
+                        floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
+                        floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(3, 3, 64, 64));
+                        handler.addObject(floor, handler.floors);
+                        break;
 
                 }
-                else if (colour.getRed() == 0 && colour.getGreen() == 255 && colour.getBlue() == 0) {
-                    handler.addObject(new Skeleton(xx * 64, yy * 64, ID.Enemy, handler, spriteSheet), handler.enemy);
+                x++;
+            }
+        }
+
+        for (String[] row : level.wallFile.rows) {
+            int yy = level.wallFile.rows.indexOf(row) * 64;
+            int x = 0;
+            for (String item : row) {
+                int xx = x * 64;
+                Wall wall;
+                switch (item) {
+                    case "15":
+                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
+                        wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(1, 4, 64, 64));
+                        handler.addObject(wall, handler.walls);
+                        break;
+                    case "16":
+                        System.out.println(item + " " + xx + " " + yy);
+                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 44, -44);
+                        wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(2, 4, 64, 64));
+                        handler.addObject(wall, handler.walls);
+                        break;
+                    case "17":
+                        System.out.println(item + " " + xx + " " + yy);
+                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, -44);
+                        wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(3, 4, 64, 64));
+                        handler.addObject(wall, handler.walls);
+                        break;
+                    case "20":
+                        System.out.println(item + " " + xx + " " + yy);
+                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
+                        wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(1, 5, 64, 64));
+                        handler.addObject(wall, handler.walls);
+                        break;
+                    case "21":
+                        System.out.println(item + " " + xx + " " + yy);
+                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
+                        wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(2, 5, 64, 64));
+                        handler.addObject(wall, handler.walls);
+                        break;
+                    case "22":
+                        System.out.println(item + " " + xx + " " + yy);
+                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
+                        wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(3, 5, 64, 64));
+                        handler.addObject(wall, handler.walls);
+                        break;
+                    case "25":
+                        System.out.println(item + " " + xx + " " + yy);
+                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 44, -44);
+                        wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(1, 6, 64, 64));
+                        handler.addObject(wall, handler.walls);
+                        break;
+                    case "26":
+                        System.out.println(item + " " + xx + " " + yy);
+                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 44, -44);
+                        wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(2, 6, 64, 64));
+                        handler.addObject(wall, handler.walls);
+                        break;
+                    case "27":
+                        System.out.println(item + " " + xx + " " + yy);
+                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, -44);
+                        wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(3, 6, 64, 64));
+                        handler.addObject(wall, handler.walls);
+                        break;
+                    case "28":
+                        System.out.println(item + " " + xx + " " + yy);
+                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, -44);
+                        wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(4, 6, 64, 64));
+                        handler.addObject(wall, handler.walls);
+                        break;
+                    case "31":
+                        System.out.println(item + " " + xx + " " + yy);
+                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 44, -44);
+                        wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(2, 7, 64, 64));
+                        handler.addObject(wall, handler.walls);
+                        break;
+                    case "32":
+                        System.out.println(item + " " + xx + " " + yy);
+                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
+                        wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(3, 7, 64, 64));
+                        handler.addObject(wall, handler.walls);
+                        break;
+                    case "33":
+                        System.out.println(item + " " + xx + " " + yy);
+                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, -44);
+                        wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(4, 7, 64, 64));
+                        handler.addObject(wall, handler.walls);
+                        break;
                 }
-                else if (colour.getRed() == 0 && colour.getGreen() == 0 && colour.getBlue() == 255) {
-                    characterSpawn.loadCharacter(xx, yy, colour);
-                }
+                x++;
             }
         }
     }

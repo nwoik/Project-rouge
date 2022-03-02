@@ -30,4 +30,8 @@ public class SpriteSheet {
         //extract sprites from image
         return image.getSubimage((col*64)-64, (row*64)-64, width, height);
     }
+
+    public SpriteSheet subSheet(BufferedImage bufferedImage) {
+        return new SpriteSheet(bufferedImage);
+    }
 }
