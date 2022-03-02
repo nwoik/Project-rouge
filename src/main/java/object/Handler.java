@@ -1,14 +1,16 @@
 package object;
 
 import java.util.LinkedList;
-
+import core.Camera;
 import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 
 public class Handler {
     public LinkedList<GameObject> floors = new LinkedList<GameObject>();
     public LinkedList<GameObject> walls = new LinkedList<GameObject>();
     public LinkedList<GameObject> enemies = new LinkedList<GameObject>();
     public Player player;
+    public Camera camera;
 
     //ticks every object in our list.
     public void tick(boolean debugMode) {
@@ -26,17 +28,22 @@ public class Handler {
 
     //renders every object in list
     public void render(Graphics g, boolean debugMode) {
+        Rectangle2D rect = new Rectangle2D.Float(camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight());
 
         for(GameObject gameObject : walls){
-            gameObject.render(g);
-            if (debugMode) {
-                gameObject.debugRender(g);
+            if (gameObject.getBounds().intersects(rect)) {
+                gameObject.render(g);
+                if (debugMode) {
+                    gameObject.debugRender(g);
+                }
             }
         }
         for(GameObject gameObject : enemies){
-            gameObject.render(g);
-            if (debugMode) {
-                gameObject.debugRender(g);
+            if (gameObject.getBounds().intersects(rect)) {
+                gameObject.render(g);
+                if (debugMode) {
+                    gameObject.debugRender(g);
+                }
             }
         }
         player.render(g);
@@ -47,8 +54,11 @@ public class Handler {
     }
 
     public void renderFloors(Graphics g) {
+        Rectangle2D rect = new Rectangle2D.Float(camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight());
         for(GameObject gameObject : floors){
-            gameObject.render(g);
+            if (gameObject.getBounds().intersects(rect)) {
+                gameObject.render(g);
+            }
         }
     }
 
