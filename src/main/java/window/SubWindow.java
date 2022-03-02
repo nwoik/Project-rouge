@@ -1,12 +1,14 @@
 package window;
 
+import window.menu.LayoutPanel;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class SubWindow extends JFrame {
     private SubMenu subMenu;
-    public SubWindow(GameCanvas gameCanvas) {
-        this.subMenu = new SubMenu(this, gameCanvas);
+    public SubWindow(GameCanvas gameCanvas, GameWindow gameWindow, LayoutPanel layoutPanel) {
+        this.subMenu = new SubMenu(this, gameCanvas, gameWindow, layoutPanel);
         setTitle("SubMenu");
         setBackground(new Color(255, 200, 200));
         setPreferredSize(new Dimension(500, 800));

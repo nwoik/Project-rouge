@@ -1,18 +1,30 @@
 package window;
 
 import audio.AudioHandler;
+import window.menu.LayoutPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class SubMenu extends JPanel {
-    private SubWindow subWindow;
-    private GameCanvas gameCanvas;
-    public SubMenu(SubWindow subWindow, GameCanvas gameCanvas) {
+    public SubWindow subWindow;
+    public GameCanvas gameCanvas;
+    private GameWindow gameWindow;
+    private LayoutPanel layoutPanel;
+
+    public SubMenu(SubWindow subWindow, GameCanvas gameCanvas, GameWindow gameWindow, LayoutPanel layoutPanel) {
         this.subWindow = subWindow;
         this.gameCanvas = gameCanvas;
+        this.gameWindow = gameWindow;
+        this.layoutPanel = layoutPanel;
+
+        setFocusable(true);
+        requestFocus();
+        addKeyListener(new EscInput(this));
 
         setBackground(new Color(255, 200, 200));
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -32,6 +44,8 @@ public class SubMenu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 subWindow.dispose();
+                gameWindow.remove(gameCanvas);
+                layoutPanel.setVisible(true);
             }
         });
 
