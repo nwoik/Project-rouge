@@ -9,7 +9,9 @@ public class TileMap {
 
     public SpriteSheet horizontalWallTile, verticalWallTileR, verticalWallTileL,
             separatorTop, separatorMiddle, separatorBottom,
-            topLeft, bottomLeft, topRight, bottomRight, baseLeft, baseMiddle, baseRight;
+            topLeft, bottomLeft, topRight, bottomRight, baseLeft,
+            baseMiddle, baseRight, topLeftFilled, bottomLeftFilled, topRightFilled, bottomRightFilled,
+            verticalWallFilledL, verticalWallFilledR;
 
     public TileMap(SpriteSheet spriteSheet){
         this.spriteSheet = spriteSheet;
@@ -35,6 +37,13 @@ public class TileMap {
         this.baseLeft = this.spriteSheet;
         this.baseMiddle = this.spriteSheet;
         this.baseRight = this.spriteSheet;
+        this.topLeftFilled = this.spriteSheet;
+        this.bottomLeftFilled = this.spriteSheet;
+        this.topRightFilled = this.spriteSheet;
+        this.bottomRightFilled = this.spriteSheet;
+        this.verticalWallFilledL = this.spriteSheet;
+        this.verticalWallFilledR = this.spriteSheet;
+
 
         this.tiles.put("0", this.floorTile0);
         this.tiles.put("1", this.floorTile1);
@@ -57,7 +66,12 @@ public class TileMap {
         this.tiles.put("31", this.baseLeft);
         this.tiles.put("32", this.baseMiddle);
         this.tiles.put("33", this.baseRight);
-
+        this.tiles.put("35", this.topLeftFilled);
+        this.tiles.put("36", this.bottomLeftFilled);
+        this.tiles.put("37", this.topRightFilled);
+        this.tiles.put("38", this.bottomRightFilled);
+        this.tiles.put("40", this.verticalWallFilledL);
+        this.tiles.put("42", this.verticalWallFilledR);
 
     }
 }
