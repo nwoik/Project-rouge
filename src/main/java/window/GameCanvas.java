@@ -41,6 +41,7 @@ public class GameCanvas extends Canvas implements Runnable{
     public GameCanvas(GameWindow gameWindow, LayoutPanel layoutPanel) throws IOException {
         this.handler = new Handler();
         camera = new Camera(0,0, HEIGHT, WIDTH);
+        handler.camera = camera;
 
         this.debugSettings = new DebugSettings(false);
         this.gameWindow = gameWindow;
@@ -49,8 +50,8 @@ public class GameCanvas extends Canvas implements Runnable{
         addKeyListener(new KeyInput(handler, debugSettings, this));
         setBackground(new Color(0, 0, 0, 199));
 
-        ReadCSVFile csvFile1 = new ReadCSVFile("src/main/java/core/levels/DC1_Floors.csv");
-        ReadCSVFile csvFile2 = new ReadCSVFile("src/main/java/core/levels/DC1_Walls.csv");
+        ReadCSVFile csvFile1 = new ReadCSVFile("src/main/java/core/levels/level2_floor.csv");
+        ReadCSVFile csvFile2 = new ReadCSVFile("src/main/java/core/levels/level2_walls.csv");
 
         BufferedImageLoader loader = new BufferedImageLoader();
         character = loader.loadImage("/Player/Character_Atlas.png");

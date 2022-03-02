@@ -11,7 +11,7 @@ public class LevelLoader {
     public LevelLoader(Handler handler, CharacterSpawn characterSpawn) {
         this.handler = handler;
         this.characterSpawn = characterSpawn;
-
+        this.characterSpawn.loadCharacter(5, 5);
 
     }
 
@@ -35,7 +35,8 @@ public class LevelLoader {
                 switch (item) {
                     case "0":
                         System.out.println("Spawn character");
-                        this.characterSpawn.loadCharacter(xx, yy);
+                        this.playerSpawnX = xx;
+                        this.playerSpawnY = yy;
                         floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
                         floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(1, 1, 64, 64));
                         handler.addObject(floor, handler.floors);

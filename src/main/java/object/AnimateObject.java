@@ -13,7 +13,7 @@ import java.util.List;
 public class AnimateObject extends GameObject{
     protected float velX = 0, velY = 0;
     protected int movementSpeed, alignmentY;
-    public boolean up, down, left, right, isAttacking;
+    public boolean up, down, left, right, attack;
     protected int framedelay = 2;
 
     public Animation animation;
