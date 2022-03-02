@@ -5,6 +5,7 @@ import core.spawns.CharacterSpawn;
 import debug.DebugSettings;
 import inputs.KeyInput;
 import object.Handler;
+import window.menu.LayoutPanel;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -22,6 +23,8 @@ public class GameCanvas extends Canvas implements Runnable{
     public Boolean stopped = false;
 
     public DebugSettings debugSettings;
+    public GameWindow gameWindow;
+    public LayoutPanel layoutPanel;
 
     private final Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
     public int HEIGHT = dimension.height;
@@ -38,10 +41,13 @@ public class GameCanvas extends Canvas implements Runnable{
     String outputFPS = "";
 
     //initialise the game canvas
-    public GameCanvas() {
+    public GameCanvas(GameWindow gameWindow, LayoutPanel layoutPanel) {
         this.handler = new Handler();
         camera = new Camera(0,0, HEIGHT, WIDTH);
+
         this.debugSettings = new DebugSettings(false);
+        this.gameWindow = gameWindow;
+        this.layoutPanel = layoutPanel;
 
         addKeyListener(new KeyInput(handler, debugSettings, this));
         setBackground(new Color(0, 0, 0, 199));
@@ -135,7 +141,7 @@ public class GameCanvas extends Canvas implements Runnable{
         this.stopped = !this.stopped;
         SubWindow subWindow;
         if (this.stopped) {
-            subWindow = new SubWindow(this);
+            subWindow = new SubWindow(this, this.gameWindow, this.layoutPanel);
         }
     }
 

@@ -6,14 +6,15 @@ import window.GameWindow;
 import javax.swing.*;
 import java.awt.*;
 
-import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
 public class SceneTransition extends JPanel {
+    public LayoutPanel layoutPanel;
 
-    public SceneTransition() {
+    public SceneTransition(LayoutPanel layoutPanel) {
+        this.layoutPanel = layoutPanel;
         setBackground(new Color(0, 0, 0));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -26,7 +27,7 @@ public class SceneTransition extends JPanel {
         TimerTask task = new TimerTask(){
             int i = 3;
 
-            @Override public void run() {
+            @Override public void run(){
                 if(i>0){
                     System.out.println(i);
                     i--;
@@ -35,12 +36,7 @@ public class SceneTransition extends JPanel {
 //                    gameCanvas.setVisible(true);
 //                    setVisible(false);
 
-                    GameCanvas gameCanvas = null;
-                    try {
-                        gameCanvas = new GameCanvas();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    GameCanvas gameCanvas = new GameCanvas(gameWindow, layoutPanel);
                     gameWindow.add(gameCanvas);
                     gameCanvas.start();
                     setVisible(false);
