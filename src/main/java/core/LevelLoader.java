@@ -12,7 +12,6 @@ public class LevelLoader {
         this.handler = handler;
         this.characterSpawn = characterSpawn;
 
-
     }
 
     //might be useful for loading new level
