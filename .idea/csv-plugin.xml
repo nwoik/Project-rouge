@@ -17,20 +17,6 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="\src\main\java\core\test_Floor.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\src\main\java\core\test_Walls.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
       </map>
     </option>
   </component>
