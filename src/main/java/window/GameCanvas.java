@@ -41,6 +41,7 @@ public class GameCanvas extends Canvas implements Runnable{
     public GameCanvas(GameWindow gameWindow, LayoutPanel layoutPanel) throws IOException {
         this.handler = new Handler();
         camera = new Camera(0,0, HEIGHT, WIDTH);
+        handler.camera = camera;
 
         this.debugSettings = new DebugSettings(false);
         this.gameWindow = gameWindow;
