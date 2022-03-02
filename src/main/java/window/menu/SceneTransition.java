@@ -12,8 +12,10 @@ import java.util.TimerTask;
 
 
 public class SceneTransition extends JPanel {
+    public LayoutPanel layoutPanel;
 
-    public SceneTransition() {
+    public SceneTransition(LayoutPanel layoutPanel) {
+        this.layoutPanel = layoutPanel;
         setBackground(new Color(0, 0, 0));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -37,7 +39,7 @@ public class SceneTransition extends JPanel {
 
                     GameCanvas gameCanvas = null;
                     try {
-                        gameCanvas = new GameCanvas();
+                        gameCanvas = new GameCanvas(gameWindow, layoutPanel);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

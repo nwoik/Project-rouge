@@ -5,6 +5,7 @@ import core.spawns.CharacterSpawn;
 import debug.DebugSettings;
 import inputs.KeyInput;
 import object.Handler;
+import window.menu.LayoutPanel;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -22,6 +23,8 @@ public class GameCanvas extends Canvas implements Runnable{
     public Boolean stopped = false;
 
     public DebugSettings debugSettings;
+    public GameWindow gameWindow;
+    public LayoutPanel layoutPanel;
 
     private final Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
     public int HEIGHT = dimension.height;
@@ -35,13 +38,16 @@ public class GameCanvas extends Canvas implements Runnable{
     String outputFPS = "";
 
     //initialise the game canvas
-    public GameCanvas() throws IOException {
+    public GameCanvas(GameWindow gameWindow, LayoutPanel layoutPanel) throws IOException {
         this.handler = new Handler();
         camera = new Camera(0,0, HEIGHT, WIDTH);
+
         this.debugSettings = new DebugSettings(false);
+        this.gameWindow = gameWindow;
+        this.layoutPanel = layoutPanel;
 
         addKeyListener(new KeyInput(handler, debugSettings, this));
-        setBackground(new Color(0, 0, 0));
+        setBackground(new Color(0, 0, 0, 199));
 
         ReadCSVFile csvFile1 = new ReadCSVFile("src/main/java/core/levels/BoxMap_Floor.csv");
         ReadCSVFile csvFile2 = new ReadCSVFile("src/main/java/core/levels/BoxMap_Walls.csv");
@@ -112,6 +118,13 @@ public class GameCanvas extends Canvas implements Runnable{
         stop();
     }
 
+    public void comeBack(){
+        setFocusable(true);
+        this.stopped = !this.stopped;
+        this.stopped = !this.stopped;
+
+    }
+
     //updates everything in the game. updated 60 times per second
     public void tick(){
         //camera follows player every tick
@@ -119,6 +132,15 @@ public class GameCanvas extends Canvas implements Runnable{
         camera.tick(handler.player);
         this.handler.tick(this.debugSettings.isDebugMode());
     }
+
+    public void openMenu(){
+        this.stopped = !this.stopped;
+        SubWindow subWindow;
+        if (this.stopped) {
+            subWindow = new SubWindow(this, this.gameWindow, this.layoutPanel);
+        }
+    }
+
     //Draw everything
     public void render(){
         BufferStrategy bs = this.getBufferStrategy();
