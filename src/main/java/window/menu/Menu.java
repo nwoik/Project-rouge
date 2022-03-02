@@ -19,7 +19,6 @@ public class Menu extends JPanel {
     public Menu(LayoutPanel layoutPanel, GameWindow gameWindow, Settings settings) {
 
         setBackground(new Color(255, 200, 200));
-        System.out.println("DAVE THIS BETTER WORK");
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JLabel title = new JLabel("Once Upon a Dungeon", SwingConstants.CENTER);
 
@@ -125,11 +124,11 @@ public class Menu extends JPanel {
 //                gameWindow.setVisible(false);
 //                gameWindow.add(gameCanvas);
 
-                SceneTransition sceneTransition = new SceneTransition();
-
                 setVisible(false);
                 settings.setVisible(false);
                 layoutPanel.setVisible(false);
+
+                SceneTransition sceneTransition = new SceneTransition(layoutPanel);
 
                 gameWindow.add(sceneTransition);
                 sceneTransition.load(gameWindow);
