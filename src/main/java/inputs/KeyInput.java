@@ -3,10 +3,7 @@ package inputs;
 import debug.DebugSettings;
 import object.Handler;
 import window.GameCanvas;
-import object.Player;
-import object.Player;
 
-import javax.swing.text.PlainDocument;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
@@ -78,7 +75,7 @@ public class KeyInput extends KeyAdapter{
                 this.handler.player.up = true;
                 this.handler.player.upPressed = true;
             }
-            case 4 -> this.handler.player.attack = true;
+            case 4 -> this.handler.player.isAttacking = true;
             case 5 -> {
                 this.debugSettings.changeDebugMode();
             }

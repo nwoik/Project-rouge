@@ -21,6 +21,7 @@ public abstract class GameObject {
     protected SpriteSheet spriteSheet;
     protected int width;
     protected int height;
+    protected int hp;
 
     public GameObject(int x, int y, ID id, SpriteSheet ss){
         this.x = x;
@@ -78,4 +79,15 @@ public abstract class GameObject {
         this.height = height;
     }
 
+    public int getHp() {
+        return this.hp;
+    }
+
+    public void addHp(int value) {
+        this.hp += value;
+    }
+
+    public void subHp(int value) {
+        this.hp -= value;
+    }
 }

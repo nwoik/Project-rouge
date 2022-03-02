@@ -139,6 +139,10 @@ public class Skeleton extends AnimateObject {
         //randomly change movement (or stop movement)
         switch (this.choose) {
             case 0:
+            case 9:
+            case 10:
+            case 11:
+            case 12:
                 this.velX = 0;
                 this.velY = 0;
                 break;
@@ -173,22 +177,6 @@ public class Skeleton extends AnimateObject {
             case 8:
                 this.velX = -this.movementSpeed;
                 this.velY = this.movementSpeed;
-                break;
-            case 9:
-                this.velX = 0;
-                this.velY = 0;
-                break;
-            case 10:
-                this.velX = 0;
-                this.velY = 0;
-                break;
-            case 11:
-                this.velX = 0;
-                this.velY = 0;
-                break;
-            case 12:
-                this.velX = 0;
-                this.velY = 0;
                 break;
         }
     }

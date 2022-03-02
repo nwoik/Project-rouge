@@ -84,13 +84,13 @@ public class Player extends AnimateObject {
 
     @Override
     public void tick() {
-        if (this.attack) {
+        if (this.isAttacking) {
             if (this.animation == this.standFacingDown || this.animation == this.walkDown) {
                 this.setAnimation(this.attackDown);
                 this.animation.start();
                 return;
             } else if (this.animation.stop && this.animation == this.attackDown) {
-                this.attack = false;
+                this.isAttacking = false;
                 this.setAnimation(standFacingDown);
             }
             if (this.animation == this.standFacingUp || this.animation == this.walkUp) {
@@ -98,7 +98,7 @@ public class Player extends AnimateObject {
                 this.animation.start();
                 return;
             } else if (this.animation.stop && this.animation == this.attackUp) {
-                this.attack = false;
+                this.isAttacking = false;
                 this.setAnimation(standFacingUp);
             }
             if (this.animation == this.standFacingLeft || this.animation == this.walkLeft) {
@@ -106,7 +106,7 @@ public class Player extends AnimateObject {
                 this.animation.start();
                 return;
             } else if (this.animation.stop && this.animation == this.attackLeft) {
-                this.attack = false;
+                this.isAttacking = false;
                 this.setAnimation(standFacingLeft);
             }
             if (this.animation == this.standFacingRight || this.animation == this.walkRight) {
@@ -114,7 +114,7 @@ public class Player extends AnimateObject {
                 this.animation.start();
                 return;
             } else if (this.animation.stop && this.animation == this.attackRight) {
-                this.attack = false;
+                this.isAttacking = false;
                 this.setAnimation(standFacingRight);
             }
         }
@@ -146,16 +146,16 @@ public class Player extends AnimateObject {
         //Player getting knocked back after being hit
         if (!this.dash) {
             if (this.knockBackFrames > 6) {
-                if (this.right & !attack) {
+                if (this.right & !isAttacking) {
                     addX(this.movementSpeed);
                 }
-                if (this.left & !attack) {
+                if (this.left & !isAttacking) {
                     subX(this.movementSpeed);
                 }
-                if (this.down & !attack) {
+                if (this.down & !isAttacking) {
                     addY(this.movementSpeed);
                 }
-                if (this.up & !attack) {
+                if (this.up & !isAttacking) {
                     subY(this.movementSpeed);
                 }
             } else {
@@ -177,22 +177,22 @@ public class Player extends AnimateObject {
         }
 
         //animations for movement
-        if (this.leftPressed & !attack){
+        if (this.leftPressed & !isAttacking){
             this.setAnimation(this.walkLeft);
             this.animation.start();
             this.left = true;
         }
-        if (this.rightPressed & !attack){
+        if (this.rightPressed & !isAttacking){
             this.setAnimation(this.walkRight);
             this.animation.start();
             this.right = true;
         }
-        if (this.upPressed & !attack){
+        if (this.upPressed & !isAttacking){
             this.setAnimation(this.walkUp);
             this.animation.start();
             this.up = true;
         }
-        if (this.downPressed & !attack){
+        if (this.downPressed & !isAttacking){
             this.setAnimation(this.walkDown);
             this.animation.start();
             this.down = true;
@@ -294,7 +294,6 @@ public class Player extends AnimateObject {
             int tempX = 0;
             int tempY = 0;
             if (this.inRange) {
-
                 for (GameObject gameObject : this.handler.enemies) {
                     if (getBounds().intersects(gameObject.getBounds())) {
                         boolean check = false;
@@ -313,7 +312,7 @@ public class Player extends AnimateObject {
                             this.knockBackDirection = "right";
                             check = true;
                         }
-                        if (getBoundsSmall(x + this.width - this.movementSpeed2, this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2 * this.movementSpeed2).intersects(gameObject.getBounds())) {
+                        if (getBoundsSmall(this.x + this.width - this.movementSpeed2, this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2 * this.movementSpeed2).intersects(gameObject.getBounds())) {
                             tempX = -(this.movementSpeed);
                             this.knockBackDirection = "left";
                             check = true;
@@ -357,6 +356,18 @@ public class Player extends AnimateObject {
         }
     }
 
+    public void attack(Rectangle2D attackBox) {
+        if (!this.isAttacking) {
+            return;
+        }
+        for (GameObject gameObject : this.handler.enemies) {
+            if (attackBox.getBounds().intersects(gameObject.getBounds())) {
+                gameObject.subHp(5);
+                System.out.println(gameObject.getHp());
+            }
+        }
+    }
+
     //Check if player is detected by enemy. For debugging
     public void checkEnemyDetection(){
         for (GameObject gameObject : this.handler.enemies){
@@ -377,6 +388,35 @@ public class Player extends AnimateObject {
     public void debugRender(Graphics g) {
         g.setColor(this.colour);
         g.drawRect(this.x, this.y, this.width, this.height);
+        g.setColor(Color.yellow);
+        if (this.animation == this.attackUp) {
+            g.drawRect(x-12, y-44, this.width*2, 70);
+        }
+        else if (this.animation == this.attackDown) {
+            g.drawRect(x-12, y+32, this.width*2, 56);
+        }
+        else if (this.animation == this.attackLeft) {
+            g.drawRect(x-32, y-48, this.width, 136);
+        }
+        else if (this.animation == this.attackRight) {
+            g.drawRect(x+40, y-24, this.width, 96);
+        }
+    }
+
+    public Rectangle2D getUpAttackBox() {
+        return new Rectangle2D.Float(x-12, y-44, this.width*2, 70);
+    }
+
+    public Rectangle2D getDownAttackBox() {
+        return new Rectangle2D.Float(x-12, y+32, this.width*2, 56);
+    }
+
+    public Rectangle2D getLeftAttackBox() {
+        return new Rectangle2D.Float(x-32, y-48, this.width, 136);
+    }
+
+    public Rectangle2D getRightAttackBox() {
+        return new Rectangle2D.Float(x+40, y-24, this.width, 96);
     }
 
     //Helper method for more precise collision checking

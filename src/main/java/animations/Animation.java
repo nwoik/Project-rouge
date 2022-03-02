@@ -21,7 +21,6 @@ public class Animation {
         this.frameDuration = frameDelay;
         this.offsetX = offsetX;
         this.offsetY = offsetY;
-        this.stop = true;
         this.playOnce = playOnce;
 
         for (BufferedImage frame: frames) {
@@ -36,7 +35,7 @@ public class Animation {
     }
 
     public void start() {
-        if (!stop) {
+        if (!this.stop) {
             return;
         }
         if (frames.isEmpty()) {
@@ -91,7 +90,7 @@ public class Animation {
     public void update() {
         if (!stop) {
             frameCount++;
-            if (frameCount > frameDuration) {
+            if (frameCount > frameDuration ) {
                 frameCount = 0;
                 currentFrame += animationDirection;
                 if (currentFrame > totalFrames - 1) {
