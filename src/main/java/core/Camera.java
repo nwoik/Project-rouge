@@ -37,4 +37,8 @@ public class Camera {
     public void setY(float y){
         this.y = y;
     }
+
+    public float getWidth() {return WIDTH;}
+
+    public float getHeight() {return HEIGHT;}
 }
