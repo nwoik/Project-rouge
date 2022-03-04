@@ -61,13 +61,26 @@ public class AnimateObject extends GameObject{
         this.velY = velY;
     }
 
-    public AnimateObject(int x, int y, ID id, SpriteSheet ss){
+    public AnimateObject(int x, int y, Handler handler, ID id, SpriteSheet ss){
         super(x, y, id, ss);
         this.left = false;
         this.right = false;
         this.up = false;
         this.down = false;
+        this.handler = handler;
     }
+
+    protected void fillAnimationList(SpriteSheet spriteSheet, List<BufferedImage> framesList, int column, int row, int increment, int width, int height, int frameCount) {
+        for (int i = 0; i < frameCount; i++) {
+            framesList.add(spriteSheet.grabImage(column, row, width, height));
+            column += increment;
+        }
+    }
+
+    public void setAnimation(Animation animation) {
+        this.animation = animation;
+    }
+
 
     @Override
     public void tick() {

@@ -27,7 +27,7 @@ public class Enemy extends AnimateObject {
     private BufferedImage enemyImage;
 
     public Enemy(int x, int y, ID id, Handler handler, SpriteSheet ss) {
-        super(x, y, id, ss);
+        super(x, y, handler, id, ss);
         this.handler = handler;
         this.width = 64;
         this.height = 64;
