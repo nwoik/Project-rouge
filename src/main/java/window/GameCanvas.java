@@ -18,7 +18,6 @@ public class GameCanvas extends Canvas implements Runnable{
     public boolean isRunning = false;
     private Panel panel;
     private Thread thread;
-    private SpriteSheet characterSheet, dungeon1Sheet;
     private SpriteSheet uiSheet;
     public Boolean stopped = false;
 
@@ -30,9 +29,7 @@ public class GameCanvas extends Canvas implements Runnable{
     public int HEIGHT = dimension.height;
     public int WIDTH = dimension.width;
 
-    private BufferedImage character = null;
     private BufferedImage ui = null;
-    private final BufferedImage dungeon1;
 
     // For callFPS
     String outputFPS = "";
@@ -50,24 +47,13 @@ public class GameCanvas extends Canvas implements Runnable{
         addKeyListener(new KeyInput(handler, debugSettings, this));
         setBackground(new Color(0, 0, 0, 199));
 
-        ReadCSVFile csvFile1 = new ReadCSVFile("src/main/java/core/levels/DC1_Floors.csv");
-        ReadCSVFile csvFile2 = new ReadCSVFile("src/main/java/core/levels/DC1_Walls.csv");
-
         BufferedImageLoader loader = new BufferedImageLoader();
-        character = loader.loadImage("/Player/Character_Atlas.png");
         ui = loader.loadImage("/UI.png");
-        dungeon1 = loader.loadImage("/Dungeon 1 atlas.png");
 
         uiSheet = new SpriteSheet(ui);
-        characterSheet = new SpriteSheet(character);
-        dungeon1Sheet = new SpriteSheet(dungeon1);
 
-        TileMap tileMap1 = new TileMap(dungeon1Sheet);
-        Level level1 = new Level(tileMap1, csvFile1, csvFile2);
-
-        CharacterSpawn characterSpawn = new CharacterSpawn(this.handler, characterSheet);
-        LevelLoader levelLoader = new LevelLoader(this.handler, characterSpawn);
-        levelLoader.loadLevel(level1);
+        LevelLoader levelLoader = new LevelLoader(this.handler);
+        levelLoader.loadLevel(levelLoader.level1);
     }
     //stop game
     public void start(){
@@ -172,6 +158,8 @@ public class GameCanvas extends Canvas implements Runnable{
         //Render every single object.
         handler.render(g, this.debugSettings.isDebugMode());
         g2d.translate(camera.getX(), camera.getY());
+        g.setColor(Color.red);
+        g.fillRect(20, 20, 120, 120);
         g.drawImage(this.uiSheet.image, 20,20, null);
         //Write out fps
         g.setColor(Color.yellow);

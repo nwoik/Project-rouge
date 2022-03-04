@@ -1,16 +1,50 @@
 package core;
 
 import core.spawns.CharacterSpawn;
+import core.spawns.ObjectSpawn;
 import object.*;
 
-public class LevelLoader {
-    private Handler handler;
-    private CharacterSpawn characterSpawn;
-    int playerSpawnX, playerSpawnY;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
-    public LevelLoader(Handler handler, CharacterSpawn characterSpawn) {
+public class LevelLoader {
+
+    private Handler handler;
+
+    private CharacterSpawn characterSpawn;
+    private ObjectSpawn skeletonSpawn;
+
+    private BufferedImageLoader loader;
+    private BufferedImage character, skeletonImg;
+    private BufferedImage dungeon1;
+
+    private SpriteSheet characterSheet, skeletonSheet;
+    private SpriteSheet dungeon1Sheet;
+    private Skeleton skeleton;
+
+    private ReadCSVFile csvFile1, csvFile2;
+    private TileMap tileMap1;
+    public Level level1;
+
+
+    public LevelLoader(Handler handler) throws IOException {
         this.handler = handler;
-        this.characterSpawn = characterSpawn;
+        this.loader = new BufferedImageLoader();
+
+        this.csvFile1 = new ReadCSVFile("src/main/java/core/levels/DC1_Floors.csv");
+        this.csvFile2 = new ReadCSVFile("src/main/java/core/levels/DC1_Walls.csv");
+        this.dungeon1 = loader.loadImage("/Dungeon 1 atlas.png");
+        this.dungeon1Sheet = new SpriteSheet(dungeon1);
+        this.tileMap1 = new TileMap(dungeon1Sheet);
+        this.level1 = new Level(tileMap1, csvFile1, csvFile2);
+
+        this.character = loader.loadImage("/Player/Character_Atlas.png");
+        this.characterSheet = new SpriteSheet(this.character);
+        this.characterSpawn = new CharacterSpawn(this.handler, this.characterSheet);
+
+        this.skeletonImg = loader.loadImage("/Enemies/Skeleton_Atlas.png");
+        this.skeletonSheet = new SpriteSheet(this.skeletonImg);
+
 
     }
 
@@ -65,6 +99,8 @@ public class LevelLoader {
                         break;
                     case "7":
                         System.out.println(item + " " + xx + " " + yy);
+                        this.skeletonSpawn = new ObjectSpawn(this.handler, new Skeleton(xx, yy, ID.Enemy, this.handler, this.skeletonSheet));
+                        this.skeletonSpawn.loadObject();
                         floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
                         floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(3, 2, 64, 64));
                         handler.addObject(floor, handler.floors);

@@ -25,18 +25,35 @@ public class Skeleton extends AnimateObject {
     private BufferedImage enemyImage;
 
     public Skeleton(int x, int y, ID id, Handler handler, SpriteSheet ss) {
-        super(x, y, id, ss);
+        super(x, y, handler, id, ss);
         this.handler = handler;
         this.width = 64;
         this.height = 64;
         this.movementSpeed = 3;
         this.movementSpeed1 = this.movementSpeed +1;
         this.movementSpeed2 = this.movementSpeed1 * 2;
-        this.alignmentY = -32;
+        this.alignmentY = -28;
 
-        this.standingFacingDown.add(spriteSheet.grabImage(2, 3, 64, 96));
+        this.standingFacingDown.add(spriteSheet.grabImage(1, 1, 64, 96));
+        this.standingFacingLeft.add(spriteSheet.grabImage(3, 1, 64, 96));
+        this.standingFacingUp.add(spriteSheet.grabImage(4, 1, 64, 96));
+        this.standingFacingRight.add(spriteSheet.grabImage(2, 1, 64, 96));
 
         this.standFacingDown = new Animation(this.standingFacingDown, framedelay, 0, alignmentY, true);
+        this.standFacingLeft = new Animation(this.standingFacingLeft, framedelay, 0, alignmentY, true);
+        this.standFacingUp = new Animation(this.standingFacingUp, framedelay, 0, alignmentY, true);
+        this.standFacingRight = new Animation(this.standingFacingRight, framedelay, 0, alignmentY, true);
+
+        fillAnimationList(spriteSheet, this.walkingUp, 1, 9, 1, 64, 96, 10);
+        fillAnimationList(spriteSheet, this.walkingDown, 1, 3, 1, 64, 96, 10);
+        fillAnimationList(spriteSheet, this.walkingLeft, 1, 5, 1, 64, 96, 10);
+        fillAnimationList(spriteSheet, this.walkingRight, 1, 7, 1, 64, 96, 10);
+
+        this.walkUp = new Animation(this.walkingUp, framedelay, 0, alignmentY, true);
+        this.walkDown = new Animation(this.walkingDown, framedelay, 0, alignmentY, true);
+        this.walkLeft = new Animation(this.walkingLeft, framedelay, 0, alignmentY, true);
+        this.walkRight = new Animation(this.walkingRight, framedelay, 0, alignmentY, true);
+
 
         this.animation = this.standFacingDown;
     }
@@ -61,6 +78,45 @@ public class Skeleton extends AnimateObject {
         else {
             randomMovement();
         }
+
+        //animations for movement
+        if (this.velX < 0 & !isAttacking){
+            this.setAnimation(this.walkLeft);
+            this.animation.start();
+        }
+        if (this.velX > 0 & !isAttacking){
+            this.setAnimation(this.walkRight);
+            this.animation.start();
+        }
+        if (this.velY < 0 & !isAttacking){
+            this.setAnimation(this.walkUp);
+            this.animation.start();
+        }
+        if (this.velY > 0 & !isAttacking){
+            this.setAnimation(this.walkDown);
+            this.animation.start();
+        }
+
+        if (this.velY == 0 & this.animation == this.walkDown) {
+            this.setAnimation(this.standFacingDown);
+            this.animation.start();
+        }
+
+        if (this.velY == 0 & this.animation == this.walkUp) {
+            this.setAnimation(this.standFacingUp);
+            this.animation.start();
+        }
+
+        if (this.velX == 0 & this.animation == this.walkLeft) {
+            this.setAnimation(this.standFacingLeft);
+            this.animation.start();
+        }
+
+        if (this.velX == 0 & this.animation == this.walkRight) {
+            this.setAnimation(this.standFacingRight);
+            this.animation.start();
+        }
+        this.animation.update();
 
     }
 

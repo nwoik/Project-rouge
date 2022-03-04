@@ -31,7 +31,7 @@ public class Player extends AnimateObject {
 
 
     public Player(int x, int y, ID id, Handler handler, SpriteSheet spriteSheet) {
-        super(x, y, id, spriteSheet);
+        super(x, y, handler, id, spriteSheet);
         this.handler = handler;
         this.movementSpeed = 6;
         this.movementSpeed1 = this.movementSpeed +1;
@@ -75,12 +75,6 @@ public class Player extends AnimateObject {
         this.animation = this.standFacingDown;
     }
 
-    private void fillAnimationList(SpriteSheet spriteSheet, List<BufferedImage> framesList, int column, int row, int increment, int width, int height, int frameCount) {
-        for (int i = 0; i < frameCount; i++) {
-            framesList.add(spriteSheet.grabImage(column, row, width, height));
-            column += increment;
-        }
-    }
 
     @Override
     public void tick() {
@@ -434,7 +428,4 @@ public class Player extends AnimateObject {
         return null;
     }
 
-    public void setAnimation(Animation animation) {
-        this.animation = animation;
-    }
 }
