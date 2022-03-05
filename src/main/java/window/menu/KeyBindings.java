@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 class KeyBindings extends KeyAdapter {
-    JButton button;
+    KeyWidget widget;
     ArrayList<Integer> keysList;
     int keyPos;
     Map<Integer, String> arrowMap = new HashMap<>();
@@ -17,8 +17,8 @@ class KeyBindings extends KeyAdapter {
     arrowMap.put(letter[i], gpa[i]);
     arrowMap.put(letter[i], gpa[i]);*/
 
-    public KeyBindings(JButton button, ArrayList<Integer> keysList, int keyPos) {
-        this.button=button;
+    public KeyBindings(KeyWidget widget, ArrayList<Integer> keysList, int keyPos) {
+        this.widget=widget;
         this.keysList=keysList;
         this.keyPos=keyPos;
         this.arrowMap.put(37, "LeftArrow");
@@ -32,12 +32,12 @@ class KeyBindings extends KeyAdapter {
         char key = event.getKeyChar();
         if (this.arrowMap.containsKey(keyNum)) {
             String arrowKey = arrowMap.get(keyNum);
-            this.button.setText(""+arrowKey);
+            this.widget.setText(""+arrowKey);
             this.keysList.set(this.keyPos, keyNum);
             return;
         }
 
-        this.button.setText(""+key);
+        this.widget.setText(""+key);
         this.keysList.set(this.keyPos, keyNum);
     }
 }

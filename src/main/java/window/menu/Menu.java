@@ -4,6 +4,7 @@ import audio.AudioHandler;
 import core.BufferedImageLoader;
 import window.GameCanvas;
 import window.GameWindow;
+import window.Widget;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,24 +21,20 @@ public class Menu extends JPanel {
 
         setBackground(new Color(255, 200, 200));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JLabel title = new JLabel("Once Upon a Dungeon", SwingConstants.CENTER);
-
-        JButton playButton = new JButton();
-        JButton settingsButton = new JButton(new SwapCardAction("Settings", Settings.class.toString(), layoutPanel));
-        JButton exitButton = new JButton();
 
         BufferedImageLoader image = new BufferedImageLoader();
         BufferedImage wordAtlas = image.loadImage("/Word Sheet.png");
 
-        Image newGameImage = wordAtlas.getSubimage(0,12,65,12);
-        Image scaledNewGameImage = newGameImage.getScaledInstance(360, 60,  java.awt.Image.SCALE_SMOOTH);
-        Image newGameHover = wordAtlas.getSubimage(74,12,65,12);
-        Image scaledNewGameHover = newGameHover.getScaledInstance(360, 60,  java.awt.Image.SCALE_SMOOTH);
-        playButton.setBorderPainted(false);
-        playButton.setContentAreaFilled(false);
-        playButton.setFocusPainted(false);
-        playButton.setOpaque(false);
-        playButton.setIcon(new ImageIcon(scaledNewGameImage));
+        JLabel title = new JLabel("Once Upon a Dungeon", SwingConstants.CENTER);
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        Widget playButton = new Widget(wordAtlas.getSubimage(0,168,34,12), wordAtlas.getSubimage(74,168,34,12));
+        playButton.scaleWidget(240,60);
+
+        JButton settingsButton = new JButton(new SwapCardAction("Settings", Settings.class.toString(), layoutPanel));
+
+        Widget exitButton = new Widget(wordAtlas.getSubimage(0,36,31,12), wordAtlas.getSubimage(74,36,31,12));
+        exitButton.scaleWidget(200, 60);
 
         Image settingsImage = wordAtlas.getSubimage(74,0,65,12);
         Image scaledSettingsImage = settingsImage.getScaledInstance(360, 60,  java.awt.Image.SCALE_SMOOTH);
@@ -50,34 +47,8 @@ public class Menu extends JPanel {
         settingsButton.setOpaque(false);
         settingsButton.setIcon(new ImageIcon(scaledSettingsHover));
 
-        Image exitImage = wordAtlas.getSubimage(0,36,31,12);
-        Image scaledExitImage = exitImage.getScaledInstance(200, 60,  java.awt.Image.SCALE_SMOOTH);
-        Image exitHover = wordAtlas.getSubimage(74,36,31,12);
-        Image scaledExitHover = exitHover.getScaledInstance(200, 60,  java.awt.Image.SCALE_SMOOTH);
-        exitButton.setBorderPainted(false);
-        exitButton.setContentAreaFilled(false);
-        exitButton.setFocusPainted(false);
-        exitButton.setOpaque(false);
-        exitButton.setIcon(new ImageIcon(scaledExitImage));
-
         AudioHandler audio = new AudioHandler("music/Once_upon_a_dungeon.wav");
-
-        playButton.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseReleased(MouseEvent arg0) {}
-            @Override
-            public void mousePressed(MouseEvent arg0) {}
-            @Override
-            public void mouseExited(MouseEvent arg0) {
-                playButton.setIcon(new ImageIcon(scaledNewGameImage));
-            }
-            @Override
-            public void mouseEntered(MouseEvent arg0) {
-                playButton.setIcon(new ImageIcon(scaledNewGameHover));
-            }
-            @Override
-            public void mouseClicked(MouseEvent arg0) {}
-        });
+        AudioHandler clickAudio = new AudioHandler("sfx/menu/wood_click.wav");
 
         settingsButton.addMouseListener(new MouseListener() {
             @Override
@@ -96,33 +67,11 @@ public class Menu extends JPanel {
             public void mouseClicked(MouseEvent arg0) {}
         });
 
-        exitButton.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseReleased(MouseEvent arg0) {}
-            @Override
-            public void mousePressed(MouseEvent arg0) {}
-            @Override
-            public void mouseExited(MouseEvent arg0) {
-                exitButton.setIcon(new ImageIcon(scaledExitImage));
-            }
-            @Override
-            public void mouseEntered(MouseEvent arg0) {
-                exitButton.setIcon(new ImageIcon(scaledExitHover));
-            }
-            @Override
-            public void mouseClicked(MouseEvent arg0) {}
-        });
-
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 audio.clear();
-                AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
-                audio1.playMusic();
-
-//                GameCanvas gameCanvas = new GameCanvas();
-//                gameWindow.setVisible(false);
-//                gameWindow.add(gameCanvas);
+                clickAudio.playMusic();
 
                 setVisible(false);
                 settings.setVisible(false);
@@ -132,26 +81,16 @@ public class Menu extends JPanel {
 
                 gameWindow.add(sceneTransition);
                 sceneTransition.load(gameWindow);
-
-//                gameWindow.setVisible(true);
             }
         });
         settingsButton.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) {
-            AudioHandler audio2 = new AudioHandler("sfx/menu/wood_click.wav");
-            audio2.playMusic();
+            clickAudio.playMusic();
         }});
         exitButton.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) {
-            AudioHandler audio2 = new AudioHandler("sfx/menu/wood_click.wav");
-            audio2.playMusic();
+            clickAudio.playMusic();
             System.exit(0);
         }});
-
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        playButton.setMaximumSize(new Dimension(400, 400));
 
         add(Box.createRigidArea(new Dimension(0, 100)));
         add(title);
