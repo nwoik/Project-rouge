@@ -21,6 +21,9 @@ public class Enemy extends AnimateObject {
     private boolean collided = false;
     private boolean lineCollided = false;
 
+    public int knockBackFrames = 7;
+    public String knockBackDirection = "";
+
     private Line2D center;
     private Color lineColour = Color.cyan;
     //enemy image to be drawn
@@ -44,16 +47,33 @@ public class Enemy extends AnimateObject {
         collision();
 
         //move enemy
-        this.x += this.velX;
-        this.y += this.velY;
-
-        //If player is close enough, run directed movement
-        if (playerInRange()){
-            directMovement();
+        if (this.knockBackFrames > 6) {
+            this.x += this.velX;
+            this.y += this.velY;
+            //If player is close enough, run directed movement
+            if (playerInRange()){
+                directMovement();
+            }
+            //otherwise move randomly
+            else {
+                randomMovement();
+            }
         }
-        //otherwise move randomly
         else {
-            randomMovement();
+            if (this.knockBackFrames == 0) {
+                this.movementSpeed = 10;
+            }
+
+            switch (knockBackDirection) {
+                case "up" -> subY(this.movementSpeed);
+                case "down" -> addY(this.movementSpeed);
+                case "left" -> subX(this.movementSpeed);
+                case "right" -> addX(this.movementSpeed);
+            }
+            if (this.knockBackFrames == 6) {
+                this.movementSpeed = 6;
+            }
+            this.knockBackFrames += 1;
         }
 
     }

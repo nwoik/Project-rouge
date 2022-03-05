@@ -23,6 +23,9 @@ public abstract class GameObject {
     protected int height;
     protected int hp;
 
+    protected int knockBackFrames;
+    protected String knockBackDirection;
+
     public GameObject(int x, int y, ID id, SpriteSheet ss){
         this.x = x;
         this.y = y;

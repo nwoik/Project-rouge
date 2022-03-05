@@ -23,6 +23,7 @@ public class Player extends AnimateObject {
     public boolean inRange = false;
     private int knockBackFrames = 7;
     private String knockBackDirection = "";
+    private String attackDirection = "";
 
     public boolean dash = false;
     private String dashDirection = "";
@@ -78,10 +79,12 @@ public class Player extends AnimateObject {
 
     @Override
     public void tick() {
+        this.attackDirection = "";
         if (this.isAttacking) {
             if (this.animation == this.standFacingDown || this.animation == this.walkDown) {
                 this.setAnimation(this.attackDown);
                 this.animation.start();
+                this.attackDirection = "down";
                 return;
             } else if (this.animation.stop && this.animation == this.attackDown) {
                 this.isAttacking = false;
@@ -90,6 +93,7 @@ public class Player extends AnimateObject {
             if (this.animation == this.standFacingUp || this.animation == this.walkUp) {
                 this.setAnimation(this.attackUp);
                 this.animation.start();
+                this.attackDirection = "up";
                 return;
             } else if (this.animation.stop && this.animation == this.attackUp) {
                 this.isAttacking = false;
@@ -98,6 +102,7 @@ public class Player extends AnimateObject {
             if (this.animation == this.standFacingLeft || this.animation == this.walkLeft) {
                 this.setAnimation(this.attackLeft);
                 this.animation.start();
+                this.attackDirection = "left";
                 return;
             } else if (this.animation.stop && this.animation == this.attackLeft) {
                 this.isAttacking = false;
@@ -106,6 +111,7 @@ public class Player extends AnimateObject {
             if (this.animation == this.standFacingRight || this.animation == this.walkRight) {
                 this.setAnimation(this.attackRight);
                 this.animation.start();
+                this.attackDirection = "right";
                 return;
             } else if (this.animation.stop && this.animation == this.attackRight) {
                 this.isAttacking = false;
@@ -358,6 +364,14 @@ public class Player extends AnimateObject {
             if (attackBox.getBounds().intersects(gameObject.getBounds())) {
                 gameObject.subHp(5);
                 System.out.println(gameObject.getHp());
+                gameObject.knockBackFrames = 0;
+                switch (attackDirection){
+                    case "left"-> gameObject.knockBackDirection = "left";
+                    case "right"-> gameObject.knockBackDirection = "right";
+                    case "up"-> gameObject.knockBackDirection = "up";
+                    case "down"-> gameObject.knockBackDirection = "down";
+                }
+
             }
         }
     }
