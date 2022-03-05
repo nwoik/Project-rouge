@@ -387,10 +387,10 @@ public class Player extends AnimateObject {
             g.drawRect(x-12, y-44, this.width*2, 70);
         }
         else if (this.animation == this.attackDown) {
-            g.drawRect(x-12, y+32, this.width*2, 56);
+            g.drawRect(x-12, y+32, this.width*2, 70);
         }
         else if (this.animation == this.attackLeft) {
-            g.drawRect(x-32, y-48, this.width, 136);
+            g.drawRect(x-48, y-48, this.width, 136);
         }
         else if (this.animation == this.attackRight) {
             g.drawRect(x+40, y-24, this.width, 96);
@@ -402,11 +402,11 @@ public class Player extends AnimateObject {
     }
 
     public Rectangle2D getDownAttackBox() {
-        return new Rectangle2D.Float(x-12, y+32, this.width*2, 56);
+        return new Rectangle2D.Float(x-12, y+32, this.width*2, 70);
     }
 
     public Rectangle2D getLeftAttackBox() {
-        return new Rectangle2D.Float(x-32, y-48, this.width, 136);
+        return new Rectangle2D.Float(x-48, y-48, this.width, 136);
     }
 
     public Rectangle2D getRightAttackBox() {
