@@ -29,73 +29,26 @@ public class SubMenu extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         JLabel title = new JLabel("", SwingConstants.CENTER);
-        JButton returnButton = new JButton();
-        JButton exitButton = new JButton();
 
         BufferedImageLoader image = new BufferedImageLoader();
         BufferedImage wordAtlas = image.loadImage("/Word Sheet.png");
+
+        Widget returnButton = new Widget(wordAtlas.getSubimage(0,180,36,12), wordAtlas.getSubimage(74,180,36,12));
+        returnButton.scaleWidget(240,60);
+
+        Widget exitButton = new Widget(wordAtlas.getSubimage(0,36,31,12), wordAtlas.getSubimage(74,36,31,12));
+        exitButton.scaleWidget(200, 60);
 
         Image titleImage = wordAtlas.getSubimage(0,156,36,12);
         Image scaledTitleImage = titleImage.getScaledInstance(300, 70,  java.awt.Image.SCALE_SMOOTH);
         title.setIcon(new ImageIcon(scaledTitleImage));
 
-        Image returnImage = wordAtlas.getSubimage(0,180,36,12);
-        Image scaledReturnImage = returnImage.getScaledInstance(200, 60,  java.awt.Image.SCALE_SMOOTH);
-        Image returnHover = wordAtlas.getSubimage(74,180,36,12);
-        Image scaledReturnHover = returnHover.getScaledInstance(200, 60,  java.awt.Image.SCALE_SMOOTH);
-        returnButton.setBorderPainted(false);
-        returnButton.setContentAreaFilled(false);
-        returnButton.setFocusPainted(false);
-        returnButton.setOpaque(false);
-        returnButton.setIcon(new ImageIcon(scaledReturnImage));
-
-        Image exitImage = wordAtlas.getSubimage(0,36,31,12);
-        Image scaledExitImage = exitImage.getScaledInstance(200, 60,  java.awt.Image.SCALE_SMOOTH);
-        Image exitHover = wordAtlas.getSubimage(74,36,31,12);
-        Image scaledExitHover = exitHover.getScaledInstance(200, 60,  java.awt.Image.SCALE_SMOOTH);
-        exitButton.setBorderPainted(false);
-        exitButton.setContentAreaFilled(false);
-        exitButton.setFocusPainted(false);
-        exitButton.setOpaque(false);
-        exitButton.setIcon(new ImageIcon(scaledExitImage));
-
-        returnButton.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseReleased(MouseEvent arg0) {}
-            @Override
-            public void mousePressed(MouseEvent arg0) {}
-            @Override
-            public void mouseExited(MouseEvent arg0) {
-                returnButton.setIcon(new ImageIcon(scaledReturnImage));
-            }
-            @Override
-            public void mouseEntered(MouseEvent arg0) {
-                returnButton.setIcon(new ImageIcon(scaledReturnHover));
-            }
-            @Override
-            public void mouseClicked(MouseEvent arg0) {}
-        });
-
-        exitButton.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseReleased(MouseEvent arg0) {}
-            @Override
-            public void mousePressed(MouseEvent arg0) {}
-            @Override
-            public void mouseExited(MouseEvent arg0) {
-                exitButton.setIcon(new ImageIcon(scaledExitImage));
-            }
-            @Override
-            public void mouseEntered(MouseEvent arg0) {
-                exitButton.setIcon(new ImageIcon(scaledExitHover));
-            }
-            @Override
-            public void mouseClicked(MouseEvent arg0) {}
-        });
+        AudioHandler clickAudio = new AudioHandler("sfx/menu/wood_click.wav");
 
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                clickAudio.playMusic();
                 closeMenu();
                 gameCanvas.comeBack();
             }
@@ -104,6 +57,7 @@ public class SubMenu extends JPanel {
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                clickAudio.playMusic();
                 subWindow.dispose();
                 gameWindow.remove(gameCanvas);
                 layoutPanel.setVisible(true);
@@ -118,8 +72,6 @@ public class SubMenu extends JPanel {
         add(exitButton);
 
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        returnButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
 
     public void closeMenu() {

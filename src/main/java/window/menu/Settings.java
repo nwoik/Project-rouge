@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -25,60 +24,28 @@ public class Settings extends JPanel {
 
         setBackground(new Color(150, 200, 255));
 
-        JLabel title = new JLabel("", SwingConstants.CENTER);
-        JLabel keyLabel = new JLabel("", SwingConstants.CENTER);
-        JLabel upLabel = new JLabel("", SwingConstants.CENTER);
-        JLabel downLabel = new JLabel("", SwingConstants.CENTER);
-        JLabel leftLabel = new JLabel("", SwingConstants.CENTER);
-        JLabel rightLabel = new JLabel("", SwingConstants.CENTER);
-        JLabel weapon1Label = new JLabel("", SwingConstants.CENTER);
-        JLabel dashLabel = new JLabel("", SwingConstants.CENTER);
+        BufferedImageLoader image = new BufferedImageLoader();
+        BufferedImage wordAtlas = image.loadImage("/Word Sheet.png");
+
+        Tag title = new Tag(wordAtlas.getSubimage(0,0,64,10), 400, 80);
+        Tag keyLabel = new Tag(wordAtlas.getSubimage(0,25,69,10), 280, 50);
+        Tag upLabel = new Tag(wordAtlas.getSubimage(0,73,18,10), 50, 30);
+        Tag downLabel = new Tag(wordAtlas.getSubimage(0,85,36,10), 90, 30);
+        Tag leftLabel = new Tag(wordAtlas.getSubimage(1,97,30,10), 70, 30);
+        Tag rightLabel = new Tag(wordAtlas.getSubimage(1,109,39,10), 90, 30);
+        Tag weapon1Label = new Tag(wordAtlas.getSubimage(1,120,52,10), 160, 30);
+        Tag dashLabel = new Tag(wordAtlas.getSubimage(1,192,36,10), 100, 30);
 
         this.movementSettings = new ArrayList<String>();
         this.keyCodeList = new ArrayList<Integer>();
         readText(this.movementSettings, this.keyCodeList);
 
-        JButton moveUp = new JButton(this.movementSettings.get(0));
-        JButton moveDown = new JButton(this.movementSettings.get(1));
-        JButton moveLeft = new JButton(this.movementSettings.get(2));
-        JButton moveRight = new JButton(this.movementSettings.get(3));
-        JButton weapon1 = new JButton(this.movementSettings.get(4));
-        JButton dash = new JButton(this.movementSettings.get(5));
-
-        BufferedImageLoader image = new BufferedImageLoader();
-        BufferedImage wordAtlas = image.loadImage("/Word Sheet.png");
-
-        Image titleImage = wordAtlas.getSubimage(0,0,64,10);
-        Image scaledTitleImage = titleImage.getScaledInstance(400, 80,  java.awt.Image.SCALE_SMOOTH);
-        title.setIcon(new ImageIcon(scaledTitleImage));
-
-        Image controlsImage = wordAtlas.getSubimage(0,25,69,10);
-        Image scaledControlsImage = controlsImage.getScaledInstance(280, 50,  java.awt.Image.SCALE_SMOOTH);
-        keyLabel.setIcon(new ImageIcon(scaledControlsImage));
-
-        Image upImage = wordAtlas.getSubimage(0,73,18,10);
-        Image scaledUpImage = upImage.getScaledInstance(50, 30,  java.awt.Image.SCALE_SMOOTH);
-        upLabel.setIcon(new ImageIcon(scaledUpImage));
-
-        Image downImage = wordAtlas.getSubimage(0,85,36,10);
-        Image scaledDownImage = downImage.getScaledInstance(90, 30,  java.awt.Image.SCALE_SMOOTH);
-        downLabel.setIcon(new ImageIcon(scaledDownImage));
-
-        Image leftImage = wordAtlas.getSubimage(1,97,30,10);
-        Image scaledLeftImage = leftImage.getScaledInstance(70, 30,  java.awt.Image.SCALE_SMOOTH);
-        leftLabel.setIcon(new ImageIcon(scaledLeftImage));
-
-        Image rightImage = wordAtlas.getSubimage(1,109,39,10);
-        Image scaledRightImage = rightImage.getScaledInstance(90, 30,  java.awt.Image.SCALE_SMOOTH);
-        rightLabel.setIcon(new ImageIcon(scaledRightImage));
-
-        Image weapon1Image = wordAtlas.getSubimage(1,121,58,10);
-        Image scaledWeapon1Image = weapon1Image.getScaledInstance(160, 30,  java.awt.Image.SCALE_SMOOTH);
-        weapon1Label.setIcon(new ImageIcon(scaledWeapon1Image));
-
-        Image dashImage = wordAtlas.getSubimage(1,133,62,10);
-        Image scaledDashImage = dashImage.getScaledInstance(160, 30,  java.awt.Image.SCALE_SMOOTH);
-        dashLabel.setIcon(new ImageIcon(scaledDashImage));
+        KeyWidget moveUp = new KeyWidget(this.movementSettings.get(0), this.keyCodeList, 0);
+        KeyWidget moveDown = new KeyWidget(this.movementSettings.get(1), this.keyCodeList, 1);
+        KeyWidget moveLeft = new KeyWidget(this.movementSettings.get(2), this.keyCodeList, 2);
+        KeyWidget moveRight = new KeyWidget(this.movementSettings.get(3), this.keyCodeList, 3);
+        KeyWidget weapon1 = new KeyWidget(this.movementSettings.get(4), this.keyCodeList, 4);
+        KeyWidget dash = new KeyWidget(this.movementSettings.get(5), this.keyCodeList, 5);
 
         ArrayList<JButton> buttonList = new ArrayList<JButton>();
         buttonList.add(moveUp);
@@ -90,75 +57,6 @@ public class Settings extends JPanel {
 
         JLabel validLabel = new JLabel("");
         JButton menuButton = new JButton(new SwapCardAction("Back", Menu.class.toString(), layoutPanel));
-
-        moveUp.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
-                audio1.playMusic();
-                moveUp.setText("  ");
-                moveUp.addKeyListener(new KeyBindings(moveUp, keyCodeList, 0));
-            }
-        });
-
-        moveDown.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
-                audio1.playMusic();
-                moveDown.setText("  ");
-                moveDown.addKeyListener(new KeyBindings(moveDown, keyCodeList, 1));
-            }
-        });
-
-        moveLeft.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
-                audio1.playMusic();
-                moveLeft.setText("  ");
-                moveLeft.addKeyListener(new KeyBindings(moveLeft, keyCodeList, 2));
-            }
-        });
-
-        moveRight.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
-                audio1.playMusic();
-                moveRight.setText("  ");
-                moveRight.addKeyListener(new KeyBindings(moveRight, keyCodeList, 3));
-            }
-        });
-
-        weapon1.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
-                audio1.playMusic();
-                weapon1.setText("  ");
-                weapon1.addKeyListener(new KeyBindings(weapon1, keyCodeList, 4));
-            }
-        });
-
-        dash.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
-                audio1.playMusic();
-                dash.setText("  ");
-                dash.addKeyListener(new KeyBindings(dash, keyCodeList, 5));
-            }
-        });
-
 
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(new ActionListener()  {
@@ -330,15 +228,6 @@ public class Settings extends JPanel {
         writer.close();
         fileWriter.close();
         System.out.println("File Saved");
-
-        /*
-        InputStream is = Settings.class.getResourceAsStream("/Settings.txt");
-        BufferedWriter reader = new BufferedWriter(new FileWriter("/Settings.txt"));
-        for (String line : arrayList) {
-            reader.write(line);
-        }
-        reader.close();
-        */
     }
 
     public float getSFXVol() {
@@ -373,5 +262,3 @@ public class Settings extends JPanel {
         }
     }
 }
-
-//BIGIFY - Kozlow
