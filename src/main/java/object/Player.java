@@ -1,6 +1,7 @@
 package object;
 
 import animations.Animation;
+import audio.AudioHandler;
 import core.SpriteSheet;
 
 import java.awt.Graphics;
@@ -82,6 +83,8 @@ public class Player extends AnimateObject {
         this.attackDirection = "";
         if (this.isAttacking) {
             if (this.animation == this.standFacingDown || this.animation == this.walkDown) {
+                AudioHandler audio1 = new AudioHandler("sfx/player/sweep1.wav");
+                audio1.playSFX();
                 this.setAnimation(this.attackDown);
                 this.animation.start();
                 this.attackDirection = "down";
@@ -91,6 +94,8 @@ public class Player extends AnimateObject {
                 this.setAnimation(standFacingDown);
             }
             if (this.animation == this.standFacingUp || this.animation == this.walkUp) {
+                AudioHandler audio1 = new AudioHandler("sfx/player/sweep1.wav");
+                audio1.playSFX();
                 this.setAnimation(this.attackUp);
                 this.animation.start();
                 this.attackDirection = "up";
@@ -100,6 +105,8 @@ public class Player extends AnimateObject {
                 this.setAnimation(standFacingUp);
             }
             if (this.animation == this.standFacingLeft || this.animation == this.walkLeft) {
+                AudioHandler audio1 = new AudioHandler("sfx/player/sweep1.wav");
+                audio1.playSFX();
                 this.setAnimation(this.attackLeft);
                 this.animation.start();
                 this.attackDirection = "left";
@@ -109,6 +116,8 @@ public class Player extends AnimateObject {
                 this.setAnimation(standFacingLeft);
             }
             if (this.animation == this.standFacingRight || this.animation == this.walkRight) {
+                AudioHandler audio1 = new AudioHandler("sfx/player/sweep1.wav");
+                audio1.playSFX();
                 this.setAnimation(this.attackRight);
                 this.animation.start();
                 this.attackDirection = "right";
@@ -160,6 +169,8 @@ public class Player extends AnimateObject {
                 }
             } else {
                 if (this.knockBackFrames == 0) {
+                    AudioHandler audio1 = new AudioHandler("sfx/player/hit3.wav");
+                    audio1.playSFX();
                     this.movementSpeed = 10;
                 }
 
