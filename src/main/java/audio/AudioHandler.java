@@ -1,6 +1,5 @@
 package audio;
 
-import window.menu.LayoutPanel;
 import window.menu.Settings;
 
 import javax.sound.sampled.*;
@@ -34,9 +33,7 @@ public class AudioHandler {
     }
 
     public void clear() {
-        audioList.forEach(audio1 -> {
-            audio1.finish();
-        });
+        audioList.forEach(Audio::finish);
         audioList.clear();
     }
 
@@ -44,8 +41,7 @@ public class AudioHandler {
         audioList.add(new Music(clip));
     }
 
-    public void playSFX(String fileName) {
-        final Clip clip = getClip(fileName);
+    public void playSFX() {
         audioList.add(new SFX(clip));
 
     }
