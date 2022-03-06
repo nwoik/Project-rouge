@@ -93,4 +93,8 @@ public abstract class GameObject {
     public void subHp(int value) {
         this.hp -= value;
     }
+
+    public void setKnockBackFrames() {this.knockBackFrames = 0;}
+
+    public void setKnockBackDirection(String value) {this.knockBackDirection = value;}
 }

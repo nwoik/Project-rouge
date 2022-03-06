@@ -48,6 +48,7 @@ public class Enemy extends AnimateObject {
 
         //move enemy
         if (this.knockBackFrames > 6) {
+
             this.x += this.velX;
             this.y += this.velY;
             //If player is close enough, run directed movement
