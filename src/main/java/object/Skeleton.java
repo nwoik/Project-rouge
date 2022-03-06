@@ -13,7 +13,6 @@ import java.awt.geom.Line2D;
 public class Skeleton extends AnimateObject {
     private Random r = new Random();
     private int choose = 0;
-    private int hp = 100;
     private int movementSpeed1;
     private int movementSpeed2;
     private boolean collided = false;
@@ -29,6 +28,9 @@ public class Skeleton extends AnimateObject {
         this.handler = handler;
         this.width = 64;
         this.height = 64;
+        this.knockBackDirection = "";
+        this.knockBackFrames = 7;
+        this.hp = 100;
         this.movementSpeed = 3;
         this.movementSpeed1 = this.movementSpeed +1;
         this.movementSpeed2 = this.movementSpeed1 * 2;
@@ -63,61 +65,79 @@ public class Skeleton extends AnimateObject {
         //remove on death
         //if(hp <= 0) handler.removeObject(this, handler.enemy);
 
-        //check collision
-        collision();
-
         //move enemy
-        this.x += this.velX;
-        this.y += this.velY;
+        if (this.knockBackFrames > 6) {
+            this.x += this.velX;
+            this.y += this.velY;
 
-        //If player is close enough, run directed movement
-        if (playerInRange()){
-            directMovement();
+            //If player is close enough, run directed movement
+            if (playerInRange()) {
+                directMovement();
+            }
+            //otherwise move randomly
+            else {
+                randomMovement();
+            }
+
+            //animations for movement
+            if (this.velX < 0 & !isAttacking) {
+                this.setAnimation(this.walkLeft);
+                this.animation.start();
+            }
+            if (this.velX > 0 & !isAttacking) {
+                this.setAnimation(this.walkRight);
+                this.animation.start();
+            }
+            if (this.velY < 0 & !isAttacking) {
+                this.setAnimation(this.walkUp);
+                this.animation.start();
+            }
+            if (this.velY > 0 & !isAttacking) {
+                this.setAnimation(this.walkDown);
+                this.animation.start();
+            }
+
+            if (this.velY == 0 & this.animation == this.walkDown) {
+                this.setAnimation(this.standFacingDown);
+                this.animation.start();
+            }
+
+            if (this.velY == 0 & this.animation == this.walkUp) {
+                this.setAnimation(this.standFacingUp);
+                this.animation.start();
+            }
+
+            if (this.velX == 0 & this.animation == this.walkLeft) {
+                this.setAnimation(this.standFacingLeft);
+                this.animation.start();
+            }
+
+            if (this.velX == 0 & this.animation == this.walkRight) {
+                this.setAnimation(this.standFacingRight);
+                this.animation.start();
+            }
+            this.animation.update();
         }
-        //otherwise move randomly
         else {
-            randomMovement();
+            if (this.knockBackFrames == 0) {
+                this.movementSpeed = 10;
+            }
+            if (!this.collided) {
+                switch (this.knockBackDirection) {
+                    case "up" -> subY(this.movementSpeed);
+                    case "down" -> addY(this.movementSpeed);
+                    case "left" -> subX(this.movementSpeed);
+                    case "right" -> addX(this.movementSpeed);
+                }
+            }
+            if (this.knockBackFrames == 6) {
+                this.movementSpeed = 3;
+            }
+            this.knockBackFrames += 1;
         }
-
-        //animations for movement
-        if (this.velX < 0 & !isAttacking){
-            this.setAnimation(this.walkLeft);
-            this.animation.start();
-        }
-        if (this.velX > 0 & !isAttacking){
-            this.setAnimation(this.walkRight);
-            this.animation.start();
-        }
-        if (this.velY < 0 & !isAttacking){
-            this.setAnimation(this.walkUp);
-            this.animation.start();
-        }
-        if (this.velY > 0 & !isAttacking){
-            this.setAnimation(this.walkDown);
-            this.animation.start();
-        }
-
-        if (this.velY == 0 & this.animation == this.walkDown) {
-            this.setAnimation(this.standFacingDown);
-            this.animation.start();
-        }
-
-        if (this.velY == 0 & this.animation == this.walkUp) {
-            this.setAnimation(this.standFacingUp);
-            this.animation.start();
-        }
-
-        if (this.velX == 0 & this.animation == this.walkLeft) {
-            this.setAnimation(this.standFacingLeft);
-            this.animation.start();
-        }
-
-        if (this.velX == 0 & this.animation == this.walkRight) {
-            this.setAnimation(this.standFacingRight);
-            this.animation.start();
-        }
-        this.animation.update();
-
+        //check collision
+        this.collided = false;
+        collision();
     }
 
     //Check if player is within 800 units of enemy
