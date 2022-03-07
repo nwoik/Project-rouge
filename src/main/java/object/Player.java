@@ -229,6 +229,7 @@ public class Player extends AnimateObject {
     private void dashCheck(){
 
         if (this.rightPressed){
+            audio.playSFX("sfx/player/dash.wav");
             for (GameObject gameObject : this.handler.walls){
                 if (gameObject.getBounds().intersects(getBoundsSmall(this.x + this.width, this.y, this.width*2, this.height))){
                     this.dash = false;
@@ -245,6 +246,7 @@ public class Player extends AnimateObject {
             this.movementSpeed = 20;
         }
         else if (this.leftPressed){
+            audio.playSFX("sfx/player/dash.wav");
             for (GameObject gameObject : this.handler.walls){
                 if (gameObject.getBounds().intersects(getBoundsSmall(this.x - (this.width * 2), y, this.width*2, this.height))){
                     this.dash = false;
@@ -261,6 +263,7 @@ public class Player extends AnimateObject {
             this.movementSpeed = 20;
         }
         else if (this.upPressed) {
+            audio.playSFX("sfx/player/dash.wav");
             for (GameObject gameObject : this.handler.walls){
                 if (gameObject.getBounds().intersects(getBoundsSmall(this.x, y - (this.height*2), this.width, this.height*2))){
                     this.dash = false;
