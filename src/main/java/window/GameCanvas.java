@@ -21,7 +21,6 @@ public class GameCanvas extends Canvas implements Runnable{
     private Thread thread;
     private SpriteSheet uiSheet;
     public Boolean stopped = false;
-    public int levelNum;
 
     public DebugSettings debugSettings;
     public GameWindow gameWindow;
@@ -39,11 +38,10 @@ public class GameCanvas extends Canvas implements Runnable{
     String outputFPS = "";
 
     //initialise the game canvas
-    public GameCanvas(GameWindow gameWindow, LayoutPanel layoutPanel, int levelNum) throws IOException {
+    public GameCanvas(GameWindow gameWindow, LayoutPanel layoutPanel) throws IOException {
         this.handler = new Handler();
         camera = new Camera(0,0, HEIGHT, WIDTH);
         handler.camera = camera;
-        this.levelNum = levelNum;
 
         this.debugSettings = new DebugSettings(false);
         this.gameWindow = gameWindow;
@@ -59,12 +57,7 @@ public class GameCanvas extends Canvas implements Runnable{
 
         this.levelLoader = new LevelLoader(this.handler);
 
-        if (this.levelNum==1) {
-            this.levelLoader.loadLevel(levelLoader.level1);
-        }
-        else if (this.levelNum==2) {
-            this.levelLoader.loadLevel(levelLoader.level2);
-        }
+        this.levelLoader.loadLevel(levelLoader.level1);
     }
     //stop game
     public void start(){
@@ -129,7 +122,7 @@ public class GameCanvas extends Canvas implements Runnable{
         if (handler.player.getHp() <= 0 ){
             this.stopped = !this.stopped;
             if (this.stopped) {
-                GameOverWindow gameOverWindow = new GameOverWindow(this, this.gameWindow, this.layoutPanel, this.levelNum);
+                GameOverWindow gameOverWindow = new GameOverWindow(this, this.gameWindow, this.layoutPanel);
             }
             return;
 //            gameWindow.remove(this);

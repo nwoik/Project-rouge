@@ -13,11 +13,9 @@ import java.util.TimerTask;
 
 public class SceneTransition extends JPanel {
     public LayoutPanel layoutPanel;
-    private int levelNum;
 
-    public SceneTransition(LayoutPanel layoutPanel, int levelNum) {
+    public SceneTransition(LayoutPanel layoutPanel) {
         this.layoutPanel = layoutPanel;
-        this.levelNum = levelNum;
         setBackground(new Color(0, 0, 0));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -41,7 +39,7 @@ public class SceneTransition extends JPanel {
 
                     GameCanvas gameCanvas = null;
                     try {
-                        gameCanvas = new GameCanvas(gameWindow, layoutPanel, levelNum);
+                        gameCanvas = new GameCanvas(gameWindow, layoutPanel);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

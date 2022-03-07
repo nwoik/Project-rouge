@@ -23,7 +23,7 @@ public class LevelLoader {
     private ReadCSVFile level1Floor, level1Walls, level1Spawns;
     private ReadCSVFile level2Floor, level2Walls, level2Spawns;
     private TileMap tileMap1, tileMap2;
-    public Level level1, level2;
+    public Level level, level1, level2;
 
 
     public LevelLoader(Handler handler) throws IOException {
@@ -41,11 +41,11 @@ public class LevelLoader {
         this.level1 = new Level(tileMap1, level1Floor, level1Walls, level1Spawns);
 
         // Level 2 init
-        this.level2Spawns = new ReadCSVFile("src/main/java/core/levels/DC1_Spawns.csv");
-        this.level2Walls = new ReadCSVFile("src/main/java/core/levels/DC1_Walls.csv");
-        this.level2Floor = new ReadCSVFile("src/main/java/core/levels/DC1_Floor.csv");
-        this.tileMap2 = new TileMap(dungeon1Sheet);
-        this.level2 = new Level(tileMap2, level2Floor, level2Walls, level2Spawns);
+//        this.level2Spawns = new ReadCSVFile("src/main/java/core/levels/DC1_Spawns.csv");
+//        this.level2Walls = new ReadCSVFile("src/main/java/core/levels/DC1_Walls.csv");
+//        this.level2Floor = new ReadCSVFile("src/main/java/core/levels/DC1_Floor.csv");
+//        this.tileMap2 = new TileMap(dungeon1Sheet);
+//        this.level2 = new Level(tileMap2, level2Floor, level2Walls, level2Spawns);
 
         this.character = loader.loadImage("/Player/Character_Atlas.png");
         this.characterSheet = new SpriteSheet(this.character);
@@ -63,6 +63,8 @@ public class LevelLoader {
         this.slimeImg = loader.loadImage("/Enemies/Slime Atlas.png");
         this.slimeSheet = new SpriteSheet(this.slimeImg);
 
+        this.level = level1;
+
     }
 
     //might be useful for loading new level
@@ -70,7 +72,9 @@ public class LevelLoader {
         handler.emptyList();
     }
 
-
+    public void setLevel(Level newLevel) {
+        this.level = newLevel;
+    }
 
     //loads level given buffered image
     public void loadLevel(Level level){

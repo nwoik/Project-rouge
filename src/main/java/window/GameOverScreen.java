@@ -18,14 +18,12 @@ public class GameOverScreen extends JPanel {
     public GameCanvas gameCanvas;
     private GameWindow gameWindow;
     private LayoutPanel layoutPanel;
-    private int levelNum;
 
-    public GameOverScreen(GameOverWindow gameOverWindow, GameCanvas gameCanvas, GameWindow gameWindow, LayoutPanel layoutPanel, int levelNum) {
+    public GameOverScreen(GameOverWindow gameOverWindow, GameCanvas gameCanvas, GameWindow gameWindow, LayoutPanel layoutPanel) {
         this.gameOverWindow = gameOverWindow;
         this.gameCanvas = gameCanvas;
         this.gameWindow = gameWindow;
         this.layoutPanel = layoutPanel;
-        this.levelNum = levelNum;
 
         setBackground(new Color(255, 200, 200));
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -48,7 +46,7 @@ public class GameOverScreen extends JPanel {
                 gameOverWindow.dispose();
                 gameWindow.remove(gameCanvas);
 
-                SceneTransition sceneTransition = new SceneTransition(layoutPanel, levelNum);
+                SceneTransition sceneTransition = new SceneTransition(layoutPanel);
 
                 gameWindow.add(sceneTransition);
                 sceneTransition.load(gameWindow);
