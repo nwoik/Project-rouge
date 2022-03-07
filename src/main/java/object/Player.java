@@ -175,7 +175,11 @@ public class Player extends AnimateObject {
                 }
             } else {
                 if (this.knockBackFrames == 0) {
-                    audio.playSFX("sfx/player/hit3.wav");
+                    if (this.damageCooldown > 19) {
+                        audio.playSFX("sfx/player/hit3.wav");
+                        this.hp -= 5;
+                        this.damageCooldown = 0;
+                    }
                     this.movementSpeed = 10;
                 }
 
@@ -218,6 +222,9 @@ public class Player extends AnimateObject {
         collision();
         checkEnemyDetection();
         this.inRange = false;
+        if (this.damageCooldown < 20){
+            this.damageCooldown++;
+        }
     }
 
     private void dash(){
