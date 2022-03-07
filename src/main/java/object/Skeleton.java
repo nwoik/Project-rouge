@@ -31,11 +31,12 @@ public class Skeleton extends AnimateObject {
 
         audio = new AudioHandler();
         this.handler = handler;
+        this.spriteSheet = ss;
         this.width = 64;
         this.height = 64;
         this.knockBackDirection = "";
         this.knockBackFrames = 7;
-        this.hp = 100;
+        this.hp = 15;
         this.movementSpeed = 3;
         this.movementSpeed1 = this.movementSpeed +1;
         this.movementSpeed2 = this.movementSpeed1 * 2;
@@ -202,7 +203,7 @@ public class Skeleton extends AnimateObject {
         }
 
         //Check if enemy is close enough to player to attack
-        if (Math.abs(this.center.getX1() - this.center.getX2()) < 100 && Math.abs(this.center.getY1() - this.center.getY2()) < 100){
+        if (Math.abs(this.center.getX1() - this.center.getX2()) < 70 && Math.abs(this.center.getY1() - this.center.getY2()) < 100){
             this.lineColour = Color.white;
             this.velX = 0;
             this.velY = 0;
@@ -324,6 +325,25 @@ public class Skeleton extends AnimateObject {
                 }
             }
         }
+
+        for(GameObject gameObject : this.handler.objects){
+            //if collide with wall, go the opposite way
+            if(getBounds().intersects(gameObject.getBounds())){
+                this.collided = true;
+                if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                    this.velY = this.movementSpeed;
+                }
+                if (getBoundsSmall(this.x + this.movementSpeed2, this.y + this.height - this.movementSpeed2, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                    this.velY = -(this.movementSpeed);
+                }
+                if (getBoundsSmall(this.x, this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                    this.velX = this.movementSpeed;
+                }
+                if (getBoundsSmall(this.x + this.width - this.movementSpeed2 , this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                    this.velX = -(this.movementSpeed);
+                }
+            }
+        }
     }
     public void render(Graphics g) {
         g.drawImage(this.animation.getSprite(), x + this.animation.getOffsetX(), y + this.animation.getOffsetY(), null);
@@ -336,7 +356,7 @@ public class Skeleton extends AnimateObject {
     public void debugRender(Graphics g) {
         g.setColor(Color.red);
         g.drawRect(this.x,this.y,this.width,this.height);
-        g.drawOval((this.x-400) + (this.width/2),(this.y-400) + ((this.height)/2), 800, 800);
+        g.drawOval((this.x-300) + (this.width/2),(this.y-300) + ((this.height)/2), 600, 600);
 //        The following options check if enemy is centered in its detection radius
 //        g.setColor(Color.pink);
 //        g.drawRect((x-400) + (width/2),(y-400) + ((height+offset)/2), 800, 800);
@@ -362,6 +382,6 @@ public class Skeleton extends AnimateObject {
 
     //Get Radius of field of view and implement it
     public Ellipse2D getBoundsFOV() {
-        return new Ellipse2D.Float((this.x-400) + ((float)(this.width)/2),(this.y-400) + ((float)(this.height)/2),800,800);
+        return new Ellipse2D.Float((this.x-300) + ((float)(this.width)/2),(this.y-300) + ((float)(this.height)/2),600,600);
     }
 }

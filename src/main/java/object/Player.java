@@ -46,7 +46,7 @@ public class Player extends AnimateObject {
         this.movementSpeed2 = this.movementSpeed1 * 2;
         this.width = 64;
         this.height = 64;
-        this.hp = 96;
+        this.hp = 100;
 
         this.alignmentY = -32;
 
@@ -178,6 +178,7 @@ public class Player extends AnimateObject {
                     if (this.damageCooldown > 19) {
                         audio.playSFX("sfx/player/hit3.wav");
                         this.hp -= 5;
+                        //overhaul dmg
                         this.damageCooldown = 0;
                     }
                     this.movementSpeed = 10;
@@ -355,6 +356,22 @@ public class Player extends AnimateObject {
                 }
             }
             for(GameObject gameObject : this.handler.walls){
+                if (getBounds().intersects(gameObject.getBounds())){
+                    if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                        tempY = this.movementSpeed;
+                    }
+                    if (getBoundsSmall(this.x + this.movementSpeed2, this.y + this.height - this.movementSpeed2, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                        tempY = -(this.movementSpeed);
+                    }
+                    if (getBoundsSmall(this.x, this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                        tempX = this.movementSpeed;
+                    }
+                    if (getBoundsSmall(this.x + this.width - this.movementSpeed2 , this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                        tempX = -(this.movementSpeed);
+                    }
+                }
+            }
+            for(GameObject gameObject : this.handler.objects){
                 if (getBounds().intersects(gameObject.getBounds())){
                     if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
                         tempY = this.movementSpeed;

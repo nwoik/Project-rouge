@@ -6,6 +6,7 @@ import debug.DebugSettings;
 import inputs.KeyInput;
 import object.Handler;
 import window.menu.LayoutPanel;
+import window.menu.SceneTransition;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -31,6 +32,8 @@ public class GameCanvas extends Canvas implements Runnable{
 
     private BufferedImage ui = null;
 
+    private LevelLoader levelLoader;
+
     // For callFPS
     String outputFPS = "";
 
@@ -52,8 +55,9 @@ public class GameCanvas extends Canvas implements Runnable{
 
         uiSheet = new SpriteSheet(ui);
 
-        LevelLoader levelLoader = new LevelLoader(this.handler);
-        levelLoader.loadLevel(levelLoader.level1);
+        this.levelLoader = new LevelLoader(this.handler);
+
+        this.levelLoader.loadLevel(levelLoader.level1);
     }
     //stop game
     public void start(){
@@ -115,16 +119,28 @@ public class GameCanvas extends Canvas implements Runnable{
     //updates everything in the game. updated 60 times per second
     public void tick(){
         //camera follows player every tick
-
+        if (handler.player.getHp() <= 0 ){
+            this.stopped = !this.stopped;
+            if (this.stopped) {
+                GameOverWindow gameOverWindow = new GameOverWindow(this, this.gameWindow, this.layoutPanel);
+            }
+            return;
+//            gameWindow.remove(this);
+//
+//            SceneTransition sceneTransition = new SceneTransition(layoutPanel, 2);
+//
+//            gameWindow.add(sceneTransition);
+//            sceneTransition.load(gameWindow);
+        }
         camera.tick(handler.player);
         this.handler.tick(this.debugSettings.isDebugMode());
+
     }
 
     public void openMenu(){
         this.stopped = !this.stopped;
-        SubWindow subWindow;
         if (this.stopped) {
-            subWindow = new SubWindow(this, this.gameWindow, this.layoutPanel);
+            SubWindow subWindow = new SubWindow(this, this.gameWindow, this.layoutPanel);
         }
     }
 

@@ -2,7 +2,6 @@ package window.menu;
 
 import audio.AudioHandler;
 import core.BufferedImageLoader;
-import window.GameCanvas;
 import window.GameWindow;
 import window.Widget;
 
