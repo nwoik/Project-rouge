@@ -31,6 +31,8 @@ public class Player extends AnimateObject {
     public int dashFrames = 6;
     private int dashCooldown = 100;
 
+    private int damageCooldown = 20;
+
 
     public Player(int x, int y, ID id, Handler handler, SpriteSheet spriteSheet) {
         super(x, y, handler, id, spriteSheet);
@@ -40,6 +42,7 @@ public class Player extends AnimateObject {
         this.movementSpeed2 = this.movementSpeed1 * 2;
         this.width = 64;
         this.height = 64;
+        this.hp = 96;
 
         this.alignmentY = -32;
 
@@ -172,6 +175,7 @@ public class Player extends AnimateObject {
                 if (this.knockBackFrames == 0) {
                     AudioHandler audio1 = new AudioHandler("sfx/player/hit3.wav");
                     audio1.playSFX();
+                    this.hp -= 5;
                     this.movementSpeed = 10;
                 }
 
