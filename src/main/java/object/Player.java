@@ -46,7 +46,7 @@ public class Player extends AnimateObject {
         this.movementSpeed2 = this.movementSpeed1 * 2;
         this.width = 64;
         this.height = 64;
-        this.hp = 100;
+        this.hp = 1;
 
         this.alignmentY = -32;
 

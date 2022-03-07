@@ -6,6 +6,7 @@ import object.*;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class LevelLoader {
 
@@ -22,10 +23,10 @@ public class LevelLoader {
     private SpriteSheet dungeon1Sheet;
     private Skeleton skeleton;
 
-    private ReadCSVFile level1Floor, level1Walls, level1Spawns;
-    private ReadCSVFile level2Floor, level2Walls, level2Spawns;
-    private TileMap tileMap1, tileMap2;
-    public Level level1, level2;
+    private ReadCSVFile level1Floor, level1Walls, level1Spawns, level2Floor, level2Walls, level2Spawns,
+                        CreditsSpawns, CreditsWalls, CreditsFloor;
+    private TileMap tileMap1, tileMap2, tileMap3;
+    public Level level1, level2, Credits;
 
 
     public LevelLoader(Handler handler) throws IOException {
@@ -49,6 +50,13 @@ public class LevelLoader {
         this.tileMap2 = new TileMap(dungeon1Sheet);
         this.level2 = new Level(tileMap2, level2Floor, level2Walls, level2Spawns);
 
+        // credits init
+        this.CreditsSpawns = new ReadCSVFile("src/main/java/core/levels/Credits_Spawns.csv");
+        this.CreditsWalls = new ReadCSVFile("src/main/java/core/levels/Credits_Walls.csv");
+        this.CreditsFloor = new ReadCSVFile("src/main/java/core/levels/Credits_Floor.csv");
+        this.tileMap3 = new TileMap(dungeon1Sheet);
+        this.Credits = new Level(tileMap3, CreditsFloor, CreditsWalls, CreditsSpawns);
+
         this.character = loader.loadImage("/Player/Character_Atlas.png");
         this.characterSheet = new SpriteSheet(this.character);
         this.characterSpawn = new CharacterSpawn(this.handler, this.characterSheet);
@@ -61,8 +69,6 @@ public class LevelLoader {
     private void clearLevel() {
         handler.emptyList();
     }
-
-
 
     //loads level given buffered image
     public void loadLevel(Level level){
