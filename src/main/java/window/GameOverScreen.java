@@ -25,10 +25,17 @@ public class GameOverScreen extends JPanel {
         setBackground(new Color(255, 200, 200));
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
+        JLabel title = new JLabel("", SwingConstants.CENTER);
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         BufferedImageLoader image = new BufferedImageLoader();
         BufferedImage wordAtlas = image.loadImage("/Word Sheet.png");
 
         AudioHandler clickAudio = new AudioHandler();
+
+        Image titleImage = wordAtlas.getSubimage(0,228,73,12);
+        Image scaledTitleImage = titleImage.getScaledInstance(400, 70,  java.awt.Image.SCALE_SMOOTH);
+        title.setIcon(new ImageIcon(scaledTitleImage));
 
         Widget exitButton = new Widget(wordAtlas.getSubimage(0,36,31,12), wordAtlas.getSubimage(74,36,31,12));
         exitButton.scaleWidget(200, 60);
@@ -43,6 +50,8 @@ public class GameOverScreen extends JPanel {
             }
         });
 
+        add(Box.createRigidArea(new Dimension(0, 100)));
+        add(title);
         add(Box.createRigidArea(new Dimension(0, 100)));
         add(exitButton);
     }
