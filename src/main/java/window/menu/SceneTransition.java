@@ -18,7 +18,6 @@ public class SceneTransition extends JPanel {
         this.layoutPanel = layoutPanel;
         setBackground(new Color(0, 0, 0));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
     }
 
     public void load(GameWindow gameWindow) {
