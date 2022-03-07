@@ -264,7 +264,7 @@ public class Skeleton extends AnimateObject {
             case 0:
             case 9:
             case 10:
-            case 11: audio.playSFX("sfx/skeleton/say2.wav");
+            case 11:
             case 12:
                 this.velX = 0;
                 this.velY = 0;
@@ -327,6 +327,9 @@ public class Skeleton extends AnimateObject {
     }
     public void render(Graphics g) {
         g.drawImage(this.animation.getSprite(), x + this.animation.getOffsetX(), y + this.animation.getOffsetY(), null);
+        if (Math.random() <= 0.005) {
+            audio.playSFX("sfx/skeleton/say2.wav");
+        }
     }
 
     @Override
