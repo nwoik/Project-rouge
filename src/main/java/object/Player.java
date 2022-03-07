@@ -12,6 +12,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 public class Player extends AnimateObject {
+    private AudioHandler audio;
 
     public boolean leftPressed;
     public boolean rightPressed;
@@ -31,15 +32,21 @@ public class Player extends AnimateObject {
     public int dashFrames = 6;
     private int dashCooldown = 100;
 
+    private int damageCooldown = 20;
+
 
     public Player(int x, int y, ID id, Handler handler, SpriteSheet spriteSheet) {
         super(x, y, handler, id, spriteSheet);
+
+
+        audio = new AudioHandler();
         this.handler = handler;
         this.movementSpeed = 6;
         this.movementSpeed1 = this.movementSpeed +1;
         this.movementSpeed2 = this.movementSpeed1 * 2;
         this.width = 64;
         this.height = 64;
+        this.hp = 96;
 
         this.alignmentY = -32;
 
@@ -83,8 +90,7 @@ public class Player extends AnimateObject {
         this.attackDirection = "";
         if (this.isAttacking) {
             if (this.animation == this.standFacingDown || this.animation == this.walkDown) {
-                AudioHandler audio1 = new AudioHandler("sfx/player/sweep1.wav");
-                audio1.playSFX();
+                audio.playSFX("sfx/player/sweep1.wav");
                 this.setAnimation(this.attackDown);
                 this.animation.start();
                 this.attackDirection = "down";
@@ -95,8 +101,7 @@ public class Player extends AnimateObject {
                 this.setAnimation(standFacingDown);
             }
             if (this.animation == this.standFacingUp || this.animation == this.walkUp) {
-                AudioHandler audio1 = new AudioHandler("sfx/player/sweep1.wav");
-                audio1.playSFX();
+                audio.playSFX("sfx/player/sweep1.wav");
                 this.setAnimation(this.attackUp);
                 this.animation.start();
                 this.attackDirection = "up";
@@ -107,8 +112,8 @@ public class Player extends AnimateObject {
                 this.setAnimation(standFacingUp);
             }
             if (this.animation == this.standFacingLeft || this.animation == this.walkLeft) {
-                AudioHandler audio1 = new AudioHandler("sfx/player/sweep1.wav");
-                audio1.playSFX();
+                AudioHandler audio1 = new AudioHandler();
+                audio1.playSFX("sfx/player/sweep1.wav");
                 this.setAnimation(this.attackLeft);
                 this.animation.start();
                 this.attackDirection = "left";
@@ -119,8 +124,8 @@ public class Player extends AnimateObject {
                 this.setAnimation(standFacingLeft);
             }
             if (this.animation == this.standFacingRight || this.animation == this.walkRight) {
-                AudioHandler audio1 = new AudioHandler("sfx/player/sweep1.wav");
-                audio1.playSFX();
+                AudioHandler audio1 = new AudioHandler();
+                audio1.playSFX("sfx/player/sweep1.wav");
                 this.setAnimation(this.attackRight);
                 this.animation.start();
                 this.attackDirection = "right";
@@ -170,8 +175,12 @@ public class Player extends AnimateObject {
                 }
             } else {
                 if (this.knockBackFrames == 0) {
-                    AudioHandler audio1 = new AudioHandler("sfx/player/hit3.wav");
-                    audio1.playSFX();
+                    if (this.damageCooldown > 19) {
+                        audio.playSFX("sfx/player/hit3.wav");
+                        this.hp -= 5;
+                        //overhaul dmg
+                        this.damageCooldown = 0;
+                    }
                     this.movementSpeed = 10;
                 }
 
@@ -214,6 +223,9 @@ public class Player extends AnimateObject {
         collision();
         checkEnemyDetection();
         this.inRange = false;
+        if (this.damageCooldown < 20){
+            this.damageCooldown++;
+        }
     }
 
     private void dash(){
@@ -228,6 +240,7 @@ public class Player extends AnimateObject {
     private void dashCheck(){
 
         if (this.rightPressed){
+            audio.playSFX("sfx/player/dash.wav");
             for (GameObject gameObject : this.handler.walls){
                 if (gameObject.getBounds().intersects(getBoundsSmall(this.x + this.width, this.y, this.width*2, this.height))){
                     this.dash = false;
@@ -244,6 +257,7 @@ public class Player extends AnimateObject {
             this.movementSpeed = 20;
         }
         else if (this.leftPressed){
+            audio.playSFX("sfx/player/dash.wav");
             for (GameObject gameObject : this.handler.walls){
                 if (gameObject.getBounds().intersects(getBoundsSmall(this.x - (this.width * 2), y, this.width*2, this.height))){
                     this.dash = false;
@@ -260,6 +274,7 @@ public class Player extends AnimateObject {
             this.movementSpeed = 20;
         }
         else if (this.upPressed) {
+            audio.playSFX("sfx/player/dash.wav");
             for (GameObject gameObject : this.handler.walls){
                 if (gameObject.getBounds().intersects(getBoundsSmall(this.x, y - (this.height*2), this.width, this.height*2))){
                     this.dash = false;

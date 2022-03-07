@@ -115,16 +115,22 @@ public class GameCanvas extends Canvas implements Runnable{
     //updates everything in the game. updated 60 times per second
     public void tick(){
         //camera follows player every tick
-
+        if (handler.player.getHp() <= 0 ){
+            this.stopped = !this.stopped;
+            if (this.stopped) {
+                GameOverWindow gameOverWindow = new GameOverWindow(this, this.gameWindow, this.layoutPanel);
+            }
+            return;
+        }
         camera.tick(handler.player);
         this.handler.tick(this.debugSettings.isDebugMode());
+
     }
 
     public void openMenu(){
         this.stopped = !this.stopped;
-        SubWindow subWindow;
         if (this.stopped) {
-            subWindow = new SubWindow(this, this.gameWindow, this.layoutPanel);
+            SubWindow subWindow = new SubWindow(this, this.gameWindow, this.layoutPanel);
         }
     }
 
@@ -159,7 +165,7 @@ public class GameCanvas extends Canvas implements Runnable{
         handler.render(g, this.debugSettings.isDebugMode());
         g2d.translate(camera.getX(), camera.getY());
         g.setColor(Color.red);
-        g.fillRect(20, 20, 120, 120);
+        g.fillRect(20, 32 + (96 - handler.player.getHp()), 120, 96 - (96 - handler.player.getHp()));
         g.drawImage(this.uiSheet.image, 20,20, null);
         //Write out fps
         g.setColor(Color.yellow);

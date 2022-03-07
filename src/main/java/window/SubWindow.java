@@ -11,7 +11,8 @@ public class SubWindow extends JFrame {
         this.subMenu = new SubMenu(this, gameCanvas, gameWindow, layoutPanel);
         setTitle("SubMenu");
         setBackground(new Color(255, 200, 200));
-        setPreferredSize(new Dimension(500, 800));
+        setPreferredSize(new Dimension(500, gameWindow.height));
+        getRootPane().setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, new Color(72, 44, 25)));
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         getContentPane().add(subMenu);
@@ -20,5 +21,4 @@ public class SubWindow extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }
-
 }

@@ -22,22 +22,31 @@ public class LevelLoader {
     private SpriteSheet dungeon1Sheet;
 
     private ReadCSVFile level1Floor, level1Walls, level1Spawns;
-    private TileMap tileMap1;
-    public Level level1;
+    private ReadCSVFile level2Floor, level2Walls, level2Spawns;
+    private TileMap tileMap1, tileMap2;
+    public Level level1, level2;
 
 
     public LevelLoader(Handler handler) throws IOException {
         this.handler = handler;
         this.loader = new BufferedImageLoader();
 
+        this.dungeon1 = loader.loadImage("/Dungeon 1 atlas.png");
+        this.dungeon1Sheet = new SpriteSheet(dungeon1);
+
         // Level 1 init
         this.level1Spawns = new ReadCSVFile("src/main/java/core/levels/BoxMap_Spawns.csv");
         this.level1Walls = new ReadCSVFile("src/main/java/core/levels/BoxMap_Walls.csv");
         this.level1Floor = new ReadCSVFile("src/main/java/core/levels/BoxMap_Floor.csv");
-        this.dungeon1 = loader.loadImage("/Dungeon 1 atlas.png");
-        this.dungeon1Sheet = new SpriteSheet(dungeon1);
         this.tileMap1 = new TileMap(dungeon1Sheet);
         this.level1 = new Level(tileMap1, level1Floor, level1Walls, level1Spawns);
+
+        // Level 2 init
+//        this.level2Spawns = new ReadCSVFile("src/main/java/core/levels/DC1_Spawns.csv");
+//        this.level2Walls = new ReadCSVFile("src/main/java/core/levels/DC1_Walls.csv");
+//        this.level2Floor = new ReadCSVFile("src/main/java/core/levels/DC1_Floor.csv");
+//        this.tileMap2 = new TileMap(dungeon1Sheet);
+//        this.level2 = new Level(tileMap2, level2Floor, level2Walls, level2Spawns);
 
         this.character = loader.loadImage("/Player/Character_Atlas.png");
         this.characterSheet = new SpriteSheet(this.character);

@@ -43,12 +43,12 @@ public class SubMenu extends JPanel {
         Image scaledTitleImage = titleImage.getScaledInstance(300, 70,  java.awt.Image.SCALE_SMOOTH);
         title.setIcon(new ImageIcon(scaledTitleImage));
 
-        AudioHandler clickAudio = new AudioHandler("sfx/menu/wood_click.wav");
+        AudioHandler clickAudio = new AudioHandler();
 
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                clickAudio.playMusic();
+                clickAudio.playSFX("sfx/menu/wood_click.wav");
                 closeMenu();
                 gameCanvas.comeBack();
             }
@@ -57,7 +57,7 @@ public class SubMenu extends JPanel {
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                clickAudio.playMusic();
+                clickAudio.playSFX("sfx/menu/wood_click.wav");
                 subWindow.dispose();
                 gameWindow.remove(gameCanvas);
                 layoutPanel.setVisible(true);
