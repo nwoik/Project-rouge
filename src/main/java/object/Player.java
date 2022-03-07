@@ -1,6 +1,7 @@
 package object;
 
 import animations.Animation;
+import audio.AudioHandler;
 import core.SpriteSheet;
 
 import java.awt.Graphics;
@@ -23,6 +24,7 @@ public class Player extends AnimateObject {
     public boolean inRange = false;
     private int knockBackFrames = 7;
     private String knockBackDirection = "";
+    private String attackDirection = "";
 
     public boolean dash = false;
     private String dashDirection = "";
@@ -78,34 +80,51 @@ public class Player extends AnimateObject {
 
     @Override
     public void tick() {
+        this.attackDirection = "";
         if (this.isAttacking) {
             if (this.animation == this.standFacingDown || this.animation == this.walkDown) {
+                AudioHandler audio1 = new AudioHandler("sfx/player/sweep1.wav");
+                audio1.playSFX();
                 this.setAnimation(this.attackDown);
                 this.animation.start();
+                this.attackDirection = "down";
+                this.attack(getDownAttackBox());
                 return;
             } else if (this.animation.stop && this.animation == this.attackDown) {
                 this.isAttacking = false;
                 this.setAnimation(standFacingDown);
             }
             if (this.animation == this.standFacingUp || this.animation == this.walkUp) {
+                AudioHandler audio1 = new AudioHandler("sfx/player/sweep1.wav");
+                audio1.playSFX();
                 this.setAnimation(this.attackUp);
                 this.animation.start();
+                this.attackDirection = "up";
+                this.attack(getUpAttackBox());
                 return;
             } else if (this.animation.stop && this.animation == this.attackUp) {
                 this.isAttacking = false;
                 this.setAnimation(standFacingUp);
             }
             if (this.animation == this.standFacingLeft || this.animation == this.walkLeft) {
+                AudioHandler audio1 = new AudioHandler("sfx/player/sweep1.wav");
+                audio1.playSFX();
                 this.setAnimation(this.attackLeft);
                 this.animation.start();
+                this.attackDirection = "left";
+                this.attack(getLeftAttackBox());
                 return;
             } else if (this.animation.stop && this.animation == this.attackLeft) {
                 this.isAttacking = false;
                 this.setAnimation(standFacingLeft);
             }
             if (this.animation == this.standFacingRight || this.animation == this.walkRight) {
+                AudioHandler audio1 = new AudioHandler("sfx/player/sweep1.wav");
+                audio1.playSFX();
                 this.setAnimation(this.attackRight);
                 this.animation.start();
+                this.attackDirection = "right";
+                this.attack(getRightAttackBox());
                 return;
             } else if (this.animation.stop && this.animation == this.attackRight) {
                 this.isAttacking = false;
@@ -122,10 +141,7 @@ public class Player extends AnimateObject {
         else if (this.dash){
             if (this.dashFrames == 0){
                 this.dashCheck();
-                System.out.println(this.movementSpeed + "why is it six");
             }
-            System.out.println("I run");
-            System.out.println(this.dashFrames);
             dash();
             if (this.dashFrames >= 5){
                 this.dash = false;
@@ -154,6 +170,8 @@ public class Player extends AnimateObject {
                 }
             } else {
                 if (this.knockBackFrames == 0) {
+                    AudioHandler audio1 = new AudioHandler("sfx/player/hit3.wav");
+                    audio1.playSFX();
                     this.movementSpeed = 10;
                 }
 
@@ -199,8 +217,6 @@ public class Player extends AnimateObject {
     }
 
     private void dash(){
-        System.out.println("dash direction = " + this.dashDirection);
-        System.out.println("ms = " + this.movementSpeed);
         switch (this.dashDirection) {
             case "up" -> this.y -= this.movementSpeed;
             case "down" -> this.y += this.movementSpeed;
@@ -211,7 +227,6 @@ public class Player extends AnimateObject {
     //checks if player can dash or if it would collide, if not, dash
     private void dashCheck(){
 
-        System.out.println("pls");
         if (this.rightPressed){
             for (GameObject gameObject : this.handler.walls){
                 if (gameObject.getBounds().intersects(getBoundsSmall(this.x + this.width, this.y, this.width*2, this.height))){
@@ -357,7 +372,20 @@ public class Player extends AnimateObject {
         for (GameObject gameObject : this.handler.enemies) {
             if (attackBox.getBounds().intersects(gameObject.getBounds())) {
                 gameObject.subHp(5);
-                System.out.println(gameObject.getHp());
+                gameObject.setKnockBackFrames();
+                if (this.animation == this.attackUp) {
+                    gameObject.setKnockBackDirection("up");
+                }
+                else if (this.animation == this.attackDown) {
+                    gameObject.setKnockBackDirection("down");
+                }
+                else if (this.animation == this.attackLeft) {
+                    gameObject.setKnockBackDirection("left");
+                }
+                else if (this.animation == this.attackRight) {
+                    gameObject.setKnockBackDirection("right");
+                }
+
             }
         }
     }
