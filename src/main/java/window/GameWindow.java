@@ -7,8 +7,12 @@ import java.awt.*;
 import javax.swing.JFrame;
 
 public class GameWindow extends JFrame {
-    private LayoutPanel layoutPanel = new LayoutPanel(this);
+    public int width;
+    public int height;
+
     public GameWindow(int width, int height, String title) throws Exception{
+        this.width = width;
+        this.height = height;
         setTitle(title);
         setPreferredSize(new Dimension(width, height));
         setMinimumSize(new Dimension(width, height));
@@ -16,7 +20,7 @@ public class GameWindow extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        getContentPane().add(layoutPanel);
+        getContentPane().add(new LayoutPanel(this));
         setUndecorated(true);
         pack();
         setVisible(true);
