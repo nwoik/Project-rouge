@@ -13,7 +13,6 @@ import java.util.TimerTask;
 
 public class SceneTransition extends JPanel {
     public LayoutPanel layoutPanel;
-    private int levelNum;
 
     public SceneTransition(LayoutPanel layoutPanel) {
         this.layoutPanel = layoutPanel;

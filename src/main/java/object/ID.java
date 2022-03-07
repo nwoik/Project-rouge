@@ -4,7 +4,7 @@ package object;
 public enum ID {
     Player(),
     Block(),
-    Crate(),
+    Object(),
     Bullet(),
     Enemy();
 }

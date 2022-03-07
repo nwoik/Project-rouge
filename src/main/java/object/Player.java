@@ -371,6 +371,22 @@ public class Player extends AnimateObject {
                     }
                 }
             }
+            for(GameObject gameObject : this.handler.objects){
+                if (getBounds().intersects(gameObject.getBounds())){
+                    if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                        tempY = this.movementSpeed;
+                    }
+                    if (getBoundsSmall(this.x + this.movementSpeed2, this.y + this.height - this.movementSpeed2, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                        tempY = -(this.movementSpeed);
+                    }
+                    if (getBoundsSmall(this.x, this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                        tempX = this.movementSpeed;
+                    }
+                    if (getBoundsSmall(this.x + this.width - this.movementSpeed2 , this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                        tempX = -(this.movementSpeed);
+                    }
+                }
+            }
 
             this.x += tempX;
             this.y += tempY;

@@ -6,27 +6,24 @@ import object.*;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class LevelLoader {
-
     private Handler handler;
 
     private CharacterSpawn characterSpawn;
-    private ObjectSpawn skeletonSpawn;
+    private ObjectSpawn skeletonSpawn, torchSpawn, eyeSpawn, slimeSpawn;
 
     private BufferedImageLoader loader;
-    private BufferedImage character, skeletonImg;
+    private BufferedImage character, skeletonImg, torchImg, eyeImg, slimeImg;
     private BufferedImage dungeon1;
 
-    private SpriteSheet characterSheet, skeletonSheet;
+    private SpriteSheet characterSheet, skeletonSheet, torchSheet, eyeSheet, slimeSheet;
     private SpriteSheet dungeon1Sheet;
-    private Skeleton skeleton;
 
-    private ReadCSVFile level1Floor, level1Walls, level1Spawns, level2Floor, level2Walls, level2Spawns,
-                        CreditsSpawns, CreditsWalls, CreditsFloor;
-    private TileMap tileMap1, tileMap2, tileMap3;
-    public Level level1, level2, Credits;
+    private ReadCSVFile level1Floor, level1Walls, level1Spawns;
+    private ReadCSVFile level2Floor, level2Walls, level2Spawns;
+    private TileMap tileMap1, tileMap2;
+    public Level level, level1, level2;
 
 
     public LevelLoader(Handler handler) throws IOException {
@@ -44,18 +41,11 @@ public class LevelLoader {
         this.level1 = new Level(tileMap1, level1Floor, level1Walls, level1Spawns);
 
         // Level 2 init
-        this.level2Spawns = new ReadCSVFile("src/main/java/core/levels/DC1_Spawns.csv");
-        this.level2Walls = new ReadCSVFile("src/main/java/core/levels/DC1_Walls.csv");
-        this.level2Floor = new ReadCSVFile("src/main/java/core/levels/DC1_Floor.csv");
-        this.tileMap2 = new TileMap(dungeon1Sheet);
-        this.level2 = new Level(tileMap2, level2Floor, level2Walls, level2Spawns);
-
-        // credits init
-        this.CreditsSpawns = new ReadCSVFile("src/main/java/core/levels/Credits_Spawns.csv");
-        this.CreditsWalls = new ReadCSVFile("src/main/java/core/levels/Credits_Walls.csv");
-        this.CreditsFloor = new ReadCSVFile("src/main/java/core/levels/Credits_Floor.csv");
-        this.tileMap3 = new TileMap(dungeon1Sheet);
-        this.Credits = new Level(tileMap3, CreditsFloor, CreditsWalls, CreditsSpawns);
+//        this.level2Spawns = new ReadCSVFile("src/main/java/core/levels/DC1_Spawns.csv");
+//        this.level2Walls = new ReadCSVFile("src/main/java/core/levels/DC1_Walls.csv");
+//        this.level2Floor = new ReadCSVFile("src/main/java/core/levels/DC1_Floor.csv");
+//        this.tileMap2 = new TileMap(dungeon1Sheet);
+//        this.level2 = new Level(tileMap2, level2Floor, level2Walls, level2Spawns);
 
         this.character = loader.loadImage("/Player/Character_Atlas.png");
         this.characterSheet = new SpriteSheet(this.character);
@@ -63,11 +53,27 @@ public class LevelLoader {
 
         this.skeletonImg = loader.loadImage("/Enemies/Skeleton_Atlas.png");
         this.skeletonSheet = new SpriteSheet(this.skeletonImg);
+
+        this.torchImg = loader.loadImage("/Objects/Torch_Atlas.png");
+        this.torchSheet = new SpriteSheet(this.torchImg);
+
+        this.eyeImg = loader.loadImage("/Enemies/Eye_Atlas.png");
+        this.eyeSheet = new SpriteSheet(this.eyeImg);
+
+        this.slimeImg = loader.loadImage("/Enemies/Slime Atlas.png");
+        this.slimeSheet = new SpriteSheet(this.slimeImg);
+
+        this.level = level1;
+
     }
 
     //might be useful for loading new level
     private void clearLevel() {
         handler.emptyList();
+    }
+
+    public void setLevel(Level newLevel) {
+        this.level = newLevel;
     }
 
     //loads level given buffered image
@@ -246,7 +252,19 @@ public class LevelLoader {
                         break;
                     case "1":
                         this.skeletonSpawn = new ObjectSpawn(this.handler, new Skeleton(xx, yy, ID.Enemy, this.handler, this.skeletonSheet));
-                        this.skeletonSpawn.loadObject();
+                        this.skeletonSpawn.loadEnemy();
+                        break;
+                    case "2":
+                        this.eyeSpawn = new ObjectSpawn(this.handler, new Eye(xx, yy, ID.Enemy, this.handler, this.eyeSheet));
+                        this.eyeSpawn.loadEnemy();
+                        break;
+                    case "3":
+                        this.slimeSpawn = new ObjectSpawn(this.handler, new Slime(xx, yy, ID.Enemy, this.handler, this.slimeSheet));
+                        this.slimeSpawn.loadEnemy();
+                        break;
+                    case "5":
+                        this.torchSpawn = new ObjectSpawn(this.handler, new Torch(xx, yy, this.handler, ID.Object, this.torchSheet));
+                        this.torchSpawn.loadObject();
                         break;
                 }
                 x++;

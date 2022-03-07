@@ -56,7 +56,8 @@ public class GameCanvas extends Canvas implements Runnable{
         uiSheet = new SpriteSheet(ui);
 
         this.levelLoader = new LevelLoader(this.handler);
-        this.levelLoader.loadLevel(this.levelLoader.level1);
+
+        this.levelLoader.loadLevel(levelLoader.level1);
     }
     //stop game
     public void start(){
