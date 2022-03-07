@@ -76,7 +76,7 @@ public class Menu extends JPanel {
                 settings.setVisible(false);
                 layoutPanel.setVisible(false);
 
-                SceneTransition sceneTransition = new SceneTransition(layoutPanel);
+                SceneTransition sceneTransition = new SceneTransition(layoutPanel, 1);
 
                 gameWindow.add(sceneTransition);
                 sceneTransition.load(gameWindow);

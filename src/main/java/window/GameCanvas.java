@@ -6,6 +6,7 @@ import debug.DebugSettings;
 import inputs.KeyInput;
 import object.Handler;
 import window.menu.LayoutPanel;
+import window.menu.SceneTransition;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -20,6 +21,7 @@ public class GameCanvas extends Canvas implements Runnable{
     private Thread thread;
     private SpriteSheet uiSheet;
     public Boolean stopped = false;
+    public int levelNum;
 
     public DebugSettings debugSettings;
     public GameWindow gameWindow;
@@ -31,14 +33,17 @@ public class GameCanvas extends Canvas implements Runnable{
 
     private BufferedImage ui = null;
 
+    private LevelLoader levelLoader;
+
     // For callFPS
     String outputFPS = "";
 
     //initialise the game canvas
-    public GameCanvas(GameWindow gameWindow, LayoutPanel layoutPanel) throws IOException {
+    public GameCanvas(GameWindow gameWindow, LayoutPanel layoutPanel, int levelNum) throws IOException {
         this.handler = new Handler();
         camera = new Camera(0,0, HEIGHT, WIDTH);
         handler.camera = camera;
+        this.levelNum = levelNum;
 
         this.debugSettings = new DebugSettings(false);
         this.gameWindow = gameWindow;
@@ -52,8 +57,14 @@ public class GameCanvas extends Canvas implements Runnable{
 
         uiSheet = new SpriteSheet(ui);
 
-        LevelLoader levelLoader = new LevelLoader(this.handler);
-        levelLoader.loadLevel(levelLoader.level1);
+        this.levelLoader = new LevelLoader(this.handler);
+
+        if (this.levelNum==1) {
+            this.levelLoader.loadLevel(levelLoader.level1);
+        }
+        else if (this.levelNum==2) {
+            this.levelLoader.loadLevel(levelLoader.level2);
+        }
     }
     //stop game
     public void start(){
@@ -118,9 +129,15 @@ public class GameCanvas extends Canvas implements Runnable{
         if (handler.player.getHp() <= 0 ){
             this.stopped = !this.stopped;
             if (this.stopped) {
-                GameOverWindow gameOverWindow = new GameOverWindow(this, this.gameWindow, this.layoutPanel);
+                GameOverWindow gameOverWindow = new GameOverWindow(this, this.gameWindow, this.layoutPanel, this.levelNum);
             }
             return;
+//            gameWindow.remove(this);
+//
+//            SceneTransition sceneTransition = new SceneTransition(layoutPanel, 2);
+//
+//            gameWindow.add(sceneTransition);
+//            sceneTransition.load(gameWindow);
         }
         camera.tick(handler.player);
         this.handler.tick(this.debugSettings.isDebugMode());
