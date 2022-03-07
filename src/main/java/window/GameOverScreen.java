@@ -52,7 +52,7 @@ public class GameOverScreen extends JPanel {
 
         add(Box.createRigidArea(new Dimension(0, 100)));
         add(title);
-        add(Box.createRigidArea(new Dimension(0, 100)));
+        add(Box.createRigidArea(new Dimension(0, 50)));
         add(exitButton);
     }
 

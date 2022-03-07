@@ -87,9 +87,6 @@ public class Player extends AnimateObject {
 
     @Override
     public void tick() {
-        if (this.hp <= 0){
-            //Todo death
-        }
         this.attackDirection = "";
         if (this.isAttacking) {
             if (this.animation == this.standFacingDown || this.animation == this.walkDown) {
