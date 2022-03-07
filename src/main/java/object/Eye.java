@@ -73,7 +73,7 @@ public class Eye extends AnimateObject{
         }
         else {
             if (this.knockBackFrames == 0) {
-                audio.playSFX("sfx/skeleton/hurt1.wav");
+                audio.playSFX("sfx/bat/hurt.wav");
                 this.movementSpeed = 10;
             }
             if (!this.collided) {
@@ -225,7 +225,7 @@ public class Eye extends AnimateObject{
     public void render(Graphics g) {
         g.drawImage(this.animation.getSprite(), x + this.animation.getOffsetX(), y + this.animation.getOffsetY(), null);
         if (Math.random() <= 0.005) {
-            audio.playSFX("sfx/skeleton/say2.wav");
+            audio.playSFX("sfx/bat/moan.wav");
         }
     }
 
