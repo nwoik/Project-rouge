@@ -115,16 +115,22 @@ public class GameCanvas extends Canvas implements Runnable{
     //updates everything in the game. updated 60 times per second
     public void tick(){
         //camera follows player every tick
-
+        if (handler.player.getHp() <= 0 ){
+            this.stopped = !this.stopped;
+            if (this.stopped) {
+                GameOverWindow gameOverWindow = new GameOverWindow(this, this.gameWindow, this.layoutPanel);
+            }
+            return;
+        }
         camera.tick(handler.player);
         this.handler.tick(this.debugSettings.isDebugMode());
+
     }
 
     public void openMenu(){
         this.stopped = !this.stopped;
-        SubWindow subWindow;
         if (this.stopped) {
-            subWindow = new SubWindow(this, this.gameWindow, this.layoutPanel);
+            SubWindow subWindow = new SubWindow(this, this.gameWindow, this.layoutPanel);
         }
     }
 
