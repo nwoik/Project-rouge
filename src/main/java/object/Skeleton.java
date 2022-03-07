@@ -1,6 +1,7 @@
 package object;
 
 import animations.Animation;
+import audio.AudioHandler;
 import core.SpriteSheet;
 
 import java.awt.*;
@@ -51,10 +52,20 @@ public class Skeleton extends AnimateObject {
         fillAnimationList(spriteSheet, this.walkingLeft, 1, 5, 1, 64, 96, 10);
         fillAnimationList(spriteSheet, this.walkingRight, 1, 7, 1, 64, 96, 10);
 
-        this.walkUp = new Animation(this.walkingUp, framedelay, 0, alignmentY, true);
-        this.walkDown = new Animation(this.walkingDown, framedelay, 0, alignmentY, true);
-        this.walkLeft = new Animation(this.walkingLeft, framedelay, 0, alignmentY, true);
-        this.walkRight = new Animation(this.walkingRight, framedelay, 0, alignmentY, true);
+        this.walkUp = new Animation(this.walkingUp, framedelay, 0, alignmentY, false);
+        this.walkDown = new Animation(this.walkingDown, framedelay, 0, alignmentY, false);
+        this.walkLeft = new Animation(this.walkingLeft, framedelay, 0, alignmentY, false);
+        this.walkRight = new Animation(this.walkingRight, framedelay, 0, alignmentY, false);
+
+        fillAnimationList(spriteSheet, this.attackingDown, 1, 11, 1, 64, 96, 5);
+        fillAnimationList(spriteSheet, this.attackingUp, 1, 17, 1, 64, 96, 5);
+        fillAnimationList(spriteSheet, this.attackingLeft, 1, 15, 1, 64, 96, 5);
+        fillAnimationList(spriteSheet, this.attackingRight, 1, 13, 1, 64, 96, 5);
+
+        this.attackDown = new Animation(this.attackingDown, 4, 0, alignmentY, true);
+        this.attackUp = new Animation(this.attackingUp, 4, 0, alignmentY, true);
+        this.attackLeft = new Animation(this.attackingLeft, 4, 0, alignmentY, true);
+        this.attackRight = new Animation(this.attackingRight, 4, 0, alignmentY, true);
 
 
         this.animation = this.standFacingDown;
@@ -169,19 +180,19 @@ public class Skeleton extends AnimateObject {
         if (this.handler.player.getX() + (this.handler.player.getWidth()/2)  < this.x + (this.width/2) + 16 && this.handler.player.getX() + (this.handler.player.getWidth()/2)  > this.x + (this.width/2)){
             this.velX = 0;
         }
-        else if (this.handler.player.getX() + (this.handler.player.getWidth()/2)  > this.x + (this.width/2)){
+        else if (!this.isAttacking & this.handler.player.getX() + (this.handler.player.getWidth()/2)  > this.x + (this.width/2)){
             this.velX = this.movementSpeed;
         }
-        else if (this.handler.player.getX() + (this.handler.player.getWidth()/2)  < this.x + (this.width/2)){
+        else if (!this.isAttacking & this.handler.player.getX() + (this.handler.player.getWidth()/2)  < this.x + (this.width/2)){
             this.velX = -this.movementSpeed;
         }
         if (this.handler.player.getY() + ((this.handler.player.getHeight())/2)  < this.y + ((this.height)/2) + 16 && this.handler.player.getY() + ((this.handler.player.getHeight())/2)   > this.y + ((this.height)/2)){
             this.velY = 0;
         }
-        else if (this.handler.player.getY() + ((this.handler.player.getHeight())/2)   > this.y + ((this.height)/2)){
+        else if (!this.isAttacking & this.handler.player.getY() + ((this.handler.player.getHeight())/2)   > this.y + ((this.height)/2)){
             this.velY = this.movementSpeed;
         }
-        else if (this.handler.player.getY() + ((this.handler.player.getHeight())/2)   < this.y + ((this.height)/2)){
+        else if (!this.isAttacking & this.handler.player.getY() + ((this.handler.player.getHeight())/2)   < this.y + ((this.height)/2)){
             this.velY = -this.movementSpeed;
         }
 
@@ -190,6 +201,37 @@ public class Skeleton extends AnimateObject {
             this.lineColour = Color.white;
             this.velX = 0;
             this.velY = 0;
+            if (this.animation == this.standFacingDown || this.animation == this.walkDown) {
+                this.setAnimation(this.attackDown);
+                this.animation.start();
+                return;
+            } else if (this.animation.stop && this.animation == this.attackDown) {
+                this.isAttacking = false;
+                this.setAnimation(standFacingDown);
+            }
+            if (this.animation == this.standFacingUp || this.animation == this.walkUp) {
+                this.setAnimation(this.attackUp);
+                this.animation.start();
+                return;
+            } else if (this.animation.stop && this.animation == this.attackUp) {
+                this.isAttacking = false;
+                this.setAnimation(standFacingUp);
+            }
+            if (this.animation == this.standFacingLeft || this.animation == this.walkLeft) {
+                this.setAnimation(this.attackLeft);
+                this.animation.start();
+                return;
+            } else if (this.animation.stop && this.animation == this.attackLeft) {
+                this.isAttacking = false;
+                this.setAnimation(standFacingLeft);
+            }
+            if (this.animation == this.standFacingRight || this.animation == this.walkRight) {
+                this.setAnimation(this.attackRight);
+                this.animation.start();
+            } else if (this.animation.stop && this.animation == this.attackRight) {
+                this.isAttacking = false;
+                this.setAnimation(standFacingRight);
+            }
         }
         else{
             this.lineColour = Color.cyan;
