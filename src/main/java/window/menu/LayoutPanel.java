@@ -17,7 +17,7 @@ import javax.swing.*;
 public class LayoutPanel extends JPanel {
     private GameWindow gameWindow;
     private final CardLayout cardLayout = new CardLayout();
-    private Menu menu;
+    public Menu menu;
     private Settings settings = new Settings(this);
 
     public LayoutPanel(GameWindow gameWindow) throws Exception{

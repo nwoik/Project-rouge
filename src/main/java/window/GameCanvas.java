@@ -31,6 +31,8 @@ public class GameCanvas extends Canvas implements Runnable{
 
     private BufferedImage ui = null;
 
+    private LevelLoader levelLoader;
+
     // For callFPS
     String outputFPS = "";
 
@@ -52,8 +54,8 @@ public class GameCanvas extends Canvas implements Runnable{
 
         uiSheet = new SpriteSheet(ui);
 
-        LevelLoader levelLoader = new LevelLoader(this.handler);
-        levelLoader.loadLevel(levelLoader.level1);
+        this.levelLoader = new LevelLoader(this.handler);
+        this.levelLoader.loadLevel(levelLoader.level1);
     }
     //stop game
     public void start(){
@@ -118,7 +120,7 @@ public class GameCanvas extends Canvas implements Runnable{
         if (handler.player.getHp() <= 0 ){
             this.stopped = !this.stopped;
             if (this.stopped) {
-                GameOverWindow gameOverWindow = new GameOverWindow(this, this.gameWindow, this.layoutPanel);
+                GameOverWindow gameOverWindow = new GameOverWindow(this, this.gameWindow, this.layoutPanel, this.levelLoader);
             }
             return;
         }
