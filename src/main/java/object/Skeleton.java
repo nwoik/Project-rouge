@@ -12,6 +12,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 
 public class Skeleton extends AnimateObject {
+    private AudioHandler audio;
     private Random r = new Random();
     private int choose = 0;
     private int movementSpeed1;
@@ -25,7 +26,10 @@ public class Skeleton extends AnimateObject {
     private BufferedImage enemyImage;
 
     public Skeleton(int x, int y, ID id, Handler handler, SpriteSheet ss) {
+
         super(x, y, handler, id, ss);
+
+        audio = new AudioHandler();
         this.handler = handler;
         this.width = 64;
         this.height = 64;
@@ -131,6 +135,7 @@ public class Skeleton extends AnimateObject {
         }
         else {
             if (this.knockBackFrames == 0) {
+                audio.playSFX("sfx/skeleton/hurt1.wav");
                 this.movementSpeed = 10;
             }
             if (!this.collided) {
@@ -322,6 +327,9 @@ public class Skeleton extends AnimateObject {
     }
     public void render(Graphics g) {
         g.drawImage(this.animation.getSprite(), x + this.animation.getOffsetX(), y + this.animation.getOffsetY(), null);
+        if (Math.random() <= 0.005) {
+            audio.playSFX("sfx/skeleton/say2.wav");
+        }
     }
 
     @Override

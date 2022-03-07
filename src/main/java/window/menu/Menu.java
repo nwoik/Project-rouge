@@ -47,8 +47,8 @@ public class Menu extends JPanel {
         settingsButton.setOpaque(false);
         settingsButton.setIcon(new ImageIcon(scaledSettingsHover));
 
-        AudioHandler audio = new AudioHandler("music/Once_upon_a_dungeon.wav");
-        AudioHandler clickAudio = new AudioHandler("sfx/menu/wood_click.wav");
+        AudioHandler audio = new AudioHandler();
+        AudioHandler clickAudio = new AudioHandler();
 
         settingsButton.addMouseListener(new MouseListener() {
             @Override
@@ -71,7 +71,6 @@ public class Menu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 audio.clear();
-                clickAudio.playMusic();
 
                 setVisible(false);
                 settings.setVisible(false);
@@ -84,10 +83,10 @@ public class Menu extends JPanel {
             }
         });
         settingsButton.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) {
-            clickAudio.playMusic();
+            clickAudio.playSFX("sfx/menu/wood_click.wav");
         }});
         exitButton.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) {
-            clickAudio.playMusic();
+            clickAudio.playSFX("sfx/menu/wood_click.wav");
             System.exit(0);
         }});
         settingsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -102,7 +101,7 @@ public class Menu extends JPanel {
         add(exitButton);
         add(Box.createVerticalGlue());
 
-        audio.playMusic();
+        audio.playMusic("music/Once_upon_a_dungeon.wav");
         audio.loopAudio();
     }
 
