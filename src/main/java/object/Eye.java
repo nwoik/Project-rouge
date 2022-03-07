@@ -224,7 +224,7 @@ public class Eye extends AnimateObject{
     }
     public void render(Graphics g) {
         g.drawImage(this.animation.getSprite(), x + this.animation.getOffsetX(), y + this.animation.getOffsetY(), null);
-        if (Math.random() <= 0.005) {
+        if (Math.random() <= 0.002) {
             audio.playSFX("sfx/bat/scream2.wav");
         }
     }
