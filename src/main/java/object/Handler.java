@@ -19,6 +19,9 @@ public class Handler {
         }
         for(GameObject gameObject : enemies){
             gameObject.tick();
+            if (gameObject.getHp() <= 0){
+                removeObject(gameObject, enemies);
+            }
         }
         player.tick();
         if (debugMode) {

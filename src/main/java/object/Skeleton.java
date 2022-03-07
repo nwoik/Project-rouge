@@ -35,7 +35,7 @@ public class Skeleton extends AnimateObject {
         this.height = 64;
         this.knockBackDirection = "";
         this.knockBackFrames = 7;
-        this.hp = 100;
+        this.hp = 15;
         this.movementSpeed = 3;
         this.movementSpeed1 = this.movementSpeed +1;
         this.movementSpeed2 = this.movementSpeed1 * 2;

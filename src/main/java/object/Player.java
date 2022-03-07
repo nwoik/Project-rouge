@@ -87,6 +87,9 @@ public class Player extends AnimateObject {
 
     @Override
     public void tick() {
+        if (this.hp <= 0){
+            //Todo death
+        }
         this.attackDirection = "";
         if (this.isAttacking) {
             if (this.animation == this.standFacingDown || this.animation == this.walkDown) {
@@ -178,6 +181,7 @@ public class Player extends AnimateObject {
                     if (this.damageCooldown > 19) {
                         audio.playSFX("sfx/player/hit3.wav");
                         this.hp -= 5;
+                        //overhaul dmg
                         this.damageCooldown = 0;
                     }
                     this.movementSpeed = 10;
