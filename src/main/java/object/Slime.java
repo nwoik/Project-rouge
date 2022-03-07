@@ -11,7 +11,7 @@ import java.util.Random;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 
-public class Skeleton extends AnimateObject {
+public class Slime extends AnimateObject {
     private AudioHandler audio;
     private Random r = new Random();
     private int choose = 0;
@@ -25,7 +25,7 @@ public class Skeleton extends AnimateObject {
     //enemy image to be drawn
     private BufferedImage enemyImage;
 
-    public Skeleton(int x, int y, ID id, Handler handler, SpriteSheet ss) {
+    public Slime(int x, int y, ID id, Handler handler, SpriteSheet ss) {
 
         super(x, y, handler, id, ss);
 
