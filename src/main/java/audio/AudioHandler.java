@@ -14,8 +14,7 @@ public class AudioHandler {
     public ArrayList<Audio> audioList = new ArrayList<Audio>();
     public Clip clip;
 
-    public AudioHandler(String fileName) {
-        clip = getClip(fileName);
+    public AudioHandler() {
     }
 
     public void update(Settings settings) {
@@ -37,11 +36,13 @@ public class AudioHandler {
         audioList.clear();
     }
 
-    public void playMusic() {
+    public void playMusic(String fileName) {
+        clip = getClip(fileName);
         audioList.add(new Music(clip));
     }
 
-    public void playSFX() {
+    public void playSFX(String fileName) {
+        clip = getClip(fileName);
         audioList.add(new SFX(clip));
 
     }

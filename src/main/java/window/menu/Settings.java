@@ -22,6 +22,8 @@ public class Settings extends JPanel {
         musicVol = 1;
         sfxVol = 1;
 
+        AudioHandler audio = new AudioHandler();
+
         setBackground(new Color(150, 200, 255));
 
         BufferedImageLoader image = new BufferedImageLoader();
@@ -62,8 +64,7 @@ public class Settings extends JPanel {
         saveButton.addActionListener(new ActionListener()  {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
-                audio1.playMusic();
+                audio.playSFX("sfx/menu/wood_click.wav");
 
                 try {
                     Set<String> newMovesSettings = new LinkedHashSet<String>();
@@ -97,8 +98,7 @@ public class Settings extends JPanel {
         });
 
         menuButton.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) {
-            AudioHandler audio2 = new AudioHandler("sfx/menu/wood_click.wav");
-            audio2.playMusic();
+            audio.playSFX("sfx/menu/wood_click.wav");
         }});
 
         JPanel keyBind1Pane = new JPanel();

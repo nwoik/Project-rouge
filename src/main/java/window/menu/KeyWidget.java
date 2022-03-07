@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class KeyWidget extends JButton implements ActionListener{
+    AudioHandler audio = new AudioHandler();
     ArrayList<Integer> keysList;
     int keyPosition;
     public KeyWidget(String InitialKey, ArrayList<Integer> keysList, int keyPosition) {
@@ -19,8 +20,7 @@ public class KeyWidget extends JButton implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        AudioHandler audio1 = new AudioHandler("sfx/menu/wood_click.wav");
-        audio1.playMusic();
+        audio.playSFX("sfx/menu/wood_click.wav");
         setText("  ");
         addKeyListener(new KeyBindings(this, keysList, keyPosition));
     }
