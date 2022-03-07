@@ -32,6 +32,8 @@ public class Player extends AnimateObject {
     public int dashFrames = 6;
     private int dashCooldown = 100;
 
+    private int damageCooldown = 20;
+
 
     public Player(int x, int y, ID id, Handler handler, SpriteSheet spriteSheet) {
         super(x, y, handler, id, spriteSheet);
@@ -44,6 +46,7 @@ public class Player extends AnimateObject {
         this.movementSpeed2 = this.movementSpeed1 * 2;
         this.width = 64;
         this.height = 64;
+        this.hp = 96;
 
         this.alignmentY = -32;
 
@@ -172,7 +175,11 @@ public class Player extends AnimateObject {
                 }
             } else {
                 if (this.knockBackFrames == 0) {
-                    audio.playSFX("sfx/player/hit3.wav");
+                    if (this.damageCooldown > 19) {
+                        audio.playSFX("sfx/player/hit3.wav");
+                        this.hp -= 5;
+                        this.damageCooldown = 0;
+                    }
                     this.movementSpeed = 10;
                 }
 
@@ -215,6 +222,9 @@ public class Player extends AnimateObject {
         collision();
         checkEnemyDetection();
         this.inRange = false;
+        if (this.damageCooldown < 20){
+            this.damageCooldown++;
+        }
     }
 
     private void dash(){
