@@ -197,7 +197,7 @@ public class Skeleton extends AnimateObject {
         }
 
         //Check if enemy is close enough to player to attack
-        if (Math.abs(this.center.getX1() - this.center.getX2()) < 100 && Math.abs(this.center.getY1() - this.center.getY2()) < 100){
+        if (Math.abs(this.center.getX1() - this.center.getX2()) < 70 && Math.abs(this.center.getY1() - this.center.getY2()) < 100){
             this.lineColour = Color.white;
             this.velX = 0;
             this.velY = 0;
@@ -302,6 +302,25 @@ public class Skeleton extends AnimateObject {
     private void collision(){
         for(GameObject gameObject : this.handler.walls){
 
+            //if collide with wall, go the opposite way
+            if(getBounds().intersects(gameObject.getBounds())){
+                this.collided = true;
+                if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                    this.velY = this.movementSpeed;
+                }
+                if (getBoundsSmall(this.x + this.movementSpeed2, this.y + this.height - this.movementSpeed2, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                    this.velY = -(this.movementSpeed);
+                }
+                if (getBoundsSmall(this.x, this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                    this.velX = this.movementSpeed;
+                }
+                if (getBoundsSmall(this.x + this.width - this.movementSpeed2 , this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                    this.velX = -(this.movementSpeed);
+                }
+            }
+        }
+
+        for(GameObject gameObject : this.handler.objects){
             //if collide with wall, go the opposite way
             if(getBounds().intersects(gameObject.getBounds())){
                 this.collided = true;

@@ -12,15 +12,14 @@ public class LevelLoader {
     private Handler handler;
 
     private CharacterSpawn characterSpawn;
-    private ObjectSpawn skeletonSpawn;
+    private ObjectSpawn skeletonSpawn, torchSpawn;
 
     private BufferedImageLoader loader;
-    private BufferedImage character, skeletonImg;
+    private BufferedImage character, skeletonImg, torchImg;
     private BufferedImage dungeon1;
 
-    private SpriteSheet characterSheet, skeletonSheet;
+    private SpriteSheet characterSheet, skeletonSheet, torchSheet;
     private SpriteSheet dungeon1Sheet;
-    private Skeleton skeleton;
 
     private ReadCSVFile level1Floor, level1Walls, level1Spawns;
     private TileMap tileMap1;
@@ -46,6 +45,9 @@ public class LevelLoader {
 
         this.skeletonImg = loader.loadImage("/Enemies/Skeleton_Atlas.png");
         this.skeletonSheet = new SpriteSheet(this.skeletonImg);
+
+        this.torchImg = loader.loadImage("/Objects/Torch_Atlas.png");
+        this.torchSheet = new SpriteSheet(this.torchImg);
     }
 
     //might be useful for loading new level
@@ -231,8 +233,11 @@ public class LevelLoader {
                         break;
                     case "1":
                         this.skeletonSpawn = new ObjectSpawn(this.handler, new Skeleton(xx, yy, ID.Enemy, this.handler, this.skeletonSheet));
-                        this.skeletonSpawn.loadObject();
+                        this.skeletonSpawn.loadEnemy();
                         break;
+                    case "5":
+                        this.torchSpawn = new ObjectSpawn(this.handler, new Torch(xx, yy, this.handler, ID.Object, this.torchSheet));
+                        this.torchSpawn.loadObject();
                 }
                 x++;
             }

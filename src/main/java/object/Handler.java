@@ -9,12 +9,13 @@ public class Handler {
     public LinkedList<GameObject> floors = new LinkedList<GameObject>();
     public LinkedList<GameObject> walls = new LinkedList<GameObject>();
     public LinkedList<GameObject> enemies = new LinkedList<GameObject>();
+    public LinkedList<GameObject> objects = new LinkedList<GameObject>();
     public Player player;
     public Camera camera;
 
     //ticks every object in our list.
     public void tick(boolean debugMode) {
-        for(GameObject gameObject : walls){
+        for(GameObject gameObject : objects){
             gameObject.tick();
         }
         for(GameObject gameObject : enemies){
@@ -38,6 +39,15 @@ public class Handler {
                 }
             }
         }
+        for(GameObject gameObject : objects){
+            if (gameObject.getBounds().intersects(rect)) {
+                gameObject.render(g);
+                if (debugMode) {
+                    gameObject.debugRender(g);
+                }
+            }
+        }
+
         for(GameObject gameObject : enemies){
             if (gameObject.getBounds().intersects(rect)) {
                 gameObject.render(g);

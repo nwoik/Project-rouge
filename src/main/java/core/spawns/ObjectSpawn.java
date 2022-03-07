@@ -13,9 +13,14 @@ public class ObjectSpawn {
         this.gameObject = gameObject;
     }
 
-    public void loadObject(){
+    public void loadEnemy(){
         this.handler.addObject(this.gameObject, this.handler.enemies);
     }
+
+    public void loadObject(){
+        this.handler.addObject(this.gameObject, this.handler.objects);
+    }
+
 
     public SpriteSheet getSpriteSheet() {
         return this.gameObject.getSpriteSheet();
