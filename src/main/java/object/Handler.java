@@ -22,6 +22,7 @@ public class Handler {
             gameObject.tick();
             if (gameObject.getHp() <= 0){
                 removeObject(gameObject, enemies);
+                break;
             }
         }
         player.tick();
@@ -80,6 +81,7 @@ public class Handler {
         floors = new LinkedList<GameObject>();
         walls = new LinkedList<GameObject>();
         enemies = new LinkedList<GameObject>();
+        objects = new LinkedList<GameObject>();
     }
 
     //add to list

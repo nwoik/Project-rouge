@@ -8,17 +8,16 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class LevelLoader {
-
     private Handler handler;
 
     private CharacterSpawn characterSpawn;
-    private ObjectSpawn skeletonSpawn, torchSpawn;
+    private ObjectSpawn skeletonSpawn, torchSpawn, eyeSpawn, slimeSpawn;
 
     private BufferedImageLoader loader;
-    private BufferedImage character, skeletonImg, torchImg;
+    private BufferedImage character, skeletonImg, torchImg, eyeImg, slimeImg;
     private BufferedImage dungeon1;
 
-    private SpriteSheet characterSheet, skeletonSheet, torchSheet;
+    private SpriteSheet characterSheet, skeletonSheet, torchSheet, eyeSheet, slimeSheet;
     private SpriteSheet dungeon1Sheet;
 
     private ReadCSVFile level1Floor, level1Walls, level1Spawns;
@@ -57,6 +56,13 @@ public class LevelLoader {
 
         this.torchImg = loader.loadImage("/Objects/Torch_Atlas.png");
         this.torchSheet = new SpriteSheet(this.torchImg);
+
+        this.eyeImg = loader.loadImage("/Enemies/Eye_Atlas.png");
+        this.eyeSheet = new SpriteSheet(this.eyeImg);
+
+        this.slimeImg = loader.loadImage("/Enemies/Slime Atlas.png");
+        this.slimeSheet = new SpriteSheet(this.slimeImg);
+
     }
 
     //might be useful for loading new level
@@ -244,9 +250,18 @@ public class LevelLoader {
                         this.skeletonSpawn = new ObjectSpawn(this.handler, new Skeleton(xx, yy, ID.Enemy, this.handler, this.skeletonSheet));
                         this.skeletonSpawn.loadEnemy();
                         break;
+                    case "2":
+                        this.eyeSpawn = new ObjectSpawn(this.handler, new Eye(xx, yy, ID.Enemy, this.handler, this.eyeSheet));
+                        this.eyeSpawn.loadEnemy();
+                        break;
+                    case "3":
+                        this.slimeSpawn = new ObjectSpawn(this.handler, new Slime(xx, yy, ID.Enemy, this.handler, this.slimeSheet));
+                        this.slimeSpawn.loadEnemy();
+                        break;
                     case "5":
                         this.torchSpawn = new ObjectSpawn(this.handler, new Torch(xx, yy, this.handler, ID.Object, this.torchSheet));
                         this.torchSpawn.loadObject();
+                        break;
                 }
                 x++;
             }

@@ -31,6 +31,7 @@ public class Skeleton extends AnimateObject {
 
         audio = new AudioHandler();
         this.handler = handler;
+        this.spriteSheet = ss;
         this.width = 64;
         this.height = 64;
         this.knockBackDirection = "";
