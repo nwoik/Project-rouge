@@ -36,7 +36,7 @@ public class Eye extends AnimateObject{
         this.knockBackDirection = "";
         this.knockBackFrames = 7;
         this.hp = 5;
-        this.movementSpeed = 6;
+        this.movementSpeed = 5;
         this.movementSpeed1 = this.movementSpeed +1;
         this.movementSpeed2 = this.movementSpeed1 * 2;
         this.alignmentY = -28;
@@ -85,7 +85,7 @@ public class Eye extends AnimateObject{
                 }
             }
             if (this.knockBackFrames == 6) {
-                this.movementSpeed = 6;
+                this.movementSpeed = 5;
             }
             this.knockBackFrames += 1;
         }

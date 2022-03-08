@@ -124,6 +124,7 @@ public class GameCanvas extends Canvas implements Runnable{
         if (handler.player.getHp() <= 0 ){
             this.stopped = !this.stopped;
             if (this.stopped) {
+                audio.playSFX("sfx/player/death_shout.wav");
                 audio.playSFX("sfx/player/death.wav");
                 GameOverWindow gameOverWindow = new GameOverWindow(this, this.gameWindow, this.layoutPanel);
             }
