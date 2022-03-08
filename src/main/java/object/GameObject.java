@@ -16,6 +16,7 @@ import java.util.List;
 public abstract class GameObject {
     protected Handler handler;
     protected int x, y;
+    protected boolean interactive;
 
     protected ID id;
     protected SpriteSheet spriteSheet;

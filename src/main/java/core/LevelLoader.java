@@ -6,24 +6,29 @@ import object.*;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class LevelLoader {
     private Handler handler;
 
     private CharacterSpawn characterSpawn;
-    private ObjectSpawn skeletonSpawn, torchSpawn, eyeSpawn, slimeSpawn;
+    private ObjectSpawn skeletonSpawn, torchSpawn, eyeSpawn, slimeSpawn, buttonSpawn, warpSpawn;
 
     private BufferedImageLoader loader;
-    private BufferedImage character, skeletonImg, torchImg, eyeImg, slimeImg;
+    private BufferedImage character, skeletonImg, torchImg, eyeImg, slimeImg, buttonImg, warpImg;
     private BufferedImage dungeon1;
 
-    private SpriteSheet characterSheet, skeletonSheet, torchSheet, eyeSheet, slimeSheet;
+    private SpriteSheet characterSheet, skeletonSheet, torchSheet, eyeSheet, slimeSheet, buttonSheet, warpSheet;
     private SpriteSheet dungeon1Sheet;
 
     private ReadCSVFile level1Floor, level1Walls, level1Spawns;
     private ReadCSVFile level2Floor, level2Walls, level2Spawns;
     private TileMap tileMap1, tileMap2;
     public Level level, level1, level2;
+
+    public LinkedList<Level> levelList;
+
+    public int currentLevel;
 
 
     public LevelLoader(Handler handler) throws IOException {
@@ -33,19 +38,23 @@ public class LevelLoader {
         this.dungeon1 = loader.loadImage("/Dungeon 1 atlas.png");
         this.dungeon1Sheet = new SpriteSheet(dungeon1);
 
+        this.levelList = new LinkedList<Level>();
+
         // Level 1 init
         this.level1Spawns = new ReadCSVFile("src/main/java/core/levels/BoxMap_Spawns.csv");
         this.level1Walls = new ReadCSVFile("src/main/java/core/levels/BoxMap_Walls.csv");
         this.level1Floor = new ReadCSVFile("src/main/java/core/levels/BoxMap_Floor.csv");
         this.tileMap1 = new TileMap(dungeon1Sheet);
         this.level1 = new Level(tileMap1, level1Floor, level1Walls, level1Spawns);
+        this.levelList.add(this.level1);
 
         // Level 2 init
-//        this.level2Spawns = new ReadCSVFile("src/main/java/core/levels/DC1_Spawns.csv");
-//        this.level2Walls = new ReadCSVFile("src/main/java/core/levels/DC1_Walls.csv");
-//        this.level2Floor = new ReadCSVFile("src/main/java/core/levels/DC1_Floor.csv");
-//        this.tileMap2 = new TileMap(dungeon1Sheet);
-//        this.level2 = new Level(tileMap2, level2Floor, level2Walls, level2Spawns);
+        this.level2Spawns = new ReadCSVFile("src/main/java/core/levels/level2_Spawns.csv");
+        this.level2Walls = new ReadCSVFile("src/main/java/core/levels/level2_Walls.csv");
+        this.level2Floor = new ReadCSVFile("src/main/java/core/levels/level2_Floor.csv");
+        this.tileMap2 = new TileMap(dungeon1Sheet);
+        this.level2 = new Level(tileMap2, level2Floor, level2Walls, level2Spawns);
+        this.levelList.add(this.level2);
 
         this.character = loader.loadImage("/Player/Character_Atlas.png");
         this.characterSheet = new SpriteSheet(this.character);
@@ -63,8 +72,14 @@ public class LevelLoader {
         this.slimeImg = loader.loadImage("/Enemies/Slime Atlas.png");
         this.slimeSheet = new SpriteSheet(this.slimeImg);
 
-        this.level = level1;
+        this.buttonImg = loader.loadImage("/Objects/Button.png");
+        this.buttonSheet = new SpriteSheet(this.buttonImg);
 
+        this.warpImg = loader.loadImage("/Objects/Warp_Zone.png");
+        this.warpSheet = new SpriteSheet(this.warpImg);
+
+        this.currentLevel = 0;
+        this.level = this.levelList.get(this.currentLevel);
     }
 
     //might be useful for loading new level
@@ -266,9 +281,25 @@ public class LevelLoader {
                         this.torchSpawn = new ObjectSpawn(this.handler, new Torch(xx, yy, this.handler, ID.Object, this.torchSheet));
                         this.torchSpawn.loadObject();
                         break;
+                    case "6":
+                        this.buttonSpawn = new ObjectSpawn(this.handler, new ButtonObject(xx, yy, this.handler, ID.Object, this.buttonSheet));
+                        this.buttonSpawn.loadObject();
+                        break;
+                    case "7":
+                        this.warpSpawn = new ObjectSpawn(this.handler, new WarpZone(xx, yy, this.handler, ID.Object, this.warpSheet, this));
+                        this.warpSpawn.loadObject();
+                        break;
                 }
                 x++;
             }
         }
+    }
+
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
+    }
+
+    public int getCurrentLevel() {
+        return this.currentLevel;
     }
 }

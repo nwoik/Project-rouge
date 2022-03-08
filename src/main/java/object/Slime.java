@@ -285,7 +285,7 @@ public class Slime extends AnimateObject {
 
         for(GameObject gameObject : this.handler.objects){
             //if collide with wall, go the opposite way
-            if(getBounds().intersects(gameObject.getBounds())){
+            if(getBounds().intersects(gameObject.getBounds()) & !gameObject.interactive){
                 this.collided = true;
                 if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
                     this.velY = this.movementSpeed;

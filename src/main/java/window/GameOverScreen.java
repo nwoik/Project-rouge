@@ -44,12 +44,8 @@ public class GameOverScreen extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 clickAudio.playSFX("sfx/menu/wood_click.wav");
                 gameOverWindow.dispose();
-                gameWindow.remove(gameCanvas);
-
-                SceneTransition sceneTransition = new SceneTransition(layoutPanel);
-
-                gameWindow.add(sceneTransition);
-                sceneTransition.load(gameWindow);
+                gameCanvas.openMenu();
+                gameCanvas.levelLoader.loadLevel(gameCanvas.levelLoader.levelList.get(gameCanvas.levelLoader.getCurrentLevel()));
             }
         });
 

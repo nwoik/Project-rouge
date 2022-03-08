@@ -350,6 +350,25 @@ public class Skeleton extends AnimateObject {
                 }
             }
         }
+
+        for(GameObject gameObject : this.handler.objects){
+            //if collide with wall, go the opposite way
+            if(getBounds().intersects(gameObject.getBounds()) & !gameObject.interactive){
+                this.collided = true;
+                if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                    this.velY = this.movementSpeed;
+                }
+                if (getBoundsSmall(this.x + this.movementSpeed2, this.y + this.height - this.movementSpeed2, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                    this.velY = -(this.movementSpeed);
+                }
+                if (getBoundsSmall(this.x, this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                    this.velX = this.movementSpeed;
+                }
+                if (getBoundsSmall(this.x + this.width - this.movementSpeed2 , this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                    this.velX = -(this.movementSpeed);
+                }
+            }
+        }
     }
     public void render(Graphics g) {
         g.drawImage(this.animation.getSprite(), x + this.animation.getOffsetX(), y + this.animation.getOffsetY(), null);
