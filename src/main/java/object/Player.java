@@ -320,7 +320,7 @@ public class Player extends AnimateObject {
             int tempY = 0;
             if (this.inRange) {
                 for (GameObject gameObject : this.handler.enemies) {
-                    if (getBounds().intersects(gameObject.getBounds())) {
+                    if (getBounds().intersects(gameObject.getBounds()) && !gameObject.toString().contains("Eye")) {
                         boolean check = false;
                         if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2 * this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())) {
                             tempY = this.movementSpeed;
@@ -353,6 +353,14 @@ public class Player extends AnimateObject {
                             }
                         }
                         this.knockBackFrames = 0;
+                    }
+                    else if (gameObject.toString().contains("Eye") && gameObject.getBounds().intersects(getBounds())){
+                        if (this.damageCooldown > 19) {
+                            audio.playSFX("sfx/player/hit3.wav");
+                            this.hp -= 5;
+                            //overhaul dmg
+                            this.damageCooldown = 0;
+                        }
                     }
                 }
             }
