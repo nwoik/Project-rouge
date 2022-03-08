@@ -101,66 +101,78 @@ public class Settings extends JPanel {
             audio.playSFX("sfx/menu/wood_click.wav");
         }});
 
-        JPanel keyBind1Pane = new JPanel();
-        keyBind1Pane.setOpaque( false );
-        keyBind1Pane.setLayout(new BoxLayout(keyBind1Pane, BoxLayout.LINE_AXIS));
-        keyBind1Pane.add(Box.createHorizontalGlue());
-        keyBind1Pane.add(upLabel);
-        keyBind1Pane.add(Box.createRigidArea(new Dimension(90, 0)));
-        keyBind1Pane.add(downLabel);
-        keyBind1Pane.add(Box.createRigidArea(new Dimension(30, 0)));
+        JPanel choicePanel = new JPanel();
+        choicePanel.setBorder(BorderFactory.createEmptyBorder(4,4,4,4));
+        choicePanel.setLayout(new GridLayout(8,2));
+        choicePanel.add(upLabel);
+        choicePanel.add(downLabel);
+        choicePanel.add(moveUp);
+        choicePanel.add(moveDown);
+        choicePanel.add(leftLabel);
+        choicePanel.add(rightLabel);
+        choicePanel.add(moveLeft);
+        choicePanel.add(moveRight);
+        choicePanel.add(weapon1Label);
+        choicePanel.add(dashLabel);
+        choicePanel.add(weapon1);
+        choicePanel.add(dash);
+        choicePanel.setOpaque(false);
 
-        JPanel keyBind2Pane = new JPanel();
-        keyBind2Pane.setOpaque( false );
-        keyBind2Pane.setLayout(new BoxLayout(keyBind2Pane, BoxLayout.LINE_AXIS));
-        keyBind2Pane.add(Box.createHorizontalGlue());
-        keyBind2Pane.add(moveUp);
-        keyBind2Pane.add(Box.createRigidArea(new Dimension(120, 0)));
-        keyBind2Pane.add(moveDown);
-        keyBind2Pane.add(Box.createRigidArea(new Dimension(50, 0)));
-
-        JPanel keyBind3Pane = new JPanel();
-        keyBind3Pane.setOpaque( false );
-        keyBind3Pane.setLayout(new BoxLayout(keyBind3Pane, BoxLayout.LINE_AXIS));
-        keyBind3Pane.add(Box.createHorizontalGlue());
-        keyBind3Pane.add(leftLabel);
-        keyBind3Pane.add(Box.createRigidArea(new Dimension(120, 0)));
-        keyBind3Pane.add(rightLabel);
-
-        JPanel keyBind4Pane = new JPanel();
-        keyBind4Pane.setOpaque( false );
-        keyBind4Pane.setLayout(new BoxLayout(keyBind4Pane, BoxLayout.LINE_AXIS));
-        keyBind4Pane.add(Box.createHorizontalGlue());
-        keyBind4Pane.add(moveLeft);
-        keyBind4Pane.add(Box.createRigidArea(new Dimension(120, 0)));
-        keyBind4Pane.add(moveRight);
-        keyBind4Pane.add(Box.createRigidArea(new Dimension(50, 0)));
-
-        JPanel keyBind5Pane = new JPanel();
-        keyBind5Pane.setOpaque( false );
-        keyBind5Pane.setLayout(new BoxLayout(keyBind5Pane, BoxLayout.LINE_AXIS));
-        keyBind5Pane.add(Box.createHorizontalGlue());
-        keyBind5Pane.add(weapon1Label);
-        keyBind5Pane.add(Box.createRigidArea(new Dimension(20, 0)));
-        keyBind5Pane.add(dashLabel);
-
-        JPanel keyBind6Pane = new JPanel();
-        keyBind6Pane.setOpaque( false );
-        keyBind6Pane.setLayout(new BoxLayout(keyBind6Pane, BoxLayout.LINE_AXIS));
-        keyBind6Pane.add(Box.createHorizontalGlue());
-        keyBind6Pane.add(weapon1);
-        keyBind6Pane.add(Box.createRigidArea(new Dimension(120, 0)));
-        keyBind6Pane.add(dash);
-        keyBind6Pane.add(Box.createRigidArea(new Dimension(50, 0)));
-
+//        JPanel keyBind1Pane = new JPanel();
+//        keyBind1Pane.setOpaque( false );
+//        keyBind1Pane.setLayout(new BoxLayout(keyBind1Pane, BoxLayout.LINE_AXIS));
+//        keyBind1Pane.add(Box.createHorizontalGlue());
+//        keyBind1Pane.add(upLabel);
+//        keyBind1Pane.add(Box.createRigidArea(new Dimension(90, 0)));
+//        keyBind1Pane.add(downLabel);
+//        keyBind1Pane.add(Box.createRigidArea(new Dimension(30, 0)));
+//
+//        JPanel keyBind2Pane = new JPanel();
+//        keyBind2Pane.setOpaque( false );
+//        keyBind2Pane.setLayout(new BoxLayout(keyBind2Pane, BoxLayout.LINE_AXIS));
+//        keyBind2Pane.add(Box.createHorizontalGlue());
+//        keyBind2Pane.add(moveUp);
+//        keyBind2Pane.add(Box.createRigidArea(new Dimension(120, 0)));
+//        keyBind2Pane.add(moveDown);
+//        keyBind2Pane.add(Box.createRigidArea(new Dimension(50, 0)));
+//
+//        JPanel keyBind3Pane = new JPanel();
+//        keyBind3Pane.setOpaque( false );
+//        keyBind3Pane.setLayout(new BoxLayout(keyBind3Pane, BoxLayout.LINE_AXIS));
+//        keyBind3Pane.add(Box.createHorizontalGlue());
+//        keyBind3Pane.add(leftLabel);
+//        keyBind3Pane.add(Box.createRigidArea(new Dimension(120, 0)));
+//        keyBind3Pane.add(rightLabel);
+//
+//        JPanel keyBind4Pane = new JPanel();
+//        keyBind4Pane.setOpaque( false );
+//        keyBind4Pane.setLayout(new BoxLayout(keyBind4Pane, BoxLayout.LINE_AXIS));
+//        keyBind4Pane.add(Box.createHorizontalGlue());
+//        keyBind4Pane.add(moveLeft);
+//        keyBind4Pane.add(Box.createRigidArea(new Dimension(120, 0)));
+//        keyBind4Pane.add(moveRight);
+//        keyBind4Pane.add(Box.createRigidArea(new Dimension(50, 0)));
+//
+//        JPanel keyBind5Pane = new JPanel();
+//        keyBind5Pane.setOpaque( false );
+//        keyBind5Pane.setLayout(new BoxLayout(keyBind5Pane, BoxLayout.LINE_AXIS));
+//        keyBind5Pane.add(Box.createHorizontalGlue());
+//        keyBind5Pane.add(weapon1Label);
+//        keyBind5Pane.add(Box.createRigidArea(new Dimension(20, 0)));
+//        keyBind5Pane.add(dashLabel);
+//
+//        JPanel keyBind6Pane = new JPanel();
+//        keyBind6Pane.setOpaque( false );
+//        keyBind6Pane.setLayout(new BoxLayout(keyBind6Pane, BoxLayout.LINE_AXIS));
+//        keyBind6Pane.add(Box.createHorizontalGlue());
+//        keyBind6Pane.add(weapon1);
+//        keyBind6Pane.add(Box.createRigidArea(new Dimension(120, 0)));
+//        keyBind6Pane.add(dash);
+//        keyBind6Pane.add(Box.createRigidArea(new Dimension(50, 0)));
+//
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         keyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        keyBind1Pane.setAlignmentX(Component.CENTER_ALIGNMENT);
-        keyBind2Pane.setAlignmentX(Component.CENTER_ALIGNMENT);
-        keyBind3Pane.setAlignmentX(Component.CENTER_ALIGNMENT);
-        keyBind4Pane.setAlignmentX(Component.CENTER_ALIGNMENT);
-        keyBind5Pane.setAlignmentX(Component.CENTER_ALIGNMENT);
-        keyBind6Pane.setAlignmentX(Component.CENTER_ALIGNMENT);
+        choicePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         validLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         saveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         menuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -173,17 +185,7 @@ public class Settings extends JPanel {
         settingsPane.add(Box.createRigidArea(new Dimension(0, 100)));
         settingsPane.add(keyLabel);
         settingsPane.add(Box.createRigidArea(new Dimension(0, 50)));
-        settingsPane.add(keyBind1Pane);
-        settingsPane.add(Box.createRigidArea(new Dimension(0, 10)));
-        settingsPane.add(keyBind2Pane);
-        settingsPane.add(Box.createRigidArea(new Dimension(0, 20)));
-        settingsPane.add(keyBind3Pane);
-        settingsPane.add(Box.createRigidArea(new Dimension(0, 10)));
-        settingsPane.add(keyBind4Pane);
-        settingsPane.add(Box.createRigidArea(new Dimension(0, 20)));
-        settingsPane.add(keyBind5Pane);
-        settingsPane.add(Box.createRigidArea(new Dimension(0, 10)));
-        settingsPane.add(keyBind6Pane);
+        settingsPane.add(choicePanel);
         settingsPane.add(Box.createRigidArea(new Dimension(0, 20)));
         settingsPane.add(validLabel);
         settingsPane.add(Box.createRigidArea(new Dimension(0, 30)));

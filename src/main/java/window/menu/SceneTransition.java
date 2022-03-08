@@ -51,4 +51,8 @@ public class SceneTransition extends JPanel {
         };
         timer.scheduleAtFixedRate(task, 10, 10);
     }
+
+    private SceneTransition getActivity() {
+        return this;
+    }
 }
