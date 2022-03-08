@@ -11,13 +11,13 @@ public class LevelLoader {
     private Handler handler;
 
     private CharacterSpawn characterSpawn;
-    private ObjectSpawn skeletonSpawn, torchSpawn, eyeSpawn, slimeSpawn;
+    private ObjectSpawn skeletonSpawn, torchSpawn, eyeSpawn, slimeSpawn, buttonSpawn;
 
     private BufferedImageLoader loader;
-    private BufferedImage character, skeletonImg, torchImg, eyeImg, slimeImg;
+    private BufferedImage character, skeletonImg, torchImg, eyeImg, slimeImg, buttonImg;
     private BufferedImage dungeon1;
 
-    private SpriteSheet characterSheet, skeletonSheet, torchSheet, eyeSheet, slimeSheet;
+    private SpriteSheet characterSheet, skeletonSheet, torchSheet, eyeSheet, slimeSheet, buttonSheet;
     private SpriteSheet dungeon1Sheet;
 
     private ReadCSVFile level1Floor, level1Walls, level1Spawns;
@@ -41,11 +41,11 @@ public class LevelLoader {
         this.level1 = new Level(tileMap1, level1Floor, level1Walls, level1Spawns);
 
         // Level 2 init
-//        this.level2Spawns = new ReadCSVFile("src/main/java/core/levels/DC1_Spawns.csv");
-//        this.level2Walls = new ReadCSVFile("src/main/java/core/levels/DC1_Walls.csv");
-//        this.level2Floor = new ReadCSVFile("src/main/java/core/levels/DC1_Floor.csv");
-//        this.tileMap2 = new TileMap(dungeon1Sheet);
-//        this.level2 = new Level(tileMap2, level2Floor, level2Walls, level2Spawns);
+        this.level2Spawns = new ReadCSVFile("src/main/java/core/levels/level2_Spawns.csv");
+        this.level2Walls = new ReadCSVFile("src/main/java/core/levels/level2_Walls.csv");
+        this.level2Floor = new ReadCSVFile("src/main/java/core/levels/level2_Floor.csv");
+        this.tileMap2 = new TileMap(dungeon1Sheet);
+        this.level2 = new Level(tileMap2, level2Floor, level2Walls, level2Spawns);
 
         this.character = loader.loadImage("/Player/Character_Atlas.png");
         this.characterSheet = new SpriteSheet(this.character);
@@ -62,6 +62,9 @@ public class LevelLoader {
 
         this.slimeImg = loader.loadImage("/Enemies/Slime Atlas.png");
         this.slimeSheet = new SpriteSheet(this.slimeImg);
+
+        this.buttonImg = loader.loadImage("/Objects/Button.png");
+        this.buttonSheet = new SpriteSheet(this.buttonImg);
 
         this.level = level1;
 
@@ -266,6 +269,9 @@ public class LevelLoader {
                         this.torchSpawn = new ObjectSpawn(this.handler, new Torch(xx, yy, this.handler, ID.Object, this.torchSheet));
                         this.torchSpawn.loadObject();
                         break;
+                    case "6":
+                        this.buttonSpawn = new ObjectSpawn(this.handler, new ButtonObject(xx, yy, this.handler, ID.Object, this.buttonSheet));
+                        this.buttonSpawn.loadObject();
                 }
                 x++;
             }

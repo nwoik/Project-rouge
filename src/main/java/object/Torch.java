@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class Torch extends AnimateObject {
+
     public Torch(int x, int y, Handler handler, ID id, SpriteSheet ss) {
         super(x, y, handler, id, ss);
         this.height = 64;
