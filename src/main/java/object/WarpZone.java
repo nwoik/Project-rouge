@@ -1,6 +1,7 @@
 package object;
 
 import animations.Animation;
+import audio.AudioHandler;
 import core.LevelLoader;
 import core.SpriteSheet;
 
@@ -22,6 +23,7 @@ public class WarpZone extends GameObject {
 
     public int framedelay;
     public Handler handler;
+    private AudioHandler audio = new AudioHandler();
 
     public WarpZone(int x, int y, Handler handler, ID id, SpriteSheet ss, LevelLoader levelLoader) {
         super(x, y, id, ss);
@@ -65,6 +67,7 @@ public class WarpZone extends GameObject {
     public void warp() {
         this.levelLoader.setCurrentLevel(this.levelLoader.getCurrentLevel()+1);
         this.levelLoader.loadLevel(this.levelLoader.levelList.get(this.levelLoader.getCurrentLevel()));
+        audio.playSFX("sfx/state/warp.wav");
     }
 
     @Override

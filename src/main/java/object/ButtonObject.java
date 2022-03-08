@@ -1,6 +1,7 @@
 package object;
 
 import animations.Animation;
+import audio.AudioHandler;
 import core.SpriteSheet;
 
 import java.awt.*;
@@ -20,6 +21,7 @@ public class ButtonObject extends GameObject {
 
     public int framedelay;
     public Handler handler;
+    private AudioHandler audio = new AudioHandler();
 
     public ButtonObject(int x, int y, Handler handler, ID id, SpriteSheet ss) {
         super(x, y, id, ss);
@@ -42,7 +44,7 @@ public class ButtonObject extends GameObject {
     }
 
     public void collision() {
-        if(this.handler.player.getBounds().intersects(this.getBounds())){
+        if(this.handler.player.getBounds().intersects(this.getBounds()) & this.animation == unpressButton){
             activateButton();
         }
     }
@@ -55,6 +57,7 @@ public class ButtonObject extends GameObject {
                 wrpzn.activateWarp();
             }
         }
+        audio.playSFX("sfx/state/bpress.wav");
     }
 
     @Override
