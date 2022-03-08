@@ -24,7 +24,10 @@ public class Menu extends JPanel {
         BufferedImageLoader image = new BufferedImageLoader();
         BufferedImage wordAtlas = image.loadImage("/Word Sheet.png");
 
-        JLabel title = new JLabel("Once Upon a Dungeon", SwingConstants.CENTER);
+        JLabel title = new JLabel("", SwingConstants.CENTER);
+        BufferedImage titleImage = image.loadImage("/Title.png");
+        Image scaledTitleImage = titleImage.getScaledInstance(720, 120,  java.awt.Image.SCALE_SMOOTH);
+        title.setIcon(new ImageIcon(scaledTitleImage));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         Widget playButton = new Widget(wordAtlas.getSubimage(0,168,34,12), wordAtlas.getSubimage(74,168,34,12));
