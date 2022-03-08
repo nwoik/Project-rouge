@@ -34,7 +34,7 @@ public class GameCanvas extends Canvas implements Runnable{
 
     private BufferedImage ui = null;
 
-    private LevelLoader levelLoader;
+    public LevelLoader levelLoader;
 
     // For callFPS
     String outputFPS = "";
@@ -58,10 +58,10 @@ public class GameCanvas extends Canvas implements Runnable{
         uiSheet = new SpriteSheet(ui);
 
         this.levelLoader = new LevelLoader(this.handler);
+        levelLoader.loadLevel(levelLoader.level1);
 
-        this.levelLoader.loadLevel(levelLoader.level1);
     }
-    //stop game
+
     public void start(){
         isRunning = true;
         thread = new Thread(this);

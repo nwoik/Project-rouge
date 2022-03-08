@@ -45,6 +45,27 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\src\main\java\core\levels\level2_Floor.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\src\main\java\core\levels\level2_Spawns.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\src\main\java\core\levels\level2_Walls.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\src\main\java\core\levels\test_Floor.csv">
           <value>
             <Attribute>

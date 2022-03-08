@@ -1,6 +1,7 @@
 package object;
 
 import animations.Animation;
+import core.LevelLoader;
 import core.SpriteSheet;
 
 import java.awt.*;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WarpZone extends GameObject {
+    private final LevelLoader levelLoader;
     public Animation animation;
     public List<BufferedImage> warpOff = new ArrayList<BufferedImage>();
     public List<BufferedImage> warpOn = new ArrayList<BufferedImage>();
@@ -21,7 +23,7 @@ public class WarpZone extends GameObject {
     public int framedelay;
     public Handler handler;
 
-    public WarpZone(int x, int y, Handler handler, ID id, SpriteSheet ss) {
+    public WarpZone(int x, int y, Handler handler, ID id, SpriteSheet ss, LevelLoader levelLoader) {
         super(x, y, id, ss);
         this.x = x;
         this.y = y;
@@ -31,6 +33,7 @@ public class WarpZone extends GameObject {
         this.framedelay = 2;
         this.interactive = true;
         this.handler = handler;
+        this.levelLoader = levelLoader;
 
         this.warpOff.add(spriteSheet.grabImage(1, 1, 64, 64));
         fillAnimationList(this.spriteSheet, this.warpOn, 1, 2, 1, 64, 64, 4);
@@ -42,8 +45,9 @@ public class WarpZone extends GameObject {
     }
 
     public void collision() {
-        if(this.handler.player.getBounds().intersects(this.getBounds())){
+        if(this.handler.player.getBounds().intersects(this.getBounds()) & this.animation == this.powerWarp){
             System.out.println("warp");
+            warp();
         }
     }
 
@@ -59,14 +63,14 @@ public class WarpZone extends GameObject {
     }
 
     public void warp() {
-
+        this.levelLoader.setCurrentLevel(this.levelLoader.getCurrentLevel()+1);
+        this.levelLoader.loadLevel(this.levelLoader.levelList.get(this.levelLoader.getCurrentLevel()));
     }
 
     @Override
     public void tick() {
         collision();
         this.animation.update();
-
     }
 
     @Override

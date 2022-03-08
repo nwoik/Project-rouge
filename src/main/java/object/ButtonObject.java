@@ -49,6 +49,12 @@ public class ButtonObject extends GameObject {
 
     public void activateButton() {
         this.animation = this.pressButton;
+        for (GameObject gameObject : this.handler.objects) {
+            if (gameObject.toString().contains("WarpZone")) {
+                WarpZone wrpzn = (WarpZone) gameObject;
+                wrpzn.activateWarp();
+            }
+        }
     }
 
     @Override
