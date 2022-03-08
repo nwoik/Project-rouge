@@ -23,8 +23,6 @@ public class Player extends AnimateObject {
 
     private Color colour = Color.blue;
     public boolean inRange = false;
-    private int knockBackFrames = 7;
-    private String knockBackDirection = "";
     private String attackDirection = "";
 
     public boolean dash = false;
@@ -47,6 +45,9 @@ public class Player extends AnimateObject {
         this.width = 64;
         this.height = 64;
         this.hp = 96;
+
+        this.knockBackFrames = 7;
+        this.knockBackDirection = "";
 
         this.alignmentY = -32;
 

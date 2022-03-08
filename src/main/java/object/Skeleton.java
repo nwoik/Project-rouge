@@ -31,6 +31,7 @@ public class Skeleton extends AnimateObject {
 
         audio = new AudioHandler();
         this.handler = handler;
+        this.spriteSheet = ss;
         this.width = 64;
         this.height = 64;
         this.knockBackDirection = "";
@@ -66,10 +67,10 @@ public class Skeleton extends AnimateObject {
         fillAnimationList(spriteSheet, this.attackingLeft, 1, 15, 1, 64, 96, 5);
         fillAnimationList(spriteSheet, this.attackingRight, 1, 13, 1, 64, 96, 5);
 
-        this.attackDown = new Animation(this.attackingDown, 4, 0, alignmentY, true);
-        this.attackUp = new Animation(this.attackingUp, 4, 0, alignmentY, true);
-        this.attackLeft = new Animation(this.attackingLeft, 4, 0, alignmentY, true);
-        this.attackRight = new Animation(this.attackingRight, 4, 0, alignmentY, true);
+        this.attackDown = new Animation(this.attackingDown, framedelay, 0, alignmentY, true);
+        this.attackUp = new Animation(this.attackingUp, framedelay, 0, alignmentY, true);
+        this.attackLeft = new Animation(this.attackingLeft, framedelay, 0, alignmentY, true);
+        this.attackRight = new Animation(this.attackingRight, framedelay, 0, alignmentY, true);
 
 
         this.animation = this.standFacingDown;
@@ -202,7 +203,7 @@ public class Skeleton extends AnimateObject {
         }
 
         //Check if enemy is close enough to player to attack
-        if (Math.abs(this.center.getX1() - this.center.getX2()) < 100 && Math.abs(this.center.getY1() - this.center.getY2()) < 100){
+        if (Math.abs(this.center.getX1() - this.center.getX2()) < 70 && Math.abs(this.center.getY1() - this.center.getY2()) < 70){
             this.lineColour = Color.white;
             this.velX = 0;
             this.velY = 0;
@@ -211,6 +212,7 @@ public class Skeleton extends AnimateObject {
                 this.animation.start();
                 return;
             } else if (this.animation.stop && this.animation == this.attackDown) {
+                this.attack(getDownAttackBox());
                 this.isAttacking = false;
                 this.setAnimation(standFacingDown);
             }
@@ -219,6 +221,7 @@ public class Skeleton extends AnimateObject {
                 this.animation.start();
                 return;
             } else if (this.animation.stop && this.animation == this.attackUp) {
+                this.attack(getUpAttackBox());
                 this.isAttacking = false;
                 this.setAnimation(standFacingUp);
             }
@@ -227,6 +230,7 @@ public class Skeleton extends AnimateObject {
                 this.animation.start();
                 return;
             } else if (this.animation.stop && this.animation == this.attackLeft) {
+                this.attack(getLeftAttackBox());
                 this.isAttacking = false;
                 this.setAnimation(standFacingLeft);
             }
@@ -234,12 +238,34 @@ public class Skeleton extends AnimateObject {
                 this.setAnimation(this.attackRight);
                 this.animation.start();
             } else if (this.animation.stop && this.animation == this.attackRight) {
+                this.attack(getRightAttackBox());
                 this.isAttacking = false;
                 this.setAnimation(standFacingRight);
             }
         }
         else{
             this.lineColour = Color.cyan;
+        }
+    }
+
+    public void attack(Rectangle2D attackBox) {
+
+        if (handler.player.getBounds().intersects(attackBox)) {
+            System.out.println("pls for fuck sake");
+            handler.player.subHp(5);
+            handler.player.setKnockBackFrames();
+            if (this.animation == this.attackUp) {
+                handler.player.setKnockBackDirection("up");
+            }
+            else if (this.animation == this.attackDown) {
+                handler.player.setKnockBackDirection("down");
+            }
+            else if (this.animation == this.attackLeft) {
+                handler.player.setKnockBackDirection("left");
+            }
+            else if (this.animation == this.attackRight) {
+                handler.player.setKnockBackDirection("right");
+            }
         }
     }
 
@@ -348,7 +374,34 @@ public class Skeleton extends AnimateObject {
             g.setColor(this.lineColour);
             g.drawLine(this.x +(this.width/2), this.y+(this.height/2), this.handler.player.getX() +(this.handler.player.getWidth()/2),  this.handler.player.getY()+(this.handler.player.getHeight()/2));
         }
+        if (this.animation == this.attackUp) {
+            g.drawRect(x-12, y-24, this.width+24, 24);
+        }
+        else if (this.animation == this.attackDown) {
+            g.drawRect(x-12, y+this.height, this.width+24, 24);
+        }
+        else if (this.animation == this.attackLeft) {
+            g.drawRect(x-24, y-12, 24, this.height+24);
+        }
+        else if (this.animation == this.attackRight) {
+            g.drawRect(x+this.width, y-12, 24, this.height+24);
+        }
+    }
 
+    public Rectangle2D getUpAttackBox() {
+        return new Rectangle2D.Float(x-12, y-24, this.width+24, 24);
+    }
+
+    public Rectangle2D getDownAttackBox() {
+        return new Rectangle2D.Float(x-12, y+this.height, this.width+24, 24);
+    }
+
+    public Rectangle2D getLeftAttackBox() {
+        return new Rectangle2D.Float(x-24, y-12, 24, this.height+24);
+    }
+
+    public Rectangle2D getRightAttackBox() {
+        return new Rectangle2D.Float(x+this.width, y-12, 24, this.height+24);
     }
 
     //   for collision
