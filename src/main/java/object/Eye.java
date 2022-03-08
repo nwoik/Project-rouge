@@ -36,7 +36,7 @@ public class Eye extends AnimateObject{
         this.knockBackDirection = "";
         this.knockBackFrames = 7;
         this.hp = 5;
-        this.movementSpeed = 6;
+        this.movementSpeed = 5;
         this.movementSpeed1 = this.movementSpeed +1;
         this.movementSpeed2 = this.movementSpeed1 * 2;
         this.alignmentY = -28;
@@ -73,7 +73,7 @@ public class Eye extends AnimateObject{
         }
         else {
             if (this.knockBackFrames == 0) {
-                audio.playSFX("sfx/skeleton/hurt1.wav");
+                audio.playSFX("sfx/bat/hurt.wav");
                 this.movementSpeed = 10;
             }
             if (!this.collided) {
@@ -85,7 +85,7 @@ public class Eye extends AnimateObject{
                 }
             }
             if (this.knockBackFrames == 6) {
-                this.movementSpeed = 6;
+                this.movementSpeed = 5;
             }
             this.knockBackFrames += 1;
         }
@@ -224,8 +224,8 @@ public class Eye extends AnimateObject{
     }
     public void render(Graphics g) {
         g.drawImage(this.animation.getSprite(), x + this.animation.getOffsetX(), y + this.animation.getOffsetY(), null);
-        if (Math.random() <= 0.005) {
-            audio.playSFX("sfx/skeleton/say2.wav");
+        if (Math.random() <= 0.002) {
+            audio.playSFX("sfx/bat/scream2.wav");
         }
     }
 

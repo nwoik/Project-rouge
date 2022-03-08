@@ -1,5 +1,6 @@
 package window;
 
+import audio.AudioHandler;
 import core.*;
 import core.spawns.CharacterSpawn;
 import debug.DebugSettings;
@@ -15,6 +16,7 @@ import java.io.IOException;
 
 public class GameCanvas extends Canvas implements Runnable{
     private Handler handler;
+    private AudioHandler audio = new AudioHandler();
     private Camera camera;
     public boolean isRunning = false;
     private Panel panel;
@@ -122,6 +124,8 @@ public class GameCanvas extends Canvas implements Runnable{
         if (handler.player.getHp() <= 0 ){
             this.stopped = !this.stopped;
             if (this.stopped) {
+                audio.playSFX("sfx/player/death_shout.wav");
+                audio.playSFX("sfx/player/death.wav");
                 GameOverWindow gameOverWindow = new GameOverWindow(this, this.gameWindow, this.layoutPanel);
             }
             return;

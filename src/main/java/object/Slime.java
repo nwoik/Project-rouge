@@ -37,7 +37,7 @@ public class Slime extends AnimateObject {
         this.knockBackDirection = "";
         this.knockBackFrames = 7;
         this.hp = 15;
-        this.movementSpeed = 3;
+        this.movementSpeed = 1;
         this.movementSpeed1 = this.movementSpeed +1;
         this.movementSpeed2 = this.movementSpeed1 * 2;
         this.alignmentY = 0;
@@ -125,7 +125,7 @@ public class Slime extends AnimateObject {
         }
         else {
             if (this.knockBackFrames == 0) {
-                audio.playSFX("sfx/skeleton/hurt1.wav");
+                audio.playSFX("sfx/slime/attack.wav");
                 this.movementSpeed = 10;
             }
             if (!this.collided) {
@@ -137,7 +137,7 @@ public class Slime extends AnimateObject {
                 }
             }
             if (this.knockBackFrames == 6) {
-                this.movementSpeed = 3;
+                this.movementSpeed = 1;
             }
             this.knockBackFrames += 1;
         }
@@ -192,7 +192,7 @@ public class Slime extends AnimateObject {
         }
 
         //Check if enemy is close enough to player to attack
-        if (Math.abs(this.center.getX1() - this.center.getX2()) < 100 && Math.abs(this.center.getY1() - this.center.getY2()) < 100){
+        if (Math.abs(this.center.getX1() - this.center.getX2()) < 60 && Math.abs(this.center.getY1() - this.center.getY2()) < 60){
             this.lineColour = Color.white;
             this.velX = 0;
             this.velY = 0;
@@ -304,8 +304,8 @@ public class Slime extends AnimateObject {
     }
     public void render(Graphics g) {
         g.drawImage(this.animation.getSprite(), x + this.animation.getOffsetX(), y + this.animation.getOffsetY(), null);
-        if (Math.random() <= 0.005) {
-            audio.playSFX("sfx/skeleton/say2.wav");
+        if (Math.random() <= 0.002) {
+            audio.playSFX("sfx/slime/small.wav");
         }
     }
 
@@ -313,7 +313,7 @@ public class Slime extends AnimateObject {
     public void debugRender(Graphics g) {
         g.setColor(Color.red);
         g.drawRect(this.x,this.y,this.width,this.height);
-        g.drawOval((this.x-300) + (this.width/2),(this.y-300) + ((this.height)/2), 600, 600);
+        g.drawOval((this.x-450) + (this.width/2),(this.y-450) + ((this.height)/2), 900, 900);
 //        The following options check if enemy is centered in its detection radius
 //        g.setColor(Color.pink);
 //        g.drawRect((x-400) + (width/2),(y-400) + ((height+offset)/2), 800, 800);
@@ -339,6 +339,6 @@ public class Slime extends AnimateObject {
 
     //Get Radius of field of view and implement it
     public Ellipse2D getBoundsFOV() {
-        return new Ellipse2D.Float((this.x-300) + ((float)(this.width)/2),(this.y-300) + ((float)(this.height)/2),600,600);
+        return new Ellipse2D.Float((this.x-450) + ((float)(this.width)/2),(this.y-450 + ((float)(this.height)/2)),900,900);
     }
 }
