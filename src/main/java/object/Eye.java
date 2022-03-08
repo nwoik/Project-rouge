@@ -11,7 +11,7 @@ import java.util.Random;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 
-public class Bat extends AnimateObject{
+public class Eye extends AnimateObject{
     private AudioHandler audio;
     private Random r = new Random();
     private int choose = 0;
@@ -25,51 +25,25 @@ public class Bat extends AnimateObject{
     //enemy image to be drawn
     private BufferedImage enemyImage;
 
-    public Bat(int x, int y, ID id, Handler handler, SpriteSheet ss) {
+    public Eye(int x, int y, ID id, Handler handler, SpriteSheet ss) {
 
         super(x, y, handler, id, ss);
-
+        this.spriteSheet = ss;
         audio = new AudioHandler();
         this.handler = handler;
         this.width = 64;
         this.height = 64;
         this.knockBackDirection = "";
         this.knockBackFrames = 7;
-        this.hp = 15;
-        this.movementSpeed = 3;
+        this.hp = 5;
+        this.movementSpeed = 5;
         this.movementSpeed1 = this.movementSpeed +1;
         this.movementSpeed2 = this.movementSpeed1 * 2;
         this.alignmentY = -28;
 
-        this.standingFacingDown.add(spriteSheet.grabImage(1, 1, 64, 96));
-        this.standingFacingLeft.add(spriteSheet.grabImage(3, 1, 64, 96));
-        this.standingFacingUp.add(spriteSheet.grabImage(4, 1, 64, 96));
-        this.standingFacingRight.add(spriteSheet.grabImage(2, 1, 64, 96));
+        fillAnimationList(spriteSheet, this.standingFacingDown, 1, 1, 3, 192, 192, 6);
 
-        this.standFacingDown = new Animation(this.standingFacingDown, framedelay, 0, alignmentY, true);
-        this.standFacingLeft = new Animation(this.standingFacingLeft, framedelay, 0, alignmentY, true);
-        this.standFacingUp = new Animation(this.standingFacingUp, framedelay, 0, alignmentY, true);
-        this.standFacingRight = new Animation(this.standingFacingRight, framedelay, 0, alignmentY, true);
-
-        fillAnimationList(spriteSheet, this.walkingUp, 1, 9, 1, 64, 96, 10);
-        fillAnimationList(spriteSheet, this.walkingDown, 1, 3, 1, 64, 96, 10);
-        fillAnimationList(spriteSheet, this.walkingLeft, 1, 5, 1, 64, 96, 10);
-        fillAnimationList(spriteSheet, this.walkingRight, 1, 7, 1, 64, 96, 10);
-
-        this.walkUp = new Animation(this.walkingUp, framedelay, 0, alignmentY, false);
-        this.walkDown = new Animation(this.walkingDown, framedelay, 0, alignmentY, false);
-        this.walkLeft = new Animation(this.walkingLeft, framedelay, 0, alignmentY, false);
-        this.walkRight = new Animation(this.walkingRight, framedelay, 0, alignmentY, false);
-
-        fillAnimationList(spriteSheet, this.attackingDown, 1, 11, 1, 64, 96, 5);
-        fillAnimationList(spriteSheet, this.attackingUp, 1, 17, 1, 64, 96, 5);
-        fillAnimationList(spriteSheet, this.attackingLeft, 1, 15, 1, 64, 96, 5);
-        fillAnimationList(spriteSheet, this.attackingRight, 1, 13, 1, 64, 96, 5);
-
-        this.attackDown = new Animation(this.attackingDown, 4, 0, alignmentY, true);
-        this.attackUp = new Animation(this.attackingUp, 4, 0, alignmentY, true);
-        this.attackLeft = new Animation(this.attackingLeft, 4, 0, alignmentY, true);
-        this.attackRight = new Animation(this.attackingRight, 4, 0, alignmentY, true);
+        this.standFacingDown = new Animation(this.standingFacingDown, framedelay, -64, -64, false);
 
 
         this.animation = this.standFacingDown;
@@ -95,47 +69,11 @@ public class Bat extends AnimateObject{
             }
 
             //animations for movement
-            if (this.velX < 0 & !isAttacking) {
-                this.setAnimation(this.walkLeft);
-                this.animation.start();
-            }
-            if (this.velX > 0 & !isAttacking) {
-                this.setAnimation(this.walkRight);
-                this.animation.start();
-            }
-            if (this.velY < 0 & !isAttacking) {
-                this.setAnimation(this.walkUp);
-                this.animation.start();
-            }
-            if (this.velY > 0 & !isAttacking) {
-                this.setAnimation(this.walkDown);
-                this.animation.start();
-            }
-
-            if (this.velY == 0 & this.animation == this.walkDown) {
-                this.setAnimation(this.standFacingDown);
-                this.animation.start();
-            }
-
-            if (this.velY == 0 & this.animation == this.walkUp) {
-                this.setAnimation(this.standFacingUp);
-                this.animation.start();
-            }
-
-            if (this.velX == 0 & this.animation == this.walkLeft) {
-                this.setAnimation(this.standFacingLeft);
-                this.animation.start();
-            }
-
-            if (this.velX == 0 & this.animation == this.walkRight) {
-                this.setAnimation(this.standFacingRight);
-                this.animation.start();
-            }
             this.animation.update();
         }
         else {
             if (this.knockBackFrames == 0) {
-                audio.playSFX("sfx/skeleton/hurt1.wav");
+                audio.playSFX("sfx/bat/hurt.wav");
                 this.movementSpeed = 10;
             }
             if (!this.collided) {
@@ -147,7 +85,7 @@ public class Bat extends AnimateObject{
                 }
             }
             if (this.knockBackFrames == 6) {
-                this.movementSpeed = 3;
+                this.movementSpeed = 5;
             }
             this.knockBackFrames += 1;
         }
@@ -199,47 +137,6 @@ public class Bat extends AnimateObject{
         }
         else if (!this.isAttacking & this.handler.player.getY() + ((this.handler.player.getHeight())/2)   < this.y + ((this.height)/2)){
             this.velY = -this.movementSpeed;
-        }
-
-        //Check if enemy is close enough to player to attack
-        if (Math.abs(this.center.getX1() - this.center.getX2()) < 100 && Math.abs(this.center.getY1() - this.center.getY2()) < 100){
-            this.lineColour = Color.white;
-            this.velX = 0;
-            this.velY = 0;
-            if (this.animation == this.standFacingDown || this.animation == this.walkDown) {
-                this.setAnimation(this.attackDown);
-                this.animation.start();
-                return;
-            } else if (this.animation.stop && this.animation == this.attackDown) {
-                this.isAttacking = false;
-                this.setAnimation(standFacingDown);
-            }
-            if (this.animation == this.standFacingUp || this.animation == this.walkUp) {
-                this.setAnimation(this.attackUp);
-                this.animation.start();
-                return;
-            } else if (this.animation.stop && this.animation == this.attackUp) {
-                this.isAttacking = false;
-                this.setAnimation(standFacingUp);
-            }
-            if (this.animation == this.standFacingLeft || this.animation == this.walkLeft) {
-                this.setAnimation(this.attackLeft);
-                this.animation.start();
-                return;
-            } else if (this.animation.stop && this.animation == this.attackLeft) {
-                this.isAttacking = false;
-                this.setAnimation(standFacingLeft);
-            }
-            if (this.animation == this.standFacingRight || this.animation == this.walkRight) {
-                this.setAnimation(this.attackRight);
-                this.animation.start();
-            } else if (this.animation.stop && this.animation == this.attackRight) {
-                this.isAttacking = false;
-                this.setAnimation(standFacingRight);
-            }
-        }
-        else{
-            this.lineColour = Color.cyan;
         }
     }
 
@@ -327,8 +224,8 @@ public class Bat extends AnimateObject{
     }
     public void render(Graphics g) {
         g.drawImage(this.animation.getSprite(), x + this.animation.getOffsetX(), y + this.animation.getOffsetY(), null);
-        if (Math.random() <= 0.005) {
-            audio.playSFX("sfx/skeleton/say2.wav");
+        if (Math.random() <= 0.002) {
+            audio.playSFX("sfx/bat/scream2.wav");
         }
     }
 
@@ -336,7 +233,7 @@ public class Bat extends AnimateObject{
     public void debugRender(Graphics g) {
         g.setColor(Color.red);
         g.drawRect(this.x,this.y,this.width,this.height);
-        g.drawOval((this.x-300) + (this.width/2),(this.y-300) + ((this.height)/2), 600, 600);
+        g.drawOval((this.x-400) + (this.width/2),(this.y-400) + ((this.height)/2), 800, 800);
 //        The following options check if enemy is centered in its detection radius
 //        g.setColor(Color.pink);
 //        g.drawRect((x-400) + (width/2),(y-400) + ((height+offset)/2), 800, 800);
@@ -362,6 +259,6 @@ public class Bat extends AnimateObject{
 
     //Get Radius of field of view and implement it
     public Ellipse2D getBoundsFOV() {
-        return new Ellipse2D.Float((this.x-300) + ((float)(this.width)/2),(this.y-300) + ((float)(this.height)/2),600,600);
+        return new Ellipse2D.Float((this.x-400) + ((float)(this.width)/2),(this.y-400) + ((float)(this.height)/2),800,800);
     }
 }

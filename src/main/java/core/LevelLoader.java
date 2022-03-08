@@ -8,24 +8,22 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class LevelLoader {
-
     private Handler handler;
 
     private CharacterSpawn characterSpawn;
-    private ObjectSpawn skeletonSpawn;
+    private ObjectSpawn skeletonSpawn, torchSpawn, eyeSpawn, slimeSpawn;
 
     private BufferedImageLoader loader;
-    private BufferedImage character, skeletonImg;
+    private BufferedImage character, skeletonImg, torchImg, eyeImg, slimeImg;
     private BufferedImage dungeon1;
 
-    private SpriteSheet characterSheet, skeletonSheet;
+    private SpriteSheet characterSheet, skeletonSheet, torchSheet, eyeSheet, slimeSheet;
     private SpriteSheet dungeon1Sheet;
-    private Skeleton skeleton;
 
     private ReadCSVFile level1Floor, level1Walls, level1Spawns;
     private ReadCSVFile level2Floor, level2Walls, level2Spawns;
     private TileMap tileMap1, tileMap2;
-    public Level level1, level2;
+    public Level level, level1, level2;
 
 
     public LevelLoader(Handler handler) throws IOException {
@@ -55,6 +53,18 @@ public class LevelLoader {
 
         this.skeletonImg = loader.loadImage("/Enemies/Skeleton_Atlas.png");
         this.skeletonSheet = new SpriteSheet(this.skeletonImg);
+
+        this.torchImg = loader.loadImage("/Objects/Torch_Atlas.png");
+        this.torchSheet = new SpriteSheet(this.torchImg);
+
+        this.eyeImg = loader.loadImage("/Enemies/Eye_Atlas.png");
+        this.eyeSheet = new SpriteSheet(this.eyeImg);
+
+        this.slimeImg = loader.loadImage("/Enemies/Slime Atlas.png");
+        this.slimeSheet = new SpriteSheet(this.slimeImg);
+
+        this.level = level1;
+
     }
 
     //might be useful for loading new level
@@ -62,7 +72,9 @@ public class LevelLoader {
         handler.emptyList();
     }
 
-
+    public void setLevel(Level newLevel) {
+        this.level = newLevel;
+    }
 
     //loads level given buffered image
     public void loadLevel(Level level){
@@ -240,7 +252,19 @@ public class LevelLoader {
                         break;
                     case "1":
                         this.skeletonSpawn = new ObjectSpawn(this.handler, new Skeleton(xx, yy, ID.Enemy, this.handler, this.skeletonSheet));
-                        this.skeletonSpawn.loadObject();
+                        this.skeletonSpawn.loadEnemy();
+                        break;
+                    case "2":
+                        this.eyeSpawn = new ObjectSpawn(this.handler, new Eye(xx, yy, ID.Enemy, this.handler, this.eyeSheet));
+                        this.eyeSpawn.loadEnemy();
+                        break;
+                    case "3":
+                        this.slimeSpawn = new ObjectSpawn(this.handler, new Slime(xx, yy, ID.Enemy, this.handler, this.slimeSheet));
+                        this.slimeSpawn.loadEnemy();
+                        break;
+                    case "5":
+                        this.torchSpawn = new ObjectSpawn(this.handler, new Torch(xx, yy, this.handler, ID.Object, this.torchSheet));
+                        this.torchSpawn.loadObject();
                         break;
                 }
                 x++;

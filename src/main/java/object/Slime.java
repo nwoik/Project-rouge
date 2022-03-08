@@ -30,6 +30,7 @@ public class Slime extends AnimateObject {
         super(x, y, handler, id, ss);
 
         audio = new AudioHandler();
+        this.spriteSheet = ss;
         this.handler = handler;
         this.width = 64;
         this.height = 64;
@@ -39,38 +40,27 @@ public class Slime extends AnimateObject {
         this.movementSpeed = 3;
         this.movementSpeed1 = this.movementSpeed +1;
         this.movementSpeed2 = this.movementSpeed1 * 2;
-        this.alignmentY = -28;
+        this.alignmentY = 0;
 
-        this.standingFacingDown.add(spriteSheet.grabImage(1, 1, 64, 96));
-        this.standingFacingLeft.add(spriteSheet.grabImage(3, 1, 64, 96));
-        this.standingFacingUp.add(spriteSheet.grabImage(4, 1, 64, 96));
-        this.standingFacingRight.add(spriteSheet.grabImage(2, 1, 64, 96));
+        this.standingFacingDown.add(spriteSheet.grabImage(1, 1, width, height));
+        this.standingFacingLeft.add(spriteSheet.grabImage(3, 1, width, height));
+        this.standingFacingUp.add(spriteSheet.grabImage(4, 1, width, height));
+        this.standingFacingRight.add(spriteSheet.grabImage(2, 1, width, height));
 
-        this.standFacingDown = new Animation(this.standingFacingDown, framedelay, 0, alignmentY, true);
-        this.standFacingLeft = new Animation(this.standingFacingLeft, framedelay, 0, alignmentY, true);
-        this.standFacingUp = new Animation(this.standingFacingUp, framedelay, 0, alignmentY, true);
-        this.standFacingRight = new Animation(this.standingFacingRight, framedelay, 0, alignmentY, true);
+        this.standFacingDown = new Animation(this.standingFacingDown, framedelay, 0, 0, true);
+        this.standFacingLeft = new Animation(this.standingFacingLeft, framedelay, 0, 0, true);
+        this.standFacingUp = new Animation(this.standingFacingUp, framedelay, 0, 0, true);
+        this.standFacingRight = new Animation(this.standingFacingRight, framedelay, 0, 0, true);
 
-        fillAnimationList(spriteSheet, this.walkingUp, 1, 9, 1, 64, 96, 10);
-        fillAnimationList(spriteSheet, this.walkingDown, 1, 3, 1, 64, 96, 10);
-        fillAnimationList(spriteSheet, this.walkingLeft, 1, 5, 1, 64, 96, 10);
-        fillAnimationList(spriteSheet, this.walkingRight, 1, 7, 1, 64, 96, 10);
+        fillAnimationList(spriteSheet, this.walkingUp, 1, 5, 1, 64, height, 10);
+        fillAnimationList(spriteSheet, this.walkingDown, 1, 2, 1, 64, height, 10);
+        fillAnimationList(spriteSheet, this.walkingLeft, 1, 4, 1, 64, height, 10);
+        fillAnimationList(spriteSheet, this.walkingRight, 1, 3, 1, 64, height, 10);
 
         this.walkUp = new Animation(this.walkingUp, framedelay, 0, alignmentY, false);
         this.walkDown = new Animation(this.walkingDown, framedelay, 0, alignmentY, false);
         this.walkLeft = new Animation(this.walkingLeft, framedelay, 0, alignmentY, false);
         this.walkRight = new Animation(this.walkingRight, framedelay, 0, alignmentY, false);
-
-        fillAnimationList(spriteSheet, this.attackingDown, 1, 11, 1, 64, 96, 5);
-        fillAnimationList(spriteSheet, this.attackingUp, 1, 17, 1, 64, 96, 5);
-        fillAnimationList(spriteSheet, this.attackingLeft, 1, 15, 1, 64, 96, 5);
-        fillAnimationList(spriteSheet, this.attackingRight, 1, 13, 1, 64, 96, 5);
-
-        this.attackDown = new Animation(this.attackingDown, 4, 0, alignmentY, true);
-        this.attackUp = new Animation(this.attackingUp, 4, 0, alignmentY, true);
-        this.attackLeft = new Animation(this.attackingLeft, 4, 0, alignmentY, true);
-        this.attackRight = new Animation(this.attackingRight, 4, 0, alignmentY, true);
-
 
         this.animation = this.standFacingDown;
     }
@@ -95,19 +85,19 @@ public class Slime extends AnimateObject {
             }
 
             //animations for movement
-            if (this.velX < 0 & !isAttacking) {
+            if (this.velX < 0) {
                 this.setAnimation(this.walkLeft);
                 this.animation.start();
             }
-            if (this.velX > 0 & !isAttacking) {
+            if (this.velX > 0) {
                 this.setAnimation(this.walkRight);
                 this.animation.start();
             }
-            if (this.velY < 0 & !isAttacking) {
+            if (this.velY < 0) {
                 this.setAnimation(this.walkUp);
                 this.animation.start();
             }
-            if (this.velY > 0 & !isAttacking) {
+            if (this.velY > 0) {
                 this.setAnimation(this.walkDown);
                 this.animation.start();
             }
@@ -135,7 +125,7 @@ public class Slime extends AnimateObject {
         }
         else {
             if (this.knockBackFrames == 0) {
-                audio.playSFX("sfx/skeleton/hurt1.wav");
+                audio.playSFX("sfx/slime/attack.wav");
                 this.movementSpeed = 10;
             }
             if (!this.collided) {
@@ -206,37 +196,6 @@ public class Slime extends AnimateObject {
             this.lineColour = Color.white;
             this.velX = 0;
             this.velY = 0;
-            if (this.animation == this.standFacingDown || this.animation == this.walkDown) {
-                this.setAnimation(this.attackDown);
-                this.animation.start();
-                return;
-            } else if (this.animation.stop && this.animation == this.attackDown) {
-                this.isAttacking = false;
-                this.setAnimation(standFacingDown);
-            }
-            if (this.animation == this.standFacingUp || this.animation == this.walkUp) {
-                this.setAnimation(this.attackUp);
-                this.animation.start();
-                return;
-            } else if (this.animation.stop && this.animation == this.attackUp) {
-                this.isAttacking = false;
-                this.setAnimation(standFacingUp);
-            }
-            if (this.animation == this.standFacingLeft || this.animation == this.walkLeft) {
-                this.setAnimation(this.attackLeft);
-                this.animation.start();
-                return;
-            } else if (this.animation.stop && this.animation == this.attackLeft) {
-                this.isAttacking = false;
-                this.setAnimation(standFacingLeft);
-            }
-            if (this.animation == this.standFacingRight || this.animation == this.walkRight) {
-                this.setAnimation(this.attackRight);
-                this.animation.start();
-            } else if (this.animation.stop && this.animation == this.attackRight) {
-                this.isAttacking = false;
-                this.setAnimation(standFacingRight);
-            }
         }
         else{
             this.lineColour = Color.cyan;
@@ -306,7 +265,25 @@ public class Slime extends AnimateObject {
     //Check if enemy collided with block
     private void collision(){
         for(GameObject gameObject : this.handler.walls){
+            //if collide with wall, go the opposite way
+            if(getBounds().intersects(gameObject.getBounds())){
+                this.collided = true;
+                if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                    this.velY = this.movementSpeed;
+                }
+                if (getBoundsSmall(this.x + this.movementSpeed2, this.y + this.height - this.movementSpeed2, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                    this.velY = -(this.movementSpeed);
+                }
+                if (getBoundsSmall(this.x, this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                    this.velX = this.movementSpeed;
+                }
+                if (getBoundsSmall(this.x + this.width - this.movementSpeed2 , this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                    this.velX = -(this.movementSpeed);
+                }
+            }
+        }
 
+        for(GameObject gameObject : this.handler.objects){
             //if collide with wall, go the opposite way
             if(getBounds().intersects(gameObject.getBounds())){
                 this.collided = true;
@@ -327,8 +304,8 @@ public class Slime extends AnimateObject {
     }
     public void render(Graphics g) {
         g.drawImage(this.animation.getSprite(), x + this.animation.getOffsetX(), y + this.animation.getOffsetY(), null);
-        if (Math.random() <= 0.005) {
-            audio.playSFX("sfx/skeleton/say2.wav");
+        if (Math.random() <= 0.002) {
+            audio.playSFX("sfx/slime/small.wav");
         }
     }
 

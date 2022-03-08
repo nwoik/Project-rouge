@@ -3,20 +3,6 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="\src\main\java\core\Level_test_Floor.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\src\main\java\core\Level_test_Walls.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="\src\main\java\core\levels\BoxMap_Floor.csv">
           <value>
             <Attribute>
@@ -25,6 +11,13 @@
           </value>
         </entry>
         <entry key="\src\main\java\core\levels\BoxMap_Spawns.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\src\main\java\core\levels\BoxMap_Triggers.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

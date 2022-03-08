@@ -1,6 +1,7 @@
 package window;
 
 
+import core.LevelLoader;
 import window.menu.LayoutPanel;
 
 import javax.swing.*;

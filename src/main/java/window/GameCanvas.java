@@ -1,11 +1,13 @@
 package window;
 
+import audio.AudioHandler;
 import core.*;
 import core.spawns.CharacterSpawn;
 import debug.DebugSettings;
 import inputs.KeyInput;
 import object.Handler;
 import window.menu.LayoutPanel;
+import window.menu.SceneTransition;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -14,6 +16,7 @@ import java.io.IOException;
 
 public class GameCanvas extends Canvas implements Runnable{
     private Handler handler;
+    private AudioHandler audio = new AudioHandler();
     private Camera camera;
     public boolean isRunning = false;
     private Panel panel;
@@ -30,6 +33,8 @@ public class GameCanvas extends Canvas implements Runnable{
     public int WIDTH = dimension.width;
 
     private BufferedImage ui = null;
+
+    private LevelLoader levelLoader;
 
     // For callFPS
     String outputFPS = "";
@@ -52,8 +57,9 @@ public class GameCanvas extends Canvas implements Runnable{
 
         uiSheet = new SpriteSheet(ui);
 
-        LevelLoader levelLoader = new LevelLoader(this.handler);
-        levelLoader.loadLevel(levelLoader.level1);
+        this.levelLoader = new LevelLoader(this.handler);
+
+        this.levelLoader.loadLevel(levelLoader.level1);
     }
     //stop game
     public void start(){
@@ -118,9 +124,17 @@ public class GameCanvas extends Canvas implements Runnable{
         if (handler.player.getHp() <= 0 ){
             this.stopped = !this.stopped;
             if (this.stopped) {
+                audio.playSFX("sfx/player/death_shout.wav");
+                audio.playSFX("sfx/player/death.wav");
                 GameOverWindow gameOverWindow = new GameOverWindow(this, this.gameWindow, this.layoutPanel);
             }
             return;
+//            gameWindow.remove(this);
+//
+//            SceneTransition sceneTransition = new SceneTransition(layoutPanel, 2);
+//
+//            gameWindow.add(sceneTransition);
+//            sceneTransition.load(gameWindow);
         }
         camera.tick(handler.player);
         this.handler.tick(this.debugSettings.isDebugMode());

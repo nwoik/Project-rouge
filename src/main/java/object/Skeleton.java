@@ -136,7 +136,7 @@ public class Skeleton extends AnimateObject {
         }
         else {
             if (this.knockBackFrames == 0) {
-                audio.playSFX("sfx/skeleton/hurt1.wav");
+                audio.playSFX("sfx/skeleton/hurt4.wav");
                 this.movementSpeed = 10;
             }
             if (!this.collided) {
