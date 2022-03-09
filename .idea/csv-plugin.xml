@@ -24,13 +24,6 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="\src\main\java\core\levels\DC1_Floors.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="\src\main\java\core\levels\Stress_Floor.csv">
           <value>
             <Attribute>

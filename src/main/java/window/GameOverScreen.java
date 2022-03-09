@@ -43,9 +43,9 @@ public class GameOverScreen extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 clickAudio.playSFX("sfx/menu/wood_click.wav");
-                gameOverWindow.dispose();
-                gameCanvas.openMenu();
                 gameCanvas.levelLoader.loadLevel(gameCanvas.levelLoader.levelList.get(gameCanvas.levelLoader.getCurrentLevel()));
+                gameCanvas.stopped = false;
+                gameOverWindow.dispose();
             }
         });
 

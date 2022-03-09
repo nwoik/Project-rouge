@@ -23,8 +23,10 @@ public class LevelLoader {
 
     private ReadCSVFile level1Floor, level1Walls, level1Spawns;
     private ReadCSVFile level2Floor, level2Walls, level2Spawns;
-    private TileMap tileMap1, tileMap2;
-    public Level level, level1, level2;
+    private ReadCSVFile level3Floor, level3Walls, level3Spawns;
+
+    private TileMap tileMap1, tileMap2, tileMap3;
+    public Level level, level1, level2, level3;
 
     public LinkedList<Level> levelList;
 
@@ -49,12 +51,20 @@ public class LevelLoader {
         this.levelList.add(this.level1);
 
         // Level 2 init
-        this.level2Spawns = new ReadCSVFile("src/main/java/core/levels/level2_Spawns.csv");
-        this.level2Walls = new ReadCSVFile("src/main/java/core/levels/level2_Walls.csv");
-        this.level2Floor = new ReadCSVFile("src/main/java/core/levels/level2_Floor.csv");
+        this.level2Spawns = new ReadCSVFile("src/main/java/core/levels/DC1_Spawns.csv");
+        this.level2Walls = new ReadCSVFile("src/main/java/core/levels/DC1_Walls.csv");
+        this.level2Floor = new ReadCSVFile("src/main/java/core/levels/DC1_Floor.csv");
         this.tileMap2 = new TileMap(dungeon1Sheet);
         this.level2 = new Level(tileMap2, level2Floor, level2Walls, level2Spawns);
         this.levelList.add(this.level2);
+
+        // Level 2 init
+        this.level3Spawns = new ReadCSVFile("src/main/java/core/levels/level2_Spawns.csv");
+        this.level3Walls = new ReadCSVFile("src/main/java/core/levels/level2_Walls.csv");
+        this.level3Floor = new ReadCSVFile("src/main/java/core/levels/level2_Floor.csv");
+        this.tileMap3 = new TileMap(dungeon1Sheet);
+        this.level3 = new Level(tileMap3, level3Floor, level3Walls, level3Spawns);
+        this.levelList.add(this.level3);
 
         this.character = loader.loadImage("/Player/Character_Atlas.png");
         this.characterSheet = new SpriteSheet(this.character);
