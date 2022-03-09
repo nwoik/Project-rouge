@@ -44,9 +44,9 @@ public class LevelLoader {
         this.levelList = new LinkedList<Level>();
 
         // Level 1 init
-        this.level1Spawns = new ReadCSVFile("src/main/java/core/levels/level2_objects.csv");
-        this.level1Walls = new ReadCSVFile("src/main/java/core/levels/level2_walls.csv");
-        this.level1Floor = new ReadCSVFile("src/main/java/core/levels/level2_floor.csv");
+        this.level1Spawns = new ReadCSVFile("src/main/java/core/levels/BoxMap_Spawns.csv");
+        this.level1Walls = new ReadCSVFile("src/main/java/core/levels/BoxMap_Walls.csv");
+        this.level1Floor = new ReadCSVFile("src/main/java/core/levels/BoxMap_Floor.csv");
         this.tileMap1 = new TileMap(dungeon1Sheet);
         this.level1 = new Level(tileMap1, level1Floor, level1Walls, level1Spawns);
         this.levelList.add(this.level1);
