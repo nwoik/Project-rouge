@@ -67,9 +67,9 @@ public class LevelLoader {
         this.level3 = new Level(tileMap3, level3Floor, level3Walls, level3Spawns);
         this.levelList.add(this.level3);
 
-        this.level4Spawns = new ReadCSVFile("src/main/java/core/levels/level2_Spawns.csv");
-        this.level4Walls = new ReadCSVFile("src/main/java/core/levels/level2_Walls.csv");
-        this.level4Floor = new ReadCSVFile("src/main/java/core/levels/level2_Floor.csv");
+        this.level4Spawns = new ReadCSVFile("src/main/java/core/levels/dungeon5_2_Spawns.csv");
+        this.level4Walls = new ReadCSVFile("src/main/java/core/levels/dungeon5_2_Wall.csv");
+        this.level4Floor = new ReadCSVFile("src/main/java/core/levels/dungeon5_2_Floor.csv");
         this.tileMap4 = new TileMap(dungeon1Sheet);
         this.level4 = new Level(tileMap4, level4Floor, level4Walls, level4Spawns);
         this.levelList.add(this.level4);
