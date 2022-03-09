@@ -103,7 +103,11 @@ public class GameCanvas extends Canvas implements Runnable{
             lastTime = now;
             while(delta >= 1) {
                 if (!stopped) {
-                    tick();
+                    try {
+                        tick();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 //updates++;
                 delta--;
@@ -126,19 +130,18 @@ public class GameCanvas extends Canvas implements Runnable{
     public void comeBack(){
         setFocusable(true);
         this.stopped = !this.stopped;
-        this.stopped = !this.stopped;
 
     }
 
     //updates everything in the game. updated 60 times per second
-    public void tick(){
+    public void tick() throws IOException {
         //camera follows player every tick
         if (handler.player.getHp() <= 0 ){
             this.stopped = !this.stopped;
             if (this.stopped) {
                 audio.playSFX("sfx/player/death_shout.wav");
                 audio.playSFX("sfx/player/death.wav");
-                GameOverWindow gameOverWindow = new GameOverWindow(this, this.gameWindow, this.layoutPanel);
+                GameOverWindow gameOverWindow = new GameOverWindow(this, this.gameWindow, this.layoutPanel, this.handler, this.levelLoader);
             }
             return;
 //            gameWindow.remove(this);
