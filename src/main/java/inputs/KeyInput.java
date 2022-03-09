@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.awt.event.KeyAdapter;
 
 public class KeyInput extends KeyAdapter{
-    ArrayList<Integer> keysList = new ArrayList<Integer>();
+    private ArrayList<Integer> keysList;
 
     private final Handler handler;
     private DebugSettings debugSettings;
@@ -23,7 +23,7 @@ public class KeyInput extends KeyAdapter{
         this.handler = handler;
         this.debugSettings = debugSettings;
         this.gameCanvas = gameCanvas;
-        this.keysList=keysList;
+        this.keysList = new ArrayList<>();
 
         try {
             readText(this.keysList);
