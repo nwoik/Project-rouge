@@ -5,6 +5,8 @@ import core.BufferedImageLoader;
 import core.LevelLoader;
 import window.menu.LayoutPanel;
 import window.menu.SceneTransition;
+import object.Handler;
+import core.LevelLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,12 +20,16 @@ public class GameOverScreen extends JPanel {
     public GameCanvas gameCanvas;
     private GameWindow gameWindow;
     private LayoutPanel layoutPanel;
+    private Handler handler;
+    private LevelLoader levelLoader;
 
-    public GameOverScreen(GameOverWindow gameOverWindow, GameCanvas gameCanvas, GameWindow gameWindow, LayoutPanel layoutPanel) {
+    public GameOverScreen(GameOverWindow gameOverWindow, GameCanvas gameCanvas, GameWindow gameWindow, LayoutPanel layoutPanel, Handler handler, LevelLoader levelLoader) throws IOException {
         this.gameOverWindow = gameOverWindow;
         this.gameCanvas = gameCanvas;
         this.gameWindow = gameWindow;
         this.layoutPanel = layoutPanel;
+        this.handler = handler;
+        this.levelLoader = levelLoader;
 
         setBackground(new Color(255, 200, 200));
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -43,13 +49,11 @@ public class GameOverScreen extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 clickAudio.playSFX("sfx/menu/wood_click.wav");
+                handler.emptyList();
+                levelLoader.loadLevel(levelLoader.level1);
                 gameOverWindow.dispose();
-                gameWindow.remove(gameCanvas);
+                gameCanvas.start();
 
-                SceneTransition sceneTransition = new SceneTransition(layoutPanel);
-
-                gameWindow.add(sceneTransition);
-                sceneTransition.load(gameWindow);
             }
         });
 
