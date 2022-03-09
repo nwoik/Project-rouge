@@ -183,6 +183,9 @@ public class GameCanvas extends Canvas implements Runnable{
         g2d.translate(camera.getX(), camera.getY());
         g.setColor(Color.red);
         g.fillRect(20, 32 + (96 - handler.player.getHp()), 120, 96 - (96 - handler.player.getHp()));
+        g.setColor(Color.BLACK);
+        g.drawString("j", 20, 80);
+        g.drawString("k", 20, 124);
         g.drawImage(this.uiSheet.image, 20,20, null);
         //Write out fps
         g.setColor(Color.yellow);
