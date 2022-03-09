@@ -10,5 +10,4 @@ public class Tag extends JLabel {
         setIcon(new ImageIcon(scaledImage));
         setHorizontalAlignment(JLabel.CENTER);
     }
-
 }

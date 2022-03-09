@@ -18,8 +18,8 @@ public class Player extends AnimateObject {
     public boolean rightPressed;
     public boolean upPressed;
     public boolean downPressed;
-    private final int movementSpeed1;
-    private final int movementSpeed2;
+    public final int movementSpeed1;
+    public final int movementSpeed2;
 
     private Color colour = Color.blue;
     public boolean inRange = false;
@@ -381,7 +381,7 @@ public class Player extends AnimateObject {
                 }
             }
             for(GameObject gameObject : this.handler.objects){
-                if (getBounds().intersects(gameObject.getBounds())){
+                if (getBounds().intersects(gameObject.getBounds()) & !gameObject.interactive){
                     if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
                         tempY = this.movementSpeed;
                     }
