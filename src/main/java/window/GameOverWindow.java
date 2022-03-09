@@ -17,7 +17,7 @@ public class GameOverWindow extends JFrame{
         getRootPane().setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, new Color(72, 44, 25)));
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        getContentPane().add(new GameOverScreen(this, gameCanvas, gameWindow, layoutPanel, handler, levelLoader));
+        getContentPane().add(new GameOverScreen(this, gameCanvas, gameWindow, layoutPanel));
         setUndecorated(true);
         pack();
         setLocationRelativeTo(null);
