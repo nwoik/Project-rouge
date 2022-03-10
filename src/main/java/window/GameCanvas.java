@@ -12,7 +12,8 @@ import window.menu.SceneTransition;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 
 public class GameCanvas extends Canvas implements Runnable{
     private Handler handler;
@@ -27,6 +28,9 @@ public class GameCanvas extends Canvas implements Runnable{
     public DebugSettings debugSettings;
     public GameWindow gameWindow;
     public LayoutPanel layoutPanel;
+
+    Font gameFont;
+    private String attackButton, dashButton;
 
     private final Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
     public int HEIGHT = dimension.height;
@@ -57,9 +61,17 @@ public class GameCanvas extends Canvas implements Runnable{
 
         uiSheet = new SpriteSheet(ui);
 
+        try {
+            InputStream inputStream = getClass().getResourceAsStream("/Font/GameFont-Regular.ttf");
+            assert inputStream != null;
+            gameFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
+        readText();
+
         this.levelLoader = new LevelLoader(this.handler);
         levelLoader.loadLevel(levelLoader.level1);
-
     }
 
     public void start(){
@@ -91,7 +103,11 @@ public class GameCanvas extends Canvas implements Runnable{
             lastTime = now;
             while(delta >= 1) {
                 if (!stopped) {
-                    tick();
+                    try {
+                        tick();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 //updates++;
                 delta--;
@@ -114,19 +130,18 @@ public class GameCanvas extends Canvas implements Runnable{
     public void comeBack(){
         setFocusable(true);
         this.stopped = !this.stopped;
-        this.stopped = !this.stopped;
 
     }
 
     //updates everything in the game. updated 60 times per second
-    public void tick(){
+    public void tick() throws IOException {
         //camera follows player every tick
         if (handler.player.getHp() <= 0 ){
             this.stopped = !this.stopped;
             if (this.stopped) {
                 audio.playSFX("sfx/player/death_shout.wav");
                 audio.playSFX("sfx/player/death.wav");
-                GameOverWindow gameOverWindow = new GameOverWindow(this, this.gameWindow, this.layoutPanel);
+                GameOverWindow gameOverWindow = new GameOverWindow(this, this.gameWindow, this.layoutPanel, this.handler, this.levelLoader);
             }
             return;
 //            gameWindow.remove(this);
@@ -184,8 +199,30 @@ public class GameCanvas extends Canvas implements Runnable{
         //Write out fps
         g.setColor(Color.yellow);
         g.drawString(outputFPS, 20, 20);
+        g.setColor(new Color(88, 50, 27));
+        g.setFont(gameFont.deriveFont(32F));
+        g.drawString(this.dashButton, 200, 60);
+        g.drawString(this.attackButton, 425, 60);
         ///////////////////////////
         g.dispose();
         bs.show();
+    }
+
+    private void readText() throws IOException {
+        short inc = 0;
+        File file = new File("src/main/java/window/menu/Settings.txt");
+        String line;
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        while ((line = reader.readLine()) != null) {
+            if (inc == 10) {
+                int keycode = Integer.parseInt(line);
+                this.attackButton = Character.toString((char) keycode);
+            }
+            else if (inc == 11) {
+                int keycode = Integer.parseInt(line);
+                this.dashButton = Character.toString((char) keycode);
+            }
+            inc ++;
+        }
     }
 }
