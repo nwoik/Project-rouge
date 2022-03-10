@@ -25,9 +25,10 @@ public class LevelLoader {
     private ReadCSVFile level2Floor, level2Walls, level2Spawns;
     private ReadCSVFile level3Floor, level3Walls, level3Spawns;
     private ReadCSVFile level4Floor, level4Walls, level4Spawns;
+    private ReadCSVFile level5Floor, level5Walls, level5Spawns;
 
-    private TileMap tileMap1, tileMap2, tileMap3, tileMap4;
-    public Level level, level1, level2, level3, level4;
+    private TileMap tileMap1, tileMap2, tileMap3, tileMap4, tileMap5;
+    public Level level, level1, level2, level3, level4, level5;
 
     public LinkedList<Level> levelList;
 
@@ -73,6 +74,13 @@ public class LevelLoader {
         this.tileMap4 = new TileMap(dungeon1Sheet);
         this.level4 = new Level(tileMap4, level4Floor, level4Walls, level4Spawns);
         this.levelList.add(this.level4);
+
+        this.level5Spawns = new ReadCSVFile("src/main/java/core/levels/Credits_Spawns.csv");
+        this.level5Walls = new ReadCSVFile("src/main/java/core/levels/Credits_Walls.csv");
+        this.level5Floor = new ReadCSVFile("src/main/java/core/levels/Credits_Floor.csv");
+        this.tileMap5 = new TileMap(dungeon1Sheet);
+        this.level5 = new Level(tileMap5, level5Floor, level5Walls, level5Spawns);
+        this.levelList.add(this.level5);
 
         this.character = loader.loadImage("/Player/Character_Atlas.png");
         this.characterSheet = new SpriteSheet(this.character);
