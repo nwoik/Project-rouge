@@ -9,9 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Settings extends JPanel {
     private float sfxVol;
@@ -61,6 +59,8 @@ public class Settings extends JPanel {
         JButton menuButton = new JButton(new SwapCardAction("Back", Menu.class.toString(), layoutPanel));
 
         JButton saveButton = new JButton("Save");
+        JButton defaultButton = new JButton("Default");
+
         saveButton.addActionListener(new ActionListener()  {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,11 +70,17 @@ public class Settings extends JPanel {
                     Set<String> newMovesSettings = new LinkedHashSet<String>();
                     boolean error = false;
                     short inc = 0;
+                    ArrayList<Integer> newKeysList = new ArrayList<Integer>();
+                    ArrayList<String> arrowList = new ArrayList<>();
+                    arrowList.add("LeftArrow");
+                    arrowList.add("RightArrow");
+                    arrowList.add("UpArrow");
+                    arrowList.add("DownArrow");
                     for (JButton btn : buttonList) {
                         String newVal = btn.getText();
                         //Check if it's usable
                         int keycode = keyCodeList.get(inc);
-                        if ((keycode > 47 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode >= 37 && keycode <= 40)) {
+                        if ((newVal.matches("[a-z]+")) || (newVal.equals(" ")) || arrowList.contains(newVal)) {
                             //Check for duplicates
                             if (!newMovesSettings.add(newVal)) {
                                 validLabel.setText("Invalid inputs");
@@ -82,13 +88,17 @@ public class Settings extends JPanel {
                                 error = true;
                                 break;
                             }
+                            newKeysList.add(keycode);
                         }
                         else {break;}
                         inc ++;
                     }
                     if (!error) {
-                        validLabel.setText("Valid inputs");
-                        writeText(newMovesSettings, keyCodeList);
+                        if ((newKeysList.size() == 6)) {
+                            validLabel.setText("Valid inputs");
+                            writeText(newMovesSettings, newKeysList);}
+
+                        else {validLabel.setText("Invalid inputs");}
                     }
                     System.out.println("Settings saved");
                     } catch(IOException a) {
@@ -96,6 +106,41 @@ public class Settings extends JPanel {
                 }
             }
         });
+
+        defaultButton.addActionListener(new ActionListener()  {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int inc = 0;
+                Map<String, Integer> defaultSettings = new HashMap<>();
+                defaultSettings.put("w", 87);
+                defaultSettings.put("s", 83);
+                defaultSettings.put("a", 65);
+                defaultSettings.put("d", 68);
+                defaultSettings.put("j", 74);
+                defaultSettings.put("k", 75);
+
+                Set<String> mapDefault = new LinkedHashSet<String>();
+                mapDefault.add("w");
+                mapDefault.add("s");
+                mapDefault.add("a");
+                mapDefault.add("d");
+                mapDefault.add("j");
+                mapDefault.add("k");
+
+                for (String t : mapDefault) {
+                    JButton btn = buttonList.get(inc);
+                    btn.setText(t);
+                    keyCodeList.set(inc, defaultSettings.get(t));
+                    inc ++;
+                }
+                try {
+                    writeText(mapDefault, keyCodeList);
+                }
+                catch(IOException a) {
+                    a.printStackTrace();
+                }
+            }});
 
         menuButton.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) {
             audio.playSFX("sfx/menu/wood_click.wav");
@@ -175,6 +220,7 @@ public class Settings extends JPanel {
         choicePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         validLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         saveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        defaultButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         menuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel settingsPane = new JPanel();
@@ -188,9 +234,11 @@ public class Settings extends JPanel {
         settingsPane.add(choicePanel);
         settingsPane.add(Box.createRigidArea(new Dimension(0, 20)));
         settingsPane.add(validLabel);
-        settingsPane.add(Box.createRigidArea(new Dimension(0, 30)));
+        settingsPane.add(Box.createRigidArea(new Dimension(0, 10)));
         settingsPane.add(saveButton);
-        settingsPane.add(Box.createRigidArea(new Dimension(0, 100)));
+        settingsPane.add(Box.createRigidArea(new Dimension(0, 20)));
+        settingsPane.add(defaultButton);
+        settingsPane.add(Box.createRigidArea(new Dimension(0, 30)));
         settingsPane.add(menuButton);
         add(settingsPane);
     }
