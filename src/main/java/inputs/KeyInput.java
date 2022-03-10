@@ -44,6 +44,8 @@ public class KeyInput extends KeyAdapter{
             }
             inc ++;
         }
+        keysList.add(57);
+        keysList.add(27);
     }
 
     public int indexOf(int value, ArrayList<Integer> array){
@@ -77,14 +79,13 @@ public class KeyInput extends KeyAdapter{
             }
             case 4 -> this.handler.player.isAttacking = true;
             case 7 -> {
-                this.debugSettings.changeDebugMode();
+                this.gameCanvas.openMenu();
             }
-            case 6 -> this.gameCanvas.stopped = !this.gameCanvas.stopped;
+            case 6 -> this.debugSettings.changeDebugMode();
             case 5 -> {
                 this.handler.player.dash = true;
                 this.handler.player.dashFrames = 0;
             }
-            case 8 -> this.gameCanvas.openMenu();
         }
     }
 
