@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.awt.event.KeyAdapter;
 
 public class KeyInput extends KeyAdapter{
-    ArrayList<Integer> keysList = new ArrayList<Integer>();
+    private ArrayList<Integer> keysList;
 
     private final Handler handler;
     private DebugSettings debugSettings;
@@ -23,7 +23,7 @@ public class KeyInput extends KeyAdapter{
         this.handler = handler;
         this.debugSettings = debugSettings;
         this.gameCanvas = gameCanvas;
-        this.keysList=keysList;
+        this.keysList = new ArrayList<>();
 
         try {
             readText(this.keysList);
@@ -44,6 +44,8 @@ public class KeyInput extends KeyAdapter{
             }
             inc ++;
         }
+        keysList.add(57);
+        keysList.add(27);
     }
 
     public int indexOf(int value, ArrayList<Integer> array){
@@ -77,14 +79,13 @@ public class KeyInput extends KeyAdapter{
             }
             case 4 -> this.handler.player.isAttacking = true;
             case 7 -> {
-                this.debugSettings.changeDebugMode();
+                this.gameCanvas.openMenu();
             }
-            case 6 -> this.gameCanvas.stopped = !this.gameCanvas.stopped;
+            case 6 -> this.debugSettings.changeDebugMode();
             case 5 -> {
                 this.handler.player.dash = true;
                 this.handler.player.dashFrames = 0;
             }
-            case 8 -> this.gameCanvas.openMenu();
         }
     }
 
