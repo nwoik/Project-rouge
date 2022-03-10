@@ -12,6 +12,21 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    resources
+}
+
+jar {
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    manifest {
+        attributes(
+                'Implementation-Title': 'Game demo',
+                "Main-Class": "window.Game"
+        )
+    }
+    destinationDirectory = file("$rootDir/my-jar")
+    archivesBaseName = 'app'
 }
 
 test {
