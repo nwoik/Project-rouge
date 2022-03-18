@@ -12,10 +12,6 @@ class KeyBindings extends KeyAdapter {
     ArrayList<Integer> keysList;
     int keyPos;
     Map<Integer, String> arrowMap = new HashMap<>();
-    /*
-    arrowMap.put(letter[i], gpa[i]);
-    arrowMap.put(letter[i], gpa[i]);
-    arrowMap.put(letter[i], gpa[i]);*/
 
     public KeyBindings(KeyWidget widget, ArrayList<Integer> keysList, int keyPos) {
         this.widget=widget;

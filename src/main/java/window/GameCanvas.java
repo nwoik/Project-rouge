@@ -144,12 +144,6 @@ public class GameCanvas extends Canvas implements Runnable{
                 GameOverWindow gameOverWindow = new GameOverWindow(this, this.gameWindow, this.layoutPanel, this.handler, this.levelLoader);
             }
             return;
-//            gameWindow.remove(this);
-//
-//            SceneTransition sceneTransition = new SceneTransition(layoutPanel, 2);
-//
-//            gameWindow.add(sceneTransition);
-//            sceneTransition.load(gameWindow);
         }
         camera.tick(handler.player);
         this.handler.tick(this.debugSettings.isDebugMode());

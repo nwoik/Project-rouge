@@ -13,11 +13,13 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     resources
+
 }
+
 
 jar {
     from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+        configurations.runtimeClasspath.collect {it.isDirectory() ? it : zipTree(it) }
     }
     manifest {
         attributes(
@@ -25,9 +27,12 @@ jar {
                 "Main-Class": "window.Game"
         )
     }
+    getClass().getResourceAsStream('java/window/menu/Settings.txt')
+
     destinationDirectory = file("$rootDir/my-jar")
     archivesBaseName = 'app'
 }
+
 
 test {
     useJUnitPlatform()
