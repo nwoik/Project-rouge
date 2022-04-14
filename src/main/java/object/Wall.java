@@ -12,8 +12,6 @@ public class Wall extends Block{
 
     public Wall(int x, int y, SpriteSheet ss, BlockID bID, int offsetX, int offsetWidth) {
         super(x, y, ss, bID);
-        this.width = 64;
-        this.height = 64;
         this.offsetX = offsetX;
         this.offsetWidth = offsetWidth;
     }

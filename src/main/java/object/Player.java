@@ -366,7 +366,6 @@ public class Player extends AnimateObject {
             }
             for(Block block : this.handler.walls){
                 if (getBounds().intersects(block.getBounds())){
-                    System.out.println("just to be sure like");
                     if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(block.getBounds())){
                         tempY = this.movementSpeed;
                     }

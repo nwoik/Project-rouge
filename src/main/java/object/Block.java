@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 //Block class that represents each block pixel in level.png. Prevents player/enemy movement.
 //Can Implement various textures in this specific object using BlockID (probably in constructor).
-public class Block{
+public abstract class Block{
     protected BufferedImage block_image;
     protected BlockID blockID;
 
@@ -64,18 +64,10 @@ public class Block{
 //        this.height = height;
 //    }
 
-    public void render(Graphics g) {
-        g.drawImage(block_image, x, y, null);
-    }
+    public abstract void render(Graphics g);
 
-    public void debugRender(Graphics g) {
-        g.setColor(Color.white);
-        g.drawRect(x,y,this.width,this.height);
-    }
+    public abstract void debugRender(Graphics g);
 
-    public Rectangle2D getBounds() {
-        return new Rectangle2D.Float(x, y, this.width, this.height);
-    }
-
+    public abstract Rectangle2D getBounds();
 
 }

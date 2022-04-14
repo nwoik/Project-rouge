@@ -45,6 +45,7 @@ public class Handler {
         Rectangle2D rect = new Rectangle2D.Float(camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight());
 
         for(Block block : walls){
+            // TODO: use contains instead of intersects?
             if (block.getBounds().intersects(rect)) {
                 block.render(g);
                 if (debugMode) {
