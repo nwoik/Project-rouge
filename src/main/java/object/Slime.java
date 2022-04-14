@@ -156,8 +156,8 @@ public class Slime extends AnimateObject {
     private void directMovement(){
         this.center = plotLine(this.x +(this.width/2), this.y+(this.height/2), this.handler.player.getX() +(this.handler.player.getWidth()/2), this.handler.player.getY()+(this.handler.player.getHeight()/2));
         //If line collides with a block then return, otherwise implement line of sight actions
-        for (GameObject gameObject: this.handler.walls){
-            if (this.center.intersects(gameObject.getBounds())){
+        for (Block block: this.handler.walls){
+            if (this.center.intersects(block.getBounds())){
                 this.lineColour = Color.orange;
                 this.lineCollided = true;
                 randomMovement();
@@ -260,20 +260,20 @@ public class Slime extends AnimateObject {
     }
     //Check if enemy collided with block
     private void collision(){
-        for(GameObject gameObject : this.handler.walls){
+        for(Block block : this.handler.walls){
             //if collide with wall, go the opposite way
-            if(getBounds().intersects(gameObject.getBounds())){
+            if(getBounds().intersects(block.getBounds())){
                 this.collided = true;
-                if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                if (getBoundsSmall(this.x + this.movementSpeed2, this.y, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(block.getBounds())){
                     this.velY = this.movementSpeed;
                 }
-                if (getBoundsSmall(this.x + this.movementSpeed2, this.y + this.height - this.movementSpeed2, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(gameObject.getBounds())){
+                if (getBoundsSmall(this.x + this.movementSpeed2, this.y + this.height - this.movementSpeed2, this.width - 2* this.movementSpeed2, this.movementSpeed2).intersects(block.getBounds())){
                     this.velY = -(this.movementSpeed);
                 }
-                if (getBoundsSmall(this.x, this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                if (getBoundsSmall(this.x, this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(block.getBounds())){
                     this.velX = this.movementSpeed;
                 }
-                if (getBoundsSmall(this.x + this.width - this.movementSpeed2 , this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(gameObject.getBounds())){
+                if (getBoundsSmall(this.x + this.width - this.movementSpeed2 , this.y + this.movementSpeed2, this.movementSpeed2, this.height - 2*this.movementSpeed2).intersects(block.getBounds())){
                     this.velX = -(this.movementSpeed);
                 }
             }
