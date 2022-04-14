@@ -67,10 +67,6 @@ public class Slime extends AnimateObject {
 
     //updates enemy every tick. Mostly for checking movement and collision with blocks
     public void tick() {
-        //remove on death
-        //if(hp <= 0) handler.removeObject(this, handler.enemy);
-
-        //move enemy
         if (this.knockBackFrames > 6) {
             this.x += this.velX;
             this.y += this.velY;
@@ -314,13 +310,6 @@ public class Slime extends AnimateObject {
         g.setColor(Color.red);
         g.drawRect(this.x,this.y,this.width,this.height);
         g.drawOval((this.x-450) + (this.width/2),(this.y-450) + ((this.height)/2), 900, 900);
-//        The following options check if enemy is centered in its detection radius
-//        g.setColor(Color.pink);
-//        g.drawRect((x-400) + (width/2),(y-400) + ((height+offset)/2), 800, 800);
-//        g.setColor(Color.green);
-//        g.drawLine((x - 400) + (width/2),(y -400) + ((height+offset)/2),(x + 400) + (width/2),(y + 400) + ((height+offset)/2));
-//        g.drawLine((x - 400) + (width/2),(y + 400) + ((height+offset)/2),(x + 400) + (width/2),(y -400) + ((height+offset)/2));
-//        If player is in range draw lines of sight
         if (playerInRange()) {
             g.setColor(this.lineColour);
             g.drawLine(this.x +(this.width/2), this.y+(this.height/2), this.handler.player.getX() +(this.handler.player.getWidth()/2),  this.handler.player.getY()+(this.handler.player.getHeight()/2));

@@ -249,9 +249,7 @@ public class Skeleton extends AnimateObject {
     }
 
     public void attack(Rectangle2D attackBox) {
-
         if (handler.player.getBounds().intersects(attackBox)) {
-            System.out.println("pls for fuck sake");
             handler.player.subHp(5);
             handler.player.setKnockBackFrames();
             if (this.animation == this.attackUp) {
