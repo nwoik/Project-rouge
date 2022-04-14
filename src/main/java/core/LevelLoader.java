@@ -34,7 +34,7 @@ public class LevelLoader {
 
     public int currentLevel;
 
-
+    // TODO: This can really easily be simplified, there is a lot of repetition, especially in the switch cases
     public LevelLoader(Handler handler) throws IOException {
         this.handler = handler;
         this.loader = new BufferedImageLoader();
@@ -129,42 +129,42 @@ public class LevelLoader {
                 Floor floor;
                 switch (item) {
                     case "0":
-                        floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
+                        floor = new Floor(xx, yy,  level.tileMap.tiles.get(item), BlockID.floor);
                         floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(1, 1, 64, 64));
                         handler.addObject(floor, handler.floors);
                         break;
                     case "1":
-                        floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
+                        floor = new Floor(xx, yy,  level.tileMap.tiles.get(item), BlockID.floor);
                         floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(2, 1, 64, 64));
                         handler.addObject(floor, handler.floors);
                         break;
                     case "2":
-                        floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
+                        floor = new Floor(xx, yy,  level.tileMap.tiles.get(item), BlockID.floor);
                         floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(3, 1, 64, 64));
                         handler.addObject(floor, handler.floors);
                         break;
                     case "5":
-                        floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
+                        floor = new Floor(xx, yy,  level.tileMap.tiles.get(item), BlockID.floor);
                         floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(1, 2, 64, 64));
                         handler.addObject(floor, handler.floors);
                         break;
                     case "6":
-                        floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
+                        floor = new Floor(xx, yy,  level.tileMap.tiles.get(item), BlockID.floor);
                         floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(2, 2, 64, 64));
                         handler.addObject(floor, handler.floors);
                         break;
                     case "7":
-                        floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
+                        floor = new Floor(xx, yy,  level.tileMap.tiles.get(item), BlockID.floor);
                         floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(3, 2, 64, 64));
                         handler.addObject(floor, handler.floors);
                         break;
                     case "11":
-                        floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
+                        floor = new Floor(xx, yy,  level.tileMap.tiles.get(item), BlockID.floor);
                         floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(2, 3, 64, 64));
                         handler.addObject(floor, handler.floors);
                         break;
                     case "12":
-                        floor = new Floor(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.floor);
+                        floor = new Floor(xx, yy,  level.tileMap.tiles.get(item), BlockID.floor);
                         floor.setBlock_image(level.tileMap.tiles.get(item).grabImage(3, 3, 64, 64));
                         handler.addObject(floor, handler.floors);
                         break;
@@ -182,97 +182,97 @@ public class LevelLoader {
                 Wall wall;
                 switch (item) {
                     case "15":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
+                        wall = new Wall(xx, yy, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(1, 4, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "16":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 44, -44);
+                        wall = new Wall(xx, yy, level.tileMap.tiles.get(item), BlockID.wall, 44, -44);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(2, 4, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "17":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, -44);
+                        wall = new Wall(xx, yy, level.tileMap.tiles.get(item), BlockID.wall, 0, -44);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(3, 4, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "20":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
+                        wall = new Wall(xx, yy, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(1, 5, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "21":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
+                        wall = new Wall(xx, yy, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(2, 5, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "22":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
+                        wall = new Wall(xx, yy, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(3, 5, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "25":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 44, -44);
+                        wall = new Wall(xx, yy, level.tileMap.tiles.get(item), BlockID.wall, 44, -44);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(1, 6, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "26":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 44, -44);
+                        wall = new Wall(xx, yy, level.tileMap.tiles.get(item), BlockID.wall, 44, -44);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(2, 6, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "27":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, -44);
+                        wall = new Wall(xx, yy, level.tileMap.tiles.get(item), BlockID.wall, 0, -44);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(3, 6, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "28":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, -44);
+                        wall = new Wall(xx, yy, level.tileMap.tiles.get(item), BlockID.wall, 0, -44);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(4, 6, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "31":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 44, -44);
+                        wall = new Wall(xx, yy, level.tileMap.tiles.get(item), BlockID.wall, 44, -44);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(2, 7, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "32":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
+                        wall = new Wall(xx, yy, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(3, 7, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "33":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, -44);
+                        wall = new Wall(xx, yy, level.tileMap.tiles.get(item), BlockID.wall, 0, -44);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(4, 7, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "35":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
+                        wall = new Wall(xx, yy,  level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(1, 8, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "36":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
+                        wall = new Wall(xx, yy,  level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(2, 8, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "37":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
+                        wall = new Wall(xx, yy,  level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(3, 8, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "38":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
+                        wall = new Wall(xx, yy,  level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(4, 8, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "40":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
+                        wall = new Wall(xx, yy,  level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(1, 9, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;
                     case "42":
-                        wall = new Wall(xx, yy, ID.Block, level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
+                        wall = new Wall(xx, yy,  level.tileMap.tiles.get(item), BlockID.wall, 0, 0);
                         wall.setBlock_image(level.tileMap.tiles.get(item).grabImage(3, 9, 64, 64));
                         handler.addObject(wall, handler.walls);
                         break;

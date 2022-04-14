@@ -8,8 +8,8 @@ import java.awt.image.BufferedImage;
 
 public class Floor extends Block{
 
-    public Floor(int x, int y, ID id, SpriteSheet ss, BlockID bID) {
-        super(x, y, id, ss, bID);
+    public Floor(int x, int y, SpriteSheet ss, BlockID bID) {
+        super(x, y, ss, bID);
         this.width = 64;
         this.height = 64;
         this.block_image = ss.grabImage(1, 1, this.width, this.height);

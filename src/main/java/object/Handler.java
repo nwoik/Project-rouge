@@ -4,12 +4,13 @@ import java.util.LinkedList;
 
 import audio.AudioHandler;
 import core.Camera;
+import object.Block;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 
 public class Handler {
-    public LinkedList<GameObject> floors = new LinkedList<GameObject>();
-    public LinkedList<GameObject> walls = new LinkedList<GameObject>();
+    public LinkedList<Block> floors = new LinkedList<Block>();
+    public LinkedList<Block> walls = new LinkedList<Block>();
     public LinkedList<GameObject> enemies = new LinkedList<GameObject>();
     public LinkedList<GameObject> objects = new LinkedList<GameObject>();
     public Player player;
@@ -43,11 +44,11 @@ public class Handler {
     public void render(Graphics g, boolean debugMode) {
         Rectangle2D rect = new Rectangle2D.Float(camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight());
 
-        for(GameObject gameObject : walls){
-            if (gameObject.getBounds().intersects(rect)) {
-                gameObject.render(g);
+        for(Block block : walls){
+            if (block.getBounds().intersects(rect)) {
+                block.render(g);
                 if (debugMode) {
-                    gameObject.debugRender(g);
+                    block.debugRender(g);
                 }
             }
         }
@@ -77,17 +78,17 @@ public class Handler {
 
     public void renderFloors(Graphics g) {
         Rectangle2D rect = new Rectangle2D.Float(camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight());
-        for(GameObject gameObject : floors){
-            if (gameObject.getBounds().intersects(rect)) {
-                gameObject.render(g);
+        for(Block block : floors){
+            if (block.getBounds().intersects(rect)) {
+                block.render(g);
             }
         }
     }
 
     //empty list (for loading new level)
     public void emptyList() {
-        floors = new LinkedList<GameObject>();
-        walls = new LinkedList<GameObject>();
+        floors = new LinkedList<Block>();
+        walls = new LinkedList<Block>();
         enemies = new LinkedList<GameObject>();
         objects = new LinkedList<GameObject>();
     }
@@ -96,10 +97,23 @@ public class Handler {
     public void addObject(GameObject gameObject, LinkedList gameObjectList) {
         gameObjectList.add(gameObject);
     }
+    public void addObject(Block block, LinkedList blockList) {
+        blockList.add(block);
+    }
+//    public void addObject(GameObject gameObject, LinkedList gameObjectList) {
+//        gameObjectList.add(gameObject);
+//    }
+
+
+
+
 
     //remove from list
     public void removeObject(GameObject gameObject, LinkedList gameObjectList) {
         gameObjectList.remove(gameObject);
+    }
+    public void removeObject(Block block, LinkedList blockList) {
+        blockList.remove(block);
     }
 }
 
