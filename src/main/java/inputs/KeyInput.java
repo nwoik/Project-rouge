@@ -11,10 +11,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.KeyAdapter;
+import java.util.HashMap;
 
 public class KeyInput extends KeyAdapter{
     private ArrayList<Integer> keysList;
-
+    public HashMap<Integer, Key> keyBindings;
+    public static boolean other[] = new boolean[256];
     private final Handler handler;
     private DebugSettings debugSettings;
     private final GameCanvas gameCanvas;
@@ -23,49 +25,34 @@ public class KeyInput extends KeyAdapter{
         this.handler = handler;
         this.debugSettings = debugSettings;
         this.gameCanvas = gameCanvas;
-        this.keysList = new ArrayList<>();
+        this.keyBindings = new HashMap<Integer, Key>();
 
-        try {
-            readText(this.keysList);
-        }
-        catch(IOException a) {
-            a.printStackTrace();
-        }
+        bind(KeyEvent.VK_W, Key.up);
+        bind(KeyEvent.VK_S, Key.down);
+        bind(KeyEvent.VK_A, Key.left);
+        bind(KeyEvent.VK_D, Key.right);
+        bind(KeyEvent.VK_J, Key.dash);
+        bind(KeyEvent.VK_K, Key.attack);
+        bind(KeyEvent.VK_9, Key.debug);
+
+        this.keysList = new ArrayList<>(this.keyBindings.keySet());
     }
 
-    public void readText(ArrayList<Integer> keysList) throws IOException {
-        short inc = 0;
-        File file = new File("src/main/java/window/menu/Settings.txt");
-        String line;
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        while ((line = reader.readLine()) != null) {
-            if (inc >= 6) {
-                keysList.add(Integer.parseInt(line));
-            }
-            inc ++;
-        }
-        keysList.add(57);
-        keysList.add(27);
+    public void bind(Integer keyCode, Key key){
+        keyBindings.put(keyCode, key);
     }
 
-    public int indexOf(int value, ArrayList<Integer> array){
-        for(int i = 0; i < array.size(); i++){
-            if(array.get(i).equals(value)){
-                return i;
-            }
-        }
-        //return a place holder value
-        return -1;
+    public boolean isKeyBinded(int extendedKey){
+        return keyBindings.containsKey(extendedKey);
     }
 
     public void keyPressed(KeyEvent e) {
-        int key = e.getKeyCode();
-        switch (indexOf(key, this.keysList)) {
-            case 2 -> {
+        switch (keysList.indexOf(e.getKeyCode())) {
+            case 0 -> {
                 this.handler.player.left = true;
                 this.handler.player.leftPressed = true;
             }
-            case 3 -> {
+            case 2 -> {
                 this.handler.player.right = true;
                 this.handler.player.rightPressed = true;
             }
@@ -73,15 +60,16 @@ public class KeyInput extends KeyAdapter{
                 this.handler.player.down = true;
                 this.handler.player.downPressed = true;
             }
-            case 0 -> {
+            case 3 -> {
                 this.handler.player.up = true;
                 this.handler.player.upPressed = true;
             }
-            case 4 -> this.handler.player.isAttacking = true;
-            case 7 -> {
-                this.gameCanvas.openMenu();
+            case 6 -> {
+                this.handler.player.isAttacking = true;
             }
-            case 6 -> this.debugSettings.changeDebugMode();
+            case 4 -> {
+                this.debugSettings.changeDebugMode();
+            }
             case 5 -> {
                 this.handler.player.dash = true;
                 this.handler.player.dashFrames = 0;
@@ -91,30 +79,29 @@ public class KeyInput extends KeyAdapter{
 
     @Override
     public void keyReleased(KeyEvent e) {
-        int key = e.getKeyCode();
-        switch (indexOf(key, this.keysList)) {
+        switch (keysList.indexOf(e.getKeyCode())) {
             case 1 -> {
                 this.handler.player.down = false;
                 this.handler.player.downPressed = false;
                 this.handler.player.animation.stop();
                 this.handler.player.setAnimation(this.handler.player.standFacingDown);
             }
-            case 0 -> {
+            case 3 -> {
                 this.handler.player.up = false;
                 this.handler.player.upPressed = false;
                 this.handler.player.animation.stop();
                 this.handler.player.setAnimation(this.handler.player.standFacingUp);
+            }
+            case 0 -> {
+                this.handler.player.left = false;
+                this.handler.player.leftPressed = false;
+                this.handler.player.animation.stop();
+                if (this.handler.player.upPressed || this.handler.player.downPressed) {
+                    break;
+                }
+                this.handler.player.setAnimation(this.handler.player.standFacingLeft);
             }
             case 2 -> {
-                this.handler.player.left = false;
-                this.handler.player.leftPressed = false;
-                this.handler.player.animation.stop();
-                if (this.handler.player.upPressed || this.handler.player.downPressed) {
-                    break;
-                }
-                this.handler.player.setAnimation(this.handler.player.standFacingLeft);
-            }
-            case 3 -> {
                 this.handler.player.right = false;
                 this.handler.player.rightPressed = false;
                 this.handler.player.animation.stop();
@@ -125,65 +112,4 @@ public class KeyInput extends KeyAdapter{
             }
         }
     }
-/*
-    public void keyPressed(KeyEvent e) {
-        int key = e.getKeyCode();
-        switch (key) {
-            case KeyEvent.VK_A -> {
-                this.handler.player.left = true;
-                this.handler.player.leftPressed = true;
-            }
-            case KeyEvent.VK_D -> {
-                this.handler.player.right = true;
-                this.handler.player.rightPressed = true;
-            }
-            case KeyEvent.VK_S -> {
-                this.handler.player.down = true;
-                this.handler.player.downPressed = true;
-            }
-            case KeyEvent.VK_W -> {
-                this.handler.player.up = true;
-                this.handler.player.upPressed = true;
-            }
-            case KeyEvent.VK_G -> this.handler.player.attack = true;
-            case KeyEvent.VK_F1 -> this.debugSettings.changeDebugMode();
-            case KeyEvent.VK_F2 -> this.gameCanvas.stopped = !this.gameCanvas.stopped;
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_S:
-                this.handler.player.down = false;
-                this.handler.player.downPressed = false;
-                this.handler.player.animation.stop();
-                this.handler.player.setAnimation(this.handler.player.standFacingDown);
-                break;
-            case KeyEvent.VK_W:
-                this.handler.player.up = false;
-                this.handler.player.upPressed = false;
-                this.handler.player.animation.stop();
-                this.handler.player.setAnimation(this.handler.player.standFacingUp);
-                break;
-            case KeyEvent.VK_A:
-                this.handler.player.left = false;
-                this.handler.player.leftPressed = false;
-                this.handler.player.animation.stop();
-                if (this.handler.player.upPressed || this.handler.player.downPressed) {
-                    break;
-                }
-                this.handler.player.setAnimation(this.handler.player.standFacingLeft);
-                break;
-            case KeyEvent.VK_D:
-                this.handler.player.right = false;
-                this.handler.player.rightPressed = false;
-                this.handler.player.animation.stop();
-                if (this.handler.player.upPressed || this.handler.player.downPressed) {
-                    break;
-                }
-                this.handler.player.setAnimation(this.handler.player.standFacingRight);
-                break;
-        }
-    }*/
 }

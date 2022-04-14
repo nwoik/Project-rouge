@@ -1,8 +1,5 @@
 package audio;
 
-import window.menu.LayoutPanel;
-import window.menu.Settings;
-
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 
@@ -15,15 +12,14 @@ public abstract class Audio {
         clip.start();
     }
 
-    public void update(Settings settings) {
+    public void update() {
         final FloatControl floatControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        floatControl.setValue(getVolume(settings));
     }
 
-    void setVolume(Settings settings) {
+    void setVolume() {
         final FloatControl control = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         float range = control.getMaximum() - control.getMinimum();
-        float gain = (range * getVolume(settings)) + control.getMinimum();
+        float gain = (range * 1) + control.getMinimum();
 
         control.setValue(gain);
     }
@@ -35,7 +31,5 @@ public abstract class Audio {
     public void finish() {
         clip.close();
     }
-
-    protected abstract float getVolume(Settings settings);
 
 }

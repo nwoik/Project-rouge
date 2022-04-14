@@ -1,6 +1,5 @@
 package audio;
 
-import window.menu.Settings;
 
 import javax.sound.sampled.*;
 import java.io.IOException;
@@ -17,11 +16,10 @@ public class AudioHandler {
     public AudioHandler() {
     }
 
-    public void update(Settings settings) {
+    public void update() {
         /**
          * entire settings object is getting added to each audio object???
          * **/
-        audioList.forEach(audio1 -> audio1.update(settings));
 
         List.copyOf(audioList).forEach(audio1 -> {
             if(audio1.hasCompleted()) {
