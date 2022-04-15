@@ -33,6 +33,21 @@ public class Animation {
         this.animationDirection = 1;
         this.totalFrames = this.frames.size();
     }
+    // second constructor for a single frame - no need to create a list for it
+    public Animation(BufferedImage frame, int frameDelay, int offsetX, int offsetY, boolean playOnce) {
+        this.frameDuration = frameDelay;
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
+        this.playOnce = playOnce;
+
+        addFrame(frame, frameDelay);
+
+        this.frameCount = 0;
+        this.frameDuration = frameDelay;
+        this.currentFrame = 0;
+        this.animationDirection = 1;
+        this.totalFrames = this.frames.size();
+    }
 
     public void start() {
         if (!this.stop) {
