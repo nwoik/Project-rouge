@@ -1,6 +1,7 @@
 package object;
 
 import animations.Animation;
+import animations.AnimationHandler;
 import audio.AudioHandler;
 import core.SpriteSheet;
 
@@ -11,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
-public class Player extends AnimateObject {
+public class Player extends CharacterObject {
     private AudioHandler audio;
 
     public boolean leftPressed;
@@ -30,15 +31,18 @@ public class Player extends AnimateObject {
     public int dashFrames = 6;
     private int dashCooldown = 100;
 
+    public boolean left, right, up ,down, isAttacking;
+
     private int damageCooldown = 20;
 
 
-    public Player(int x, int y, ID id, Handler handler, SpriteSheet spriteSheet) {
-        super(x, y, handler, id, spriteSheet);
+    public Player(int x, int y, Handler handler, SpriteSheet spriteSheet) {
+        super(x, y, spriteSheet, handler);
 
 
         audio = new AudioHandler();
         this.handler = handler;
+        this.animationHandler = new AnimationHandler(this.spriteSheet);
         this.movementSpeed = 6;
         this.movementSpeed1 = this.movementSpeed +1;
         this.movementSpeed2 = this.movementSpeed1 * 2;
@@ -51,38 +55,38 @@ public class Player extends AnimateObject {
 
         this.alignmentY = -32;
 
-        this.standingFacingDown.add(spriteSheet.grabImage(1, 1, 64, 96));
-        this.standingFacingLeft.add(spriteSheet.grabImage(2, 1, 64, 96));
-        this.standingFacingUp.add(spriteSheet.grabImage(3, 1, 64, 96));
-        this.standingFacingRight.add(spriteSheet.grabImage(4, 1, 64, 96));
+//        this.standingFacingDown.add(spriteSheet.grabImage(1, 1, 64, 96));
+//        this.standingFacingLeft.add(spriteSheet.grabImage(2, 1, 64, 96));
+//        this.standingFacingUp.add(spriteSheet.grabImage(3, 1, 64, 96));
+//        this.standingFacingRight.add(spriteSheet.grabImage(4, 1, 64, 96));
 
-        this.standFacingDown = new Animation(this.standingFacingDown, framedelay, 0, alignmentY, true);
-        this.standFacingLeft = new Animation(this.standingFacingLeft, framedelay, 0, alignmentY, true);
-        this.standFacingUp = new Animation(this.standingFacingUp, framedelay, 0, alignmentY, true);
-        this.standFacingRight = new Animation(this.standingFacingRight, framedelay, 0, alignmentY, true);
+        this.animationHandler.addSingleFrame("standFacingDown", new int[] {1,1,64,96}, framedelay, 0, alignmentY, true );
+        this.animationHandler.addSingleFrame("standFacingLeft", new int[] {2,1,64,96}, framedelay, 0, alignmentY, true );
+        this.animationHandler.addSingleFrame("standFacingUp", new int[] {3,1,64,96}, framedelay, 0, alignmentY, true );
+        this.animationHandler.addSingleFrame("standFacingRight", new int[] {4,1,64,96}, framedelay, 0, alignmentY, true );
 
-        fillAnimationList(spriteSheet, this.walkingUp, 1, 3, 2, 72, 100, 10);
-        fillAnimationList(spriteSheet, this.walkingDown, 1, 9, 2, 72, 96, 10);
-        fillAnimationList(spriteSheet, this.walkingLeft, 1, 5, 2, 88, 96, 10);
-        fillAnimationList(spriteSheet, this.walkingRight, 1, 7, 2, 82, 96, 10);
+//        fillAnimationList(spriteSheet, this.walkingUp, 1, 3, 2, 72, 100, 10);
+//        fillAnimationList(spriteSheet, this.walkingDown, 1, 9, 2, 72, 96, 10);
+//        fillAnimationList(spriteSheet, this.walkingLeft, 1, 5, 2, 88, 96, 10);
+//        fillAnimationList(spriteSheet, this.walkingRight, 1, 7, 2, 82, 96, 10);
 
-        this.walkUp = new Animation(this.walkingUp, framedelay, -4, alignmentY, true);
-        this.walkDown = new Animation(this.walkingDown, framedelay, -4, alignmentY, true);
-        this.walkLeft = new Animation(this.walkingLeft, framedelay, 0, alignmentY, true);
-        this.walkRight = new Animation(this.walkingRight, framedelay, -16, alignmentY, true);
+        this.animationHandler.addManyFrames("walkUp", new int[] {1,3,2,72,100,10}, framedelay, -4, alignmentY, true);
+        this.animationHandler.addManyFrames("walkDown", new int[] {1,9,2,72,96,10}, framedelay, -4, alignmentY, true);
+        this.animationHandler.addManyFrames("walkLeft", new int[] {1,5,2,88,96,10}, framedelay, 0, alignmentY, true);
+        this.animationHandler.addManyFrames("walkRight", new int[] {1,7,2,82,96,10}, framedelay, -16, alignmentY, true);
 
         // Sword combined
-        fillAnimationList(spriteSheet, this.attackingDown, 1, 11, 3, 192, 128, 5);
-        fillAnimationList(spriteSheet, this.attackingUp, 1, 13, 3, 192, 192, 5);
-        fillAnimationList(spriteSheet, this.attackingLeft, 1, 16, 3, 192, 192, 5);
-        fillAnimationList(spriteSheet, this.attackingRight, 2, 20, 3, 128, 192, 5);
+//        fillAnimationList(spriteSheet, this.attackingDown, 1, 11, 3, 192, 128, 5);
+//        fillAnimationList(spriteSheet, this.attackingUp, 1, 13, 3, 192, 192, 5);
+//        fillAnimationList(spriteSheet, this.attackingLeft, 1, 16, 3, 192, 192, 5);
+//        fillAnimationList(spriteSheet, this.attackingRight, 2, 20, 3, 128, 192, 5);
 
-        this.attackDown = new Animation(this.attackingDown, framedelay, -64, alignmentY, true);
-        this.attackUp = new Animation(this.attackingUp, framedelay, -64, -96, true);
-        this.attackLeft = new Animation(this.attackingLeft, framedelay, -64, -96, true);
-        this.attackRight = new Animation(this.attackingRight, framedelay, 0, alignmentY, true);
+        this.animationHandler.addManyFrames("attackDown", new int[] {1,11,3,192,128,5}, framedelay, -64, alignmentY, true);
+        this.animationHandler.addManyFrames("attackUp", new int[] {1,13,3,192,192,5}, framedelay, -64, -96, true);
+        this.animationHandler.addManyFrames("attackLeft", new int[] {1,16,3,192,192,5}, framedelay, -64, -96, true);
+        this.animationHandler.addManyFrames("attackRight", new int[] {2,20,3,128,192,5}, framedelay, 0, alignmentY, true);
 
-        this.animation = this.standFacingDown;
+        this.animation = this.animationHandler.getAnimation("standFacingDown");
     }
 
 
@@ -90,51 +94,51 @@ public class Player extends AnimateObject {
     public void tick() {
         this.attackDirection = "";
         if (this.isAttacking) {
-            if (this.animation == this.standFacingDown || this.animation == this.walkDown) {
+            if (this.animation.name == "standFacingDown" || this.animation.name == "walkDown") {
                 audio.playSFX("sfx/player/sweep7.wav");
-                this.setAnimation(this.attackDown);
+                this.setAnimation("attackDown");
                 this.animation.start();
                 this.attackDirection = "down";
                 this.attack(getDownAttackBox());
                 return;
-            } else if (this.animation.stop && this.animation == this.attackDown) {
+            } else if (this.animation.stop && this.animation.name == "attackDown") {
                 this.isAttacking = false;
-                this.setAnimation(standFacingDown);
+                this.setAnimation("standFacingDown");
             }
-            if (this.animation == this.standFacingUp || this.animation == this.walkUp) {
+            if (this.animation.name == "standFacingUp" || this.animation.name == "walkUp") {
                 audio.playSFX("sfx/player/sweep7.wav");
-                this.setAnimation(this.attackUp);
+                this.setAnimation("attackUp");
                 this.animation.start();
                 this.attackDirection = "up";
                 this.attack(getUpAttackBox());
                 return;
-            } else if (this.animation.stop && this.animation == this.attackUp) {
+            } else if (this.animation.stop && this.animation.name == "attackUp") {
                 this.isAttacking = false;
-                this.setAnimation(standFacingUp);
+                this.setAnimation("standFacingUp");
             }
-            if (this.animation == this.standFacingLeft || this.animation == this.walkLeft) {
+            if (this.animation.name == "standFacingLeft" || this.animation.name == "walkLeft") {
                 AudioHandler audio1 = new AudioHandler();
                 audio1.playSFX("sfx/player/sweep7.wav");
-                this.setAnimation(this.attackLeft);
+                this.setAnimation("attackLeft");
                 this.animation.start();
                 this.attackDirection = "left";
                 this.attack(getLeftAttackBox());
                 return;
-            } else if (this.animation.stop && this.animation == this.attackLeft) {
+            } else if (this.animation.stop && this.animation.name == "attackLeft") {
                 this.isAttacking = false;
-                this.setAnimation(standFacingLeft);
+                this.setAnimation("standFacingLeft");
             }
-            if (this.animation == this.standFacingRight || this.animation == this.walkRight) {
+            if (this.animation.name == "standFacingRight" || this.animation.name == "walkRight") {
                 AudioHandler audio1 = new AudioHandler();
                 audio1.playSFX("sfx/player/sweep7.wav");
-                this.setAnimation(this.attackRight);
+                this.setAnimation("attackRight");
                 this.animation.start();
                 this.attackDirection = "right";
                 this.attack(getRightAttackBox());
                 return;
-            } else if (this.animation.stop && this.animation == this.attackRight) {
+            } else if (this.animation.stop && this.animation.name == "attackRight") {
                 this.isAttacking = false;
-                this.setAnimation(standFacingRight);
+                this.setAnimation("standFacingRight");
             }
         }
 
@@ -200,22 +204,22 @@ public class Player extends AnimateObject {
 
         //animations for movement
         if (this.leftPressed & !isAttacking){
-            this.setAnimation(this.walkLeft);
+            this.setAnimation("walkLeft");
             this.animation.start();
             this.left = true;
         }
         if (this.rightPressed & !isAttacking){
-            this.setAnimation(this.walkRight);
+            this.setAnimation("walkRight");
             this.animation.start();
             this.right = true;
         }
         if (this.upPressed & !isAttacking){
-            this.setAnimation(this.walkUp);
+            this.setAnimation("walkUp");
             this.animation.start();
             this.up = true;
         }
         if (this.downPressed & !isAttacking){
-            this.setAnimation(this.walkDown);
+            this.setAnimation("walkDown");
             this.animation.start();
             this.down = true;
         }
@@ -413,16 +417,16 @@ public class Player extends AnimateObject {
             if (attackBox.getBounds().intersects(gameObject.getBounds())) {
                 gameObject.subHp(5);
                 gameObject.setKnockBackFrames();
-                if (this.animation == this.attackUp) {
+                if (this.animation.name == "attackUp") {
                     gameObject.setKnockBackDirection("up");
                 }
-                else if (this.animation == this.attackDown) {
+                else if (this.animation.name == "attackDown") {
                     gameObject.setKnockBackDirection("down");
                 }
-                else if (this.animation == this.attackLeft) {
+                else if (this.animation.name == "attackLeft") {
                     gameObject.setKnockBackDirection("left");
                 }
-                else if (this.animation == this.attackRight) {
+                else if (this.animation.name == "attackRight") {
                     gameObject.setKnockBackDirection("right");
                 }
 
@@ -451,16 +455,16 @@ public class Player extends AnimateObject {
         g.setColor(this.colour);
         g.drawRect(this.x, this.y, this.width, this.height);
         g.setColor(Color.yellow);
-        if (this.animation == this.attackUp) {
+        if (this.animation.name == "attackUp") {
             g.drawRect(x-12, y-44, this.width*2, 70);
         }
-        else if (this.animation == this.attackDown) {
+        else if (this.animation.name == "attackDown") {
             g.drawRect(x-12, y+32, this.width*2, 70);
         }
-        else if (this.animation == this.attackLeft) {
+        else if (this.animation.name == "attackLeft") {
             g.drawRect(x-48, y-48, this.width, 136);
         }
-        else if (this.animation == this.attackRight) {
+        else if (this.animation.name == "attackRight") {
             g.drawRect(x+40, y-24, this.width, 96);
         }
     }
@@ -486,14 +490,16 @@ public class Player extends AnimateObject {
         return new Rectangle2D.Float(x,y,width,height);
     }
 
-    @Override
     public Rectangle2D getBounds() {
         return new Rectangle2D.Float(this.x, this.y, this.width, this.height); //useful for collision for future
     }
 
-    @Override
     public Ellipse2D getBoundsFOV() {
         return null;
+    }
+
+    public void setAnimation(String name){
+        this.animation = animationHandler.getAnimation(name);
     }
 
 }

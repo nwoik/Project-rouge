@@ -97,13 +97,13 @@ public class KeyInput extends KeyAdapter{
                 this.handler.player.down = false;
                 this.handler.player.downPressed = false;
                 this.handler.player.animation.stop();
-                this.handler.player.setAnimation(this.handler.player.standFacingDown);
+                this.handler.player.setAnimation("standFacingDown");
             }
             case 0 -> {
                 this.handler.player.up = false;
                 this.handler.player.upPressed = false;
                 this.handler.player.animation.stop();
-                this.handler.player.setAnimation(this.handler.player.standFacingUp);
+                this.handler.player.setAnimation("standFacingUp");
             }
             case 2 -> {
                 this.handler.player.left = false;
@@ -112,7 +112,7 @@ public class KeyInput extends KeyAdapter{
                 if (this.handler.player.upPressed || this.handler.player.downPressed) {
                     break;
                 }
-                this.handler.player.setAnimation(this.handler.player.standFacingLeft);
+                this.handler.player.setAnimation("standFacingLeft");
             }
             case 3 -> {
                 this.handler.player.right = false;
@@ -121,7 +121,7 @@ public class KeyInput extends KeyAdapter{
                 if (this.handler.player.upPressed || this.handler.player.downPressed) {
                     break;
                 }
-                this.handler.player.setAnimation(this.handler.player.standFacingRight);
+                this.handler.player.setAnimation("standFacingRight");
             }
         }
     }

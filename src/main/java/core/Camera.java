@@ -1,5 +1,6 @@
 package core;
 
+import object.CharacterObject;
 import object.GameObject;
 
 //Class that pans around the level, following the player.
@@ -14,7 +15,7 @@ public class Camera {
         this.WIDTH = WIDTH;
     }
 
-    public void tick(GameObject object){
+    public void tick(CharacterObject object){
         //could do below line but our version smoother
         //x += (object.getX()) - 1000/2;
 

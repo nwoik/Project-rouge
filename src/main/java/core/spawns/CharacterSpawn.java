@@ -17,7 +17,7 @@ public class CharacterSpawn {
     }
 
     public void loadCharacter(int xx, int yy){
-        handler.player = new Player(xx, yy, ID.Player, handler, spriteSheet);
+        handler.player = new Player(xx, yy, handler, spriteSheet);
 
     }
 

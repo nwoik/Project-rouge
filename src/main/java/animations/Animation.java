@@ -14,9 +14,27 @@ public class Animation {
     private int totalFrames;
     public boolean stop;
     private boolean playOnce;
+    public String name;
 
     private List<Frame> frames = new ArrayList<Frame>();
 
+    public Animation(List<BufferedImage> frames, int frameDelay, int offsetX, int offsetY, boolean playOnce, String name) {
+        this.frameDuration = frameDelay;
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
+        this.playOnce = playOnce;
+
+        for (BufferedImage frame: frames) {
+            addFrame(frame, frameDelay);
+        }
+
+        this.frameCount = 0;
+        this.frameDuration = frameDelay;
+        this.currentFrame = 0;
+        this.animationDirection = 1;
+        this.totalFrames = this.frames.size();
+        this.name = name;
+    }
     public Animation(List<BufferedImage> frames, int frameDelay, int offsetX, int offsetY, boolean playOnce) {
         this.frameDuration = frameDelay;
         this.offsetX = offsetX;
@@ -33,6 +51,7 @@ public class Animation {
         this.animationDirection = 1;
         this.totalFrames = this.frames.size();
     }
+
     // second constructor for a single frame - no need to create a list for it
     public Animation(BufferedImage frame, int frameDelay, int offsetX, int offsetY, boolean playOnce) {
         this.frameDuration = frameDelay;
@@ -47,6 +66,21 @@ public class Animation {
         this.currentFrame = 0;
         this.animationDirection = 1;
         this.totalFrames = this.frames.size();
+    }
+    public Animation(BufferedImage frame, int frameDelay, int offsetX, int offsetY, boolean playOnce, String name) {
+        this.frameDuration = frameDelay;
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
+        this.playOnce = playOnce;
+
+        addFrame(frame, frameDelay);
+
+        this.frameCount = 0;
+        this.frameDuration = frameDelay;
+        this.currentFrame = 0;
+        this.animationDirection = 1;
+        this.totalFrames = this.frames.size();
+        this.name = name;
     }
 
     public void start() {

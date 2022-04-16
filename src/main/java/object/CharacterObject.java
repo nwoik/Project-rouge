@@ -1,6 +1,7 @@
 package object;
 
 import animations.Animation;
+import animations.AnimationHandler;
 import core.SpriteSheet;
 
 import java.awt.*;
@@ -22,11 +23,12 @@ public abstract class CharacterObject {
 
     protected float velX = 0, velY = 0;
     protected int movementSpeed, alignmentY;
+
+    public Animation animation;
+    public AnimationHandler animationHandler;
     // The following line depends. Player has all 5, skeleton has isAttacking only, slimes and eyes have none.
     // public boolean up, down, left, right, isAttacking;
     protected int framedelay = 2;
-
-    public Animation animation;
 
     public CharacterObject(int x, int y, SpriteSheet ss, Handler handler){
         this.x = x;
@@ -47,17 +49,18 @@ public abstract class CharacterObject {
 
     public abstract Ellipse2D getBoundsFOV();
 
-    public void setAnimation(Animation animation) {
-        this.animation = animation;
-    }
-    public Animation getAnimation() {return this.animation;}
-
     public int getX(){
         return x;
     }
+    public void setX(int number) {this.x = number;}
     public int getY(){
         return y;
     }
+    public void setY(int number) {this.y = number;}
+    public void addX(int number) {this.x += number;}
+    public void subX(int number) {this.x -= number;}
+    public void addY(int number) {this.y += number;}
+    public void subY(int number) {this.y -= number;}
 
     public SpriteSheet getSpriteSheet() {
         return spriteSheet;
